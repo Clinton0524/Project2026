@@ -1,0 +1,97 @@
+/* Container full height */
+.register-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 92vh;
+  background-color: #f2f2f2;
+  padding: 0;
+}
+
+/* Card with left-right split */
+.register-card {
+  display: flex;
+  width: 900px;
+  height: 90%;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Left gradient panel */
+.register-left {
+  flex: 1;
+  background: linear-gradient(135deg, #7b2ff7, #f107a3);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+/* Right form panel */
+.register-right {
+  flex: 1;
+  background-color: white;
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Error message */
+.error {
+  color: red;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+/* Input group */
+.input-group {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+.input-group input {
+  border: none;
+  border-bottom: 2px solid #ccc;
+  padding: 8px 4px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+  border-bottom-color: #7b2ff7;
+}
+
+/* Submit button */
+.register-right button {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  background-color: #7b2ff7;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.register-right button:hover {
+  background-color: #f107a3;
+}
+
+.login-text {
+  margin-top: 1rem;
+  text-align: center;
+}

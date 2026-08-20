@@ -1,0 +1,35 @@
+@media (max-width: 767px) {
+  .cart-card {
+    padding: 3px;
+    background-color: rgb(255, 252, 252);
+  }
+
+  .cart-image {
+    height: 80px;
+    width: 90px;
+    object-fit: contain;
+  }
+
+  .cart-name {
+    font-size: 13px;
+  }
+
+  .cart-description {
+    font-size: 11px;
+  }
+
+  .cart-price {
+    font-size: 12px;
+  }
+
+  .price-total {
+    font-size: 13px;
+  }
+
+  .incdrec-btn {
+    height: 25px;
+    width: 25px;
+    padding: 0;
+  }
+
+}

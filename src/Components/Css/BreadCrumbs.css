@@ -1,0 +1,15 @@
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumbs {
+  color: black;
+  font-size: 12px;
+}

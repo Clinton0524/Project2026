@@ -1,0 +1,39 @@
+.footer {
+  background-color: #111;
+  color: #ccc;
+  padding: 40px 0 20px;
+}
+
+.footer-title {
+  color: #fff;
+  margin-bottom: 12px;
+}
+
+.footer-text {
+  font-size: 14px;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li {
+  font-size: 14px;
+  margin-bottom: 6px;
+  cursor: pointer;
+}
+
+.footer-links li:hover {
+  color: #fff;
+}
+
+.footer-divider {
+  border-color: #333;
+  margin: 20px 0;
+}
+
+.footer-copy {
+  font-size: 13px;
+  color: #888;
+}

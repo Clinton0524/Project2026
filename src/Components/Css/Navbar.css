@@ -1,0 +1,46 @@
+.mobile-menu {
+  display: none;
+}
+.navbar-brand{
+    color: greenyellow;
+}
+
+@media (max-width: 991px) {
+  .mobile-menu.show {
+    display: block;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 70%;
+    max-width: 200px;
+    height: 100vh;
+    background: rgb(235, 234, 234);
+    z-index: 1050;
+    padding: 30px;
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .navbar-toggler-icon {
+    width: 20px;
+    height: 20px;
+    background-size: 20px 20px;
+    background-color: white;
+  }
+  .mobile-menu-close {
+    display: block;
+    margin-left: auto;
+    border: none;
+    background: none;
+    font-size: 25px;
+    margin-bottom: 30px;
+  }
+  .search-input {
+    font-size: 10px;
+    height: 40px;
+  }
+  .mobile-menu .navbar-nav {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 20px !important;
+  }
+}
