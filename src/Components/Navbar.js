@@ -30,6 +30,9 @@ const Navbar = () => {
   const filteredData = products.filter((arr) =>
     arr.name.toLowerCase().includes(search.toLowerCase())
   );
+  const handleMenuClose = () => {
+  setMenuOpen(false);
+};
 
   return (
     <nav className="navbar navbar-expand-lg bg-white shadow-sm sticky-top py-2">
@@ -53,7 +56,7 @@ const Navbar = () => {
             value={search}
             onChange={handleChange}
             type="text"
-            className="form-control rounded-pill ps-4 search-input"
+            className="form-control  ps-4 search-input"
             placeholder="Search products..."
           />
 
@@ -106,26 +109,27 @@ const Navbar = () => {
           </button>
           <ul className="navbar-nav ms-auto d-flex flex-row align-items-center gap-4">
             <li className="nav-item">
-              <Link className="nav-link fw-semibold" to="/">
+              <Link className="nav-link fw-semibold" to="/"  onClick={handleMenuClose}>
+              
                 Home
               </Link>
             </li>
 
             <li className="nav-item">
-              <Link className="nav-link fw-semibold" to="/product">
+              <Link className="nav-link fw-semibold" to="/product"  onClick={handleMenuClose}>
                 Products
               </Link>
             </li>
 
             <li className="nav-item">
-              <Link className="nav-link fw-semibold" to="/home">
+              <Link className="nav-link fw-semibold" to="/home"  onClick={handleMenuClose}>
                 About
               </Link>
             </li>
 
             {/* CART */}
             <li className="nav-item position-relative">
-              <Link className="nav-link fw-semibold" to="/cart">
+              <Link className="nav-link fw-semibold" to="/cart"  onClick={handleMenuClose}>
                 Cart
                 {cart.length > 0 && (
                   <span className="badge bg-dark ms-1">{cart.length}</span>
@@ -157,7 +161,7 @@ const Navbar = () => {
               <li className="nav-item">
                 <Link
                   className="btn btn-dark btn-sm rounded-pill px-3"
-                  to="/login"
+                  to="/login"  onClick={handleMenuClose}
                 >
                   Login
                 </Link>

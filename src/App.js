@@ -15,15 +15,18 @@ import OrderSuccess from "./Components/Pages/Order-success";
 import Store from "./Components/Redux/Store";
 import { Provider } from "react-redux";
 import CategoryProducts from "./Components/Pages/CategoryProducts";
+import ScrollToTop from "./Components/ScrollToTop";
 function App() {
   return (
     <Provider store={Store}>
       <MyProvider>
         <Router>
+          <ScrollToTop />
           <div className="app-layout">
             <Navbar />
 
             <main className="content">
+                
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/cart" element={<Cart />} />

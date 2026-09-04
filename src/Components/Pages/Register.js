@@ -71,7 +71,7 @@ const Register = () => {
 
         {/* Right panel - Form */}
         <div className="register-right">
-          <h3>Register</h3>
+          <h3 className="register-text">Register</h3>
           {error && <div className="error">{error}</div>}
 
           <form onSubmit={handleSubmit}>

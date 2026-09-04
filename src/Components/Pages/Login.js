@@ -3,7 +3,7 @@ import { myContext } from "../Context/Context";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../Firebase/Firebase";
-import "../Css/Register.css"; 
+import "../Css/Login.css";
 
 const Login = () => {
   const { loginInfo, setLoginInfo, error, setError } = useContext(myContext);
@@ -50,7 +50,7 @@ const Login = () => {
 
         {/* Right panel - Form */}
         <div className="register-right">
-          <h3>Login</h3>
+          <h3 className="register-text">Login</h3>
           {error && <div className="error">{error}</div>}
 
           <form onSubmit={handleSubmit}>

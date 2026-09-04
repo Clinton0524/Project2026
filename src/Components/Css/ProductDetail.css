@@ -1,0 +1,30 @@
+@media (max-width: 767px) {
+    .product-detail-img {
+        width: 150px;
+
+    }
+
+    .product-detail-container {
+        margin-top: 2px;
+    }
+    .product-description{
+        font-size: 13px;
+    }
+
+    .product-detail-price {
+        color: green;
+        font-size: 15px;
+        font-weight: 600;
+    }
+
+    .product-detail-button {
+        font-size: 15px;
+        width: 100%;
+    }
+    .text{
+        font-size: 12px;
+    }
+    .text-1{
+        font-size: 13px;
+    }
+}
