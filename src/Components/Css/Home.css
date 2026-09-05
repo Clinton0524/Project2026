@@ -7,6 +7,9 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
+.card-container{
+    padding: 4px;
+  }
 @media (max-width: 767px) {
 
   .home {
@@ -66,6 +69,9 @@
   }
 
   /* Other mobile styles */
+  .card-container{
+    padding: 1px;
+  }
   .card-image {
     height: 100px;
     object-fit: contain;

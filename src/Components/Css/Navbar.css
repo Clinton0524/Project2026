@@ -1,45 +1,721 @@
-.mobile-menu {
-  display: none;
-}
-.navbar-brand{
-    color: greenyellow;
+/* =====================================================
+   MAIN NAVBAR
+===================================================== */
+
+.navbar {
+  background: #ffffff;
+  z-index: 3000;
 }
 
-@media (max-width: 991px) {
+.navbar-brand {
+  color: #111;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.navbar-brand:hover {
+  color: #555;
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+.mobile-search-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-container {
+  position: relative;
+  width: 300px;
+}
+
+.search-input {
+  width: 100%;
+  height: 40px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: #777;
+  box-shadow: none;
+}
+
+
+/* =====================================================
+   SEARCH DROPDOWN
+===================================================== */
+
+.search-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  margin-top: 8px;
+
+  background: #ffffff;
+  border-radius: 8px;
+
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+
+  max-height: 260px;
+  overflow-y: auto;
+
+  z-index: 9999;
+}
+
+.search-item {
+  transition: background 0.2s ease;
+}
+
+.search-item:hover {
+  background: #f5f5f5;
+}
+
+.search-product-image {
+  width: 45px;
+  height: 45px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+
+/* =====================================================
+   HAMBURGER BUTTON
+===================================================== */
+
+.hamburger-btn {
+  display: none;
+
+  background: none;
+  border: none;
+
+  font-size: 25px;
+  cursor: pointer;
+
+  padding: 4px 8px;
+}
+
+
+/* =====================================================
+   MAIN NAVIGATION
+===================================================== */
+
+.mobile-menu {
+  margin-left: auto;
+}
+
+.nav-scroll {
+  margin-bottom: 0;
+}
+
+.nav-scroll .nav-item {
+  flex-shrink: 0;
+}
+
+.nav-link {
+  color: #222;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color: #777;
+}
+
+.user-name {
+  white-space: nowrap;
+}
+
+
+/* =====================================================
+   MOBILE MENU CLOSE BUTTON
+===================================================== */
+
+.mobile-menu-close {
+  display: none;
+
+  background: none;
+  border: none;
+
+  font-size: 22px;
+  cursor: pointer;
+}
+
+
+/* =====================================================
+   SECOND CATEGORY NAVBAR
+===================================================== */
+
+.category-navbar {
+  position: relative;
+
+  background: #ffffff;
+
+  border-bottom: 1px solid #ddd;
+
+  z-index: 2000;
+
+  overflow: visible !important;
+}
+
+.category-navbar .container-fluid {
+  position: relative;
+
+  overflow: visible !important;
+}
+
+
+/* =====================================================
+   CATEGORY LIST
+===================================================== */
+
+.category-list {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 35px;
+
+  list-style: none;
+
+  margin: 0;
+
+  padding: 12px 0;
+
+  white-space: nowrap;
+
+  position: relative;
+
+  z-index: 1;
+}
+
+
+/* CATEGORY ITEMS */
+
+.category-list li {
+  position: relative;
+
+  flex-shrink: 0;
+}
+
+
+/* CATEGORY LINKS */
+
+.category-list a {
+  text-decoration: none;
+
+  color: #222;
+
+  font-size: 14px;
+
+  font-weight: 500;
+
+  white-space: nowrap;
+}
+
+.category-list a:hover {
+  color: #777;
+}
+
+
+/* =====================================================
+   CATEGORY DROPDOWN BUTTON
+===================================================== */
+
+.category-dropdown {
+  position: relative;
+
+  flex-shrink: 0;
+}
+
+.category-dropdown-btn {
+  background: none;
+
+  border: none;
+
+  padding: 0;
+
+  color: #222;
+
+  font-size: 14px;
+
+  font-weight: 500;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+}
+
+.category-dropdown-btn:hover {
+  color: #777;
+}
+
+
+/* =====================================================
+   CATEGORY DROPDOWN MENU
+===================================================== */
+
+.category-dropdown-menu {
+  display: none;
+
+  position: absolute;
+
+  top: 100%;
+
+  left: 10px;
+
+  min-width: 200px;
+
+  background: #ffffff;
+
+  border-radius: 8px;
+
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+
+  padding: 8px 0;
+
+  z-index: 99999;
+}
+
+
+/* SHOW DROPDOWN */
+
+.category-dropdown-menu.category-show {
+  display: block;
+}
+
+
+/* DROPDOWN LINKS */
+
+.category-dropdown-menu a {
+  display: block;
+
+  padding: 10px 15px;
+
+  color: #222;
+
+  text-decoration: none;
+
+  font-size: 14px;
+
+  white-space: nowrap;
+}
+
+.category-dropdown-menu a:hover {
+  background: #f5f5f5;
+
+  color: #222;
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 992px) {
+
+  .search-container {
+    width: 250px;
+  }
+
+  .category-list {
+    gap: 25px;
+  }
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 768px) {
+
+  /* ---------------------------------------------
+     MAIN NAVBAR
+  --------------------------------------------- */
+
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 3000;
+  }
+
+  .navbar .container-fluid {
+    display: flex;
+
+    flex-wrap: nowrap;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+
+  /* ---------------------------------------------
+     LOGO
+  --------------------------------------------- */
+
+  .navbar-brand {
+    font-size: 18px !important;
+
+    flex-shrink: 0;
+  }
+
+
+  /* ---------------------------------------------
+     SEARCH + HAMBURGER
+  --------------------------------------------- */
+
+  .mobile-search-wrapper {
+    display: flex;
+
+    align-items: center;
+
+    flex: 1;
+
+    min-width: 0;
+
+    gap: 6px;
+  }
+
+  .search-container {
+    width: 100%;
+
+    min-width: 0;
+  }
+
+  .search-input {
+    width: 100%;
+
+    height: 38px;
+
+    font-size: 16px !important;
+  }
+
+
+  /* ---------------------------------------------
+     HAMBURGER
+  --------------------------------------------- */
+
+  .hamburger-btn {
+    display: block;
+
+    flex-shrink: 0;
+  }
+
+
+  /* ---------------------------------------------
+     MOBILE MENU
+  --------------------------------------------- */
+
+  .mobile-menu {
+    display: none;
+
+    position: absolute;
+
+    top: 100%;
+
+    left: 0;
+
+    right: 0;
+
+    width: 100%;
+
+    background: #ffffff;
+
+    padding: 12px;
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+
+    z-index: 4000;
+  }
+
   .mobile-menu.show {
     display: block;
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 70%;
-    max-width: 200px;
-    height: 100vh;
-    background: rgb(235, 234, 234);
-    z-index: 1050;
-    padding: 30px;
-    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.15);
   }
 
-  .navbar-toggler-icon {
-    width: 20px;
-    height: 20px;
-    background-size: 20px 20px;
-    background-color: white;
-  }
+
+  /* ---------------------------------------------
+     CLOSE BUTTON
+  --------------------------------------------- */
+
   .mobile-menu-close {
     display: block;
+
     margin-left: auto;
-    border: none;
-    background: none;
-    font-size: 25px;
-    margin-bottom: 30px;
+
+    margin-bottom: 8px;
+
+    padding: 2px 8px;
   }
+
+
+  /* ---------------------------------------------
+     MOBILE NAVIGATION SCROLL
+  --------------------------------------------- */
+
+  .nav-scroll {
+    display: flex !important;
+
+    flex-direction: row !important;
+
+    align-items: center;
+
+    justify-content: flex-start !important;
+
+    flex-wrap: nowrap !important;
+
+    width: 100%;
+
+    max-width: 100%;
+
+    overflow-x: auto;
+
+    overflow-y: hidden;
+
+    white-space: nowrap;
+
+    gap: 25px !important;
+
+    padding: 8px 5px;
+
+    scrollbar-width: none;
+
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .nav-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-scroll .nav-item {
+    flex-shrink: 0;
+  }
+
+
+  /* ---------------------------------------------
+     SECOND CATEGORY NAVBAR
+  --------------------------------------------- */
+
+  .category-navbar {
+    position: relative;
+    position: sticky;
+
+    width: 100%;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #ddd;
+
+    z-index: 2000;
+
+    overflow: visible !important;
+  }
+
+  .category-navbar .container-fluid {
+    position: relative;
+
+    overflow: visible !important;
+
+    z-index: 2000;
+  }
+
+
+  /* ---------------------------------------------
+     CATEGORY HORIZONTAL SCROLL
+  --------------------------------------------- */
+
+  .category-list {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-start;
+
+    flex-wrap: nowrap;
+
+    width: 100%;
+
+    max-width: 100%;
+
+    overflow-x: auto;
+
+    overflow-y: hidden;
+
+    white-space: nowrap;
+
+    gap: 25px;
+
+    padding: 12px 10px;
+
+    margin: 0;
+
+    scrollbar-width: none;
+
+    -webkit-overflow-scrolling: touch;
+
+    position: relative;
+
+    z-index: 1;
+  }
+
+  .category-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .category-list li {
+    flex-shrink: 0;
+  }
+
+
+  /* ---------------------------------------------
+     CATEGORY BUTTON
+  --------------------------------------------- */
+
+  .category-dropdown-btn {
+    font-size: 13px;
+
+    padding: 0;
+
+    white-space: nowrap;
+  }
+
+
+  /* ---------------------------------------------
+     CATEGORY DROPDOWN
+  --------------------------------------------- */
+
+  .category-dropdown-menu {
+    display: block;
+
+    position: absolute;
+
+    top: 100%;
+
+    left: 10px;
+
+    min-width: 180px;
+
+    background: #ffffff;
+
+    border-radius: 8px;
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+
+    padding: 8px 0;
+
+    z-index: 99999;
+  }
+
+  .category-dropdown-menu a {
+    display: block;
+
+    padding: 10px 15px;
+
+    font-size: 13px;
+
+    color: #222;
+
+    text-decoration: none;
+  }
+
+  .category-dropdown-menu a:hover {
+    background: #f5f5f5;
+  }
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media (max-width: 480px) {
+
+  .navbar .container-fluid {
+    padding-left: 10px !important;
+
+    padding-right: 10px !important;
+
+    gap: 6px;
+  }
+
+  .navbar-brand {
+    font-size: 17px !important;
+  }
+
   .search-input {
-     font-size: 16px !important;
+    height: 36px;
+
+    font-size: 12px;
   }
-  .mobile-menu .navbar-nav {
-    flex-direction: column !important;
-    align-items: flex-start !important;
+
+  .hamburger-btn {
+    font-size: 23px;
+
+    padding: 3px 5px;
+  }
+
+  .nav-scroll {
     gap: 20px !important;
+  }
+
+  .nav-scroll .nav-link {
+    font-size: 14px;
+  }
+
+  .category-list {
+    gap: 22px;
+
+    padding-left: 10px;
+
+    padding-right: 10px;
+  }
+
+  .category-list a,
+  .category-dropdown-btn {
+    font-size: 13px;
+  }
+
+  .category-dropdown-menu {
+    min-width: 170px;
+  }
+}
+
+
+/* =====================================================
+   VERY SMALL PHONES
+===================================================== */
+
+@media (max-width: 360px) {
+
+  .navbar-brand {
+    font-size: 16px !important;
+  }
+
+  .search-input {
+    font-size: 11px;
+  }
+
+  .nav-scroll {
+    gap: 18px !important;
+  }
+
+  .category-list {
+    gap: 20px;
+  }
+
+  .category-dropdown-menu {
+    min-width: 160px;
   }
 }

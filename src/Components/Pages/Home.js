@@ -6,39 +6,29 @@ import "../Css/Home.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts, fetchExclusiveProducts } from "../Redux/ProductSlice";
 import image from '../Images/Red Orange Modern Flash Sale Facebok Post.png'
-import image1 from '../Images/Orange Green and White Modern Grocery Store Opening Banner.png'
-import image2 from '../Images/Green and Yellow Modern Organic Food Market Banner.png'
-import image3 from '../Images/Green Yellow Modern Grocery Store Banner.png'
 import image4 from '../Images/Green Modern Grocery Delivery Instagram Post.png'
 import image5 from '../Images/Green and White Modern Grocery Store Promotion Instagram Post .png'
 import image6 from '../Images/Yellow Green and Orange Modern Grocery Instagram Post.png'
-
-
 import googlePlay from "../Images/png-transparent-google-play-store-logo-google-play-app-store-android-wallets-text-label-logo.png";
 import appStore from "../Images/download-on-the-app-store-vector-11574169009ka9slrru5l.png";
+import HeroBanner from './HeroBanner'
+
 const Home = () => {
   const dispatch = useDispatch();
-
-  const { products, exclusiveProducts } = useSelector(
-    (state) => state.products
-  );
-
-  const { categories, cart, addToCart, decrementQty, incrementQty } =
-    useContext(myContext);
+  const { products, exclusiveProducts } = useSelector((state) => state.products);
+  const { categories, cart, addToCart, decrementQty, incrementQty } = useContext(myContext);
 
   /* ===== SLIDER SETTINGS ===== */
   const getSlidesToShow = () => {
     const width = window.innerWidth;
-
-    if (width < 576) return 2.2;
+    if (width < 576) return 2.5;
     if (width < 768) return 2;
     if (width < 992) return 3;
-
     return 7;
   };
 
   const [slidesToShow, setSlidesToShow] = useState(getSlidesToShow());
-
+  const [openIndex, setOpenIndex] = useState(null);
   useEffect(() => {
     const handleResize = () => {
       setSlidesToShow(getSlidesToShow());
@@ -51,7 +41,7 @@ const Home = () => {
     };
   }, []);
 
-  const [openIndex, setOpenIndex] = useState(null);
+
 
   const faqs = [
     {
@@ -92,50 +82,12 @@ const Home = () => {
 
   return (
     <div className="home">
-      {/* ================= HERO SECTION ================= */}
-      <section className="p-0 mt-1">
-        <Slider
-          dots={false}
-          infinite={true}
-          speed={500}
-          slidesToShow={1}
-          slidesToScroll={1}
-          autoplay={true}
-          autoplaySpeed={3000}
-          swipe={true}
-          draggable={true}
-          touchMove={true}
-        >
-          <div>
-            <img
-              className="banner-img"
-              src={image1}
-              alt="Grocery Store Banner"
-            />
-          </div>
-
-          <div>
-            <img
-              className="banner-img"
-              src={image2}
-              alt="Organic Food Banner"
-            />
-
-          </div>
-          <div>
-            <img
-              className="banner-img"
-              src={image3}
-              alt="Organic Food Banner"
-            />
-
-          </div>
-        </Slider>
-      </section>
+      <HeroBanner />
+      
       {/* ================= EXCLUSIVE PRODUCT SLIDER ================= */}
-      <section className="py-4">
+      <section className="py-2">
         <div className="container">
-          <div className="d-flex justify-content-between align-items-center mb-4">
+          <div className="d-flex justify-content-between align-items-center mb-2">
             <h3 className="fw-bold Product-headding">Exclusive Products</h3>
             <Link to="/product" className="btn btn-outline-dark headding-button">
               View All
@@ -155,7 +107,7 @@ const Home = () => {
               const cartItem = cart.find((item) => item._id === arr._id);
 
               return (
-                <div key={arr._id} className="px-2">
+                <div key={arr._id} className="card-container">
                   <div className="card">
                     {/* IMAGE */}
                     <Link to={`/product/${arr._id}`} className="img-link">
@@ -382,15 +334,14 @@ const Home = () => {
       </section>
 
       {/* ================= PRODUCT SLIDER ================= */}
-      <section className="py-4">
+     <section className="py-2">
         <div className="container">
-          <div className="d-flex justify-content-between align-items-center mb-4">
+          <div className="d-flex justify-content-between align-items-center mb-2 mt-2">
             <h3 className="fw-bold Product-headding">Featured Products</h3>
             <Link to="/product" className="btn btn-outline-dark headding-button">
               View All
             </Link>
           </div>
-
           <Slider
             dots={false}
             infinite={false}
@@ -405,41 +356,48 @@ const Home = () => {
               const cartItem = cart.find((item) => item._id === arr._id);
 
               return (
-                <div key={arr._id} className="px-2">
-                  <div className="card p-2 h-100 d-flex flex-column align-items-center text-center shadow-sm">
+                <div key={arr._id} className="card-container">
+                  <div className="card">
                     {/* IMAGE */}
-                    <img
-                      src={arr.imageUrl}
-                      alt={arr.name}
-                      className="card-img-top"
-                      style={{
-                        height: "120px",
-                        objectFit: "contain",
-                        width: "100%",
-                      }}
-                    />
-
+                    <Link to={`/product/${arr._id}`} className="img-link">
+                      <img
+                        src={arr.imageUrl}
+                        alt={arr.name}
+                        className="card-image"
+                      />
+                    </Link>
                     {/* DETAILS */}
-                    <div className="card-body p-2 d-flex flex-column w-100 text-start">
-                      <h6
-                        className="card-title mb-1"
-                        style={{ height: "20px" }}
-                      >
-                        {arr.name}
-                      </h6>
-
-                      <p className="card-text text-truncate mb-1">
+                    <div className="card-body">
+                      <h6 className="card-title text-truncate mb-1">{arr.name}</h6>
+                      <p className="card-description text-truncate mb-0">
                         {arr.description}
                       </p>
-
-                      <strong className="mb-2">₹ {arr.price}</strong>
+                      <p className="quantity mb-0">{arr.weight}</p>
+                      <div className="d-flex align-items-center mb-1 ">
+                        <span className="price">
+                          <strong style={{ color: "green" }}>
+                            ₹ {arr.price}
+                          </strong>
+                        </span>
+                        <span className="price">
+                          <strong
+                            className="old-price"
+                            style={{
+                              color: "red",
+                              textDecoration: "line-through",
+                            }}
+                          >
+                            {arr.oldprice}
+                          </strong>
+                        </span>
+                      </div>
                     </div>
 
                     {/* CART CONTROLS */}
-                    <div className="mb-1 w-100">
+                    <div className="mb-1 w-100 d-flex justify-content-center">
                       {!cartItem ? (
                         <button
-                          className="btn btn-sm btn-dark w-100"
+                          className="btn btn-sm btn-dark exclusive-button "
                           onClick={() => addToCart(arr)}
                         >
                           Add to Cart
@@ -471,7 +429,6 @@ const Home = () => {
           </Slider>
         </div>
       </section>
-
 
       {/* ================= NEWSLETTER ================= */}
       <section className="py-2">
