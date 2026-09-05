@@ -1,5 +1,7 @@
 .category-card {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .category-card:hover {
@@ -7,15 +9,61 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
-.card-container{
-    padding: 4px;
-  }
-@media (max-width: 767px) {
+.card-container {
+  padding: 4px;
+}
 
+.banner-img {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.banner-img-4 {
+  display: none;
+}
+
+.banner-img-1 {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  padding: 3px;
+}
+
+.flash-banner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 0 !important;
+}
+.button-hero {
+  font-size: 50px;
+  color: rgb(10, 10, 10);
+  background-color: yellow;
+  position: absolute;
+  top: 90%;
+  left: 40%;
+}
+
+.exclusive-button {
+  width: 100%;
+}
+
+.timeout {
+  position: absolute;
+  top: 3%;
+  left: 20%;
+  font-size: 130px;
+  font-weight: 600;
+  color: white;
+}
+
+@media (max-width: 767px) {
   .home {
     background-color: rgb(234, 236, 238);
   }
- 
+
   /* Flash Sale Banner */
   .flash-banner {
     position: relative;
@@ -23,7 +71,6 @@
     overflow: hidden;
     padding: 0 !important;
   }
- 
 
   .banner-img {
     position: relative;
@@ -31,24 +78,21 @@
     width: 100%;
     height: auto;
   }
-  
-   .banner-img-1 {
+
+  .banner-img-1 {
     position: relative;
     display: block;
     width: 100%;
     height: auto;
     padding: 3px;
   }
-  
-
-  
 
   .timeout {
     position: absolute;
     top: 12%;
     left: 50%;
     transform: translate(-50%, -50%);
-    
+
     font-size: 35px;
     font-weight: 800;
     color: rgb(253, 253, 253);
@@ -69,9 +113,10 @@
   }
 
   /* Other mobile styles */
-  .card-container{
+  .card-container {
     padding: 1px;
   }
+
   .card-image {
     height: 100px;
     object-fit: contain;
@@ -101,7 +146,6 @@
 
   .card {
     padding: 0px;
-    
   }
 
   .card-description {
@@ -109,7 +153,7 @@
   }
 
   .quantity {
-    font-size: 14px;
+    font-size: 12px;
   }
 
   .price {
@@ -120,7 +164,8 @@
     font-weight: 700;
     font-size: 13px;
   }
-  .exclusive-button{
+
+  .exclusive-button {
     padding: 3px;
     width: 95%;
   }
@@ -129,38 +174,47 @@
     margin-left: 5px;
     font-size: 12px;
   }
-  .cat-btn{
+
+  .cat-btn {
     font-size: 12px;
   }
-   .text{
-        font-size: 12px;
-    }
-    .text-1{
-        font-size: 13px;
-    }
-    .news-letter-headding{
-      font-size: 20px;
-    }
-    .news-letter-button{
-      font-size: 12px;
-    }
-    .input-news-letter{
-      font-size: 12px;
-    }
-    .news-letter-text{
-      font-size: 13px;
-    }
-    .app-store-badge {
-  width: 100px;
-  border-radius: 5px;
-  height: auto;
-  display: block;
+
+  .text {
+    font-size: 12px;
+  }
+
+  .text-1 {
+    font-size: 13px;
+  }
+
+  .news-letter-headding {
+    font-size: 20px;
+  }
+
+  .news-letter-button {
+    font-size: 12px;
+  }
+
+  .input-news-letter {
+    font-size: 12px;
+  }
+
+  .news-letter-text {
+    font-size: 13px;
+  }
+
+  .app-store-badge {
+    width: 100px;
+    border-radius: 5px;
+    height: auto;
+    display: block;
+  }
+
+  .app-store-badge:hover {
+    transform: scale(1.03);
+  }
 }
 
-.app-store-badge:hover {
-  transform: scale(1.03);
-}
-}
 @media (min-width: 768px) {
   /* Desktop styles */
 
@@ -172,5 +226,15 @@
     height: 120px;
     object-fit: contain;
     width: 100%;
+  }
+  .app-store-badge {
+    width: 100px;
+    border-radius: 5px;
+    height: auto;
+    display: block;
+  }
+
+  .app-store-badge:hover {
+    transform: scale(1.03);
   }
 }

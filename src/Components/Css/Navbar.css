@@ -17,7 +17,6 @@
   color: #555;
 }
 
-
 /* =====================================================
    SEARCH
 ===================================================== */
@@ -45,7 +44,6 @@
   border-color: #777;
   box-shadow: none;
 }
-
 
 /* =====================================================
    SEARCH DROPDOWN
@@ -84,7 +82,6 @@
   flex-shrink: 0;
 }
 
-
 /* =====================================================
    HAMBURGER BUTTON
 ===================================================== */
@@ -100,7 +97,6 @@
 
   padding: 4px 8px;
 }
-
 
 /* =====================================================
    MAIN NAVIGATION
@@ -132,7 +128,6 @@
   white-space: nowrap;
 }
 
-
 /* =====================================================
    MOBILE MENU CLOSE BUTTON
 ===================================================== */
@@ -146,7 +141,6 @@
   font-size: 22px;
   cursor: pointer;
 }
-
 
 /* =====================================================
    SECOND CATEGORY NAVBAR
@@ -169,7 +163,6 @@
 
   overflow: visible !important;
 }
-
 
 /* =====================================================
    CATEGORY LIST
@@ -197,7 +190,6 @@
   z-index: 1;
 }
 
-
 /* CATEGORY ITEMS */
 
 .category-list li {
@@ -205,7 +197,6 @@
 
   flex-shrink: 0;
 }
-
 
 /* CATEGORY LINKS */
 
@@ -224,7 +215,6 @@
 .category-list a:hover {
   color: #777;
 }
-
 
 /* =====================================================
    CATEGORY DROPDOWN BUTTON
@@ -258,7 +248,6 @@
   color: #777;
 }
 
-
 /* =====================================================
    CATEGORY DROPDOWN MENU
 ===================================================== */
@@ -270,7 +259,7 @@
 
   top: 100%;
 
-  left: 10px;
+  left: 28%;
 
   min-width: 200px;
 
@@ -285,13 +274,11 @@
   z-index: 99999;
 }
 
-
 /* SHOW DROPDOWN */
 
 .category-dropdown-menu.category-show {
   display: block;
 }
-
 
 /* DROPDOWN LINKS */
 
@@ -315,13 +302,11 @@
   color: #222;
 }
 
-
 /* =====================================================
    TABLET
 ===================================================== */
 
 @media (max-width: 992px) {
-
   .search-container {
     width: 250px;
   }
@@ -331,13 +316,11 @@
   }
 }
 
-
 /* =====================================================
    MOBILE
 ===================================================== */
 
 @media (max-width: 768px) {
-
   /* ---------------------------------------------
      MAIN NAVBAR
   --------------------------------------------- */
@@ -361,7 +344,6 @@
     padding-right: 12px !important;
   }
 
-
   /* ---------------------------------------------
      LOGO
   --------------------------------------------- */
@@ -371,7 +353,6 @@
 
     flex-shrink: 0;
   }
-
 
   /* ---------------------------------------------
      SEARCH + HAMBURGER
@@ -403,7 +384,6 @@
     font-size: 16px !important;
   }
 
-
   /* ---------------------------------------------
      HAMBURGER
   --------------------------------------------- */
@@ -413,96 +393,97 @@
 
     flex-shrink: 0;
   }
+/* =========================================
+   MOBILE SIDE MENU
+========================================= */
 
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: auto;
 
-  /* ---------------------------------------------
-     MOBILE MENU
-  --------------------------------------------- */
+  width: 280px;
+  height: 100vh;
 
-  .mobile-menu {
-    display: none;
+  background: #ffffff;
+  padding: 20px;
 
-    position: absolute;
+  box-shadow: -5px 0 20px rgba(0, 0, 0, 0.15);
 
-    top: 100%;
+  z-index: 5000;
 
-    left: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
 
-    right: 0;
+.mobile-menu.show {
+  display: block;
+}
 
-    width: 100%;
+/* =========================================
+   CLOSE BUTTON
+========================================= */
 
-    background: #ffffff;
+.mobile-menu-close {
+  display: block;
+  margin-left: auto;
+  margin-bottom: 25px;
 
-    padding: 12px;
+  background: none;
+  border: none;
 
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  font-size: 24px;
+  cursor: pointer;
+}
 
-    z-index: 4000;
-  }
+/* =========================================
+   MOBILE NAVIGATION - VERTICAL
+========================================= */
 
-  .mobile-menu.show {
-    display: block;
-  }
+.nav-scroll {
+  display: flex !important;
 
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
 
-  /* ---------------------------------------------
-     CLOSE BUTTON
-  --------------------------------------------- */
+  width: 100%;
 
-  .mobile-menu-close {
-    display: block;
+  gap: 20px !important;
 
-    margin-left: auto;
+  padding: 10px 5px;
 
-    margin-bottom: 8px;
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
 
-    padding: 2px 8px;
-  }
+  white-space: normal;
+}
 
+.nav-scroll .nav-item {
+  width: 100%;
+  flex-shrink: 0;
+}
 
-  /* ---------------------------------------------
-     MOBILE NAVIGATION SCROLL
-  --------------------------------------------- */
+.nav-scroll .nav-link {
+  display: block;
+  width: 100%;
 
-  .nav-scroll {
-    display: flex !important;
+  padding: 8px 5px;
 
-    flex-direction: row !important;
+  font-size: 16px;
+}
 
-    align-items: center;
+.user-name {
+  width: 100%;
+}
 
-    justify-content: flex-start !important;
+/* Login / Logout buttons */
 
-    flex-wrap: nowrap !important;
-
-    width: 100%;
-
-    max-width: 100%;
-
-    overflow-x: auto;
-
-    overflow-y: hidden;
-
-    white-space: nowrap;
-
-    gap: 25px !important;
-
-    padding: 8px 5px;
-
-    scrollbar-width: none;
-
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .nav-scroll::-webkit-scrollbar {
-    display: none;
-  }
-
-  .nav-scroll .nav-item {
-    flex-shrink: 0;
-  }
-
+.nav-scroll .btn {
+  margin-top: 5px;
+}
 
   /* ---------------------------------------------
      SECOND CATEGORY NAVBAR
@@ -510,27 +491,18 @@
 
   .category-navbar {
     position: relative;
-    position: sticky;
-
     width: 100%;
-
     background: #ffffff;
-
     border-bottom: 1px solid #ddd;
-
     z-index: 2000;
-
     overflow: visible !important;
   }
 
   .category-navbar .container-fluid {
     position: relative;
-
     overflow: visible !important;
-
     z-index: 2000;
   }
-
 
   /* ---------------------------------------------
      CATEGORY HORIZONTAL SCROLL
@@ -538,35 +510,20 @@
 
   .category-list {
     display: flex;
-
     align-items: center;
-
     justify-content: flex-start;
-
     flex-wrap: nowrap;
-
     width: 100%;
-
     max-width: 100%;
-
     overflow-x: auto;
-
     overflow-y: hidden;
-
     white-space: nowrap;
-
     gap: 25px;
-
     padding: 12px 10px;
-
     margin: 0;
-
     scrollbar-width: none;
-
     -webkit-overflow-scrolling: touch;
-
     position: relative;
-
     z-index: 1;
   }
 
@@ -577,7 +534,6 @@
   .category-list li {
     flex-shrink: 0;
   }
-
 
   /* ---------------------------------------------
      CATEGORY BUTTON
@@ -591,37 +547,27 @@
     white-space: nowrap;
   }
 
-
   /* ---------------------------------------------
      CATEGORY DROPDOWN
   --------------------------------------------- */
 
   .category-dropdown-menu {
     display: block;
-
     position: absolute;
-
     top: 100%;
-
     left: 10px;
-
     min-width: 180px;
-
     background: #ffffff;
-
     border-radius: 8px;
-
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-
     padding: 8px 0;
-
     z-index: 99999;
   }
 
   .category-dropdown-menu a {
     display: block;
 
-    padding: 10px 15px;
+    padding: 8px 15px;
 
     font-size: 13px;
 
@@ -635,13 +581,11 @@
   }
 }
 
-
 /* =====================================================
    SMALL MOBILE
 ===================================================== */
 
 @media (max-width: 480px) {
-
   .navbar .container-fluid {
     padding-left: 10px !important;
 
@@ -692,13 +636,11 @@
   }
 }
 
-
 /* =====================================================
    VERY SMALL PHONES
 ===================================================== */
 
 @media (max-width: 360px) {
-
   .navbar-brand {
     font-size: 16px !important;
   }

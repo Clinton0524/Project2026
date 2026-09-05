@@ -5,18 +5,21 @@ import { myContext } from "../Context/Context";
 import "../Css/Home.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts, fetchExclusiveProducts } from "../Redux/ProductSlice";
-import image from '../Images/Red Orange Modern Flash Sale Facebok Post.png'
-import image4 from '../Images/Green Modern Grocery Delivery Instagram Post.png'
-import image5 from '../Images/Green and White Modern Grocery Store Promotion Instagram Post .png'
-import image6 from '../Images/Yellow Green and Orange Modern Grocery Instagram Post.png'
+import image from "../Images/Red Orange Modern Flash Sale Facebok Post.png";
+import image4 from "../Images/Green Modern Grocery Delivery Instagram Post.png";
+import image5 from "../Images/Green and White Modern Grocery Store Promotion Instagram Post .png";
+import image6 from "../Images/Yellow Green and Orange Modern Grocery Instagram Post.png";
 import googlePlay from "../Images/png-transparent-google-play-store-logo-google-play-app-store-android-wallets-text-label-logo.png";
 import appStore from "../Images/download-on-the-app-store-vector-11574169009ka9slrru5l.png";
-import HeroBanner from './HeroBanner'
+import HeroBanner from "./HeroBanner";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { products, exclusiveProducts } = useSelector((state) => state.products);
-  const { categories, cart, addToCart, decrementQty, incrementQty } = useContext(myContext);
+  const { products, exclusiveProducts } = useSelector(
+    (state) => state.products,
+  );
+  const { categories, cart, addToCart, decrementQty, incrementQty } =
+    useContext(myContext);
 
   /* ===== SLIDER SETTINGS ===== */
   const getSlidesToShow = () => {
@@ -41,8 +44,6 @@ const Home = () => {
     };
   }, []);
 
-
-
   const faqs = [
     {
       q: "How long does delivery take?",
@@ -63,7 +64,7 @@ const Home = () => {
   }, [dispatch]);
 
   const [time, setTime] = useState(
-    new Date("2026-09-07T12:00:00").getTime() - Date.now()
+    new Date("2026-09-07T12:00:00").getTime() - Date.now(),
   );
 
   useEffect(() => {
@@ -83,13 +84,16 @@ const Home = () => {
   return (
     <div className="home">
       <HeroBanner />
-      
+
       {/* ================= EXCLUSIVE PRODUCT SLIDER ================= */}
       <section className="py-2">
         <div className="container">
           <div className="d-flex justify-content-between align-items-center mb-2">
             <h3 className="fw-bold Product-headding">Exclusive Products</h3>
-            <Link to="/product" className="btn btn-outline-dark headding-button">
+            <Link
+              to="/product"
+              className="btn btn-outline-dark headding-button"
+            >
               View All
             </Link>
           </div>
@@ -119,12 +123,14 @@ const Home = () => {
                     </Link>
                     {/* DETAILS */}
                     <div className="card-body">
-                      <h6 className="card-title mb-1">{arr.name}</h6>
+                      <h6 className="card-title text-truncate mb-1">
+                        {arr.name}
+                      </h6>
                       <p className="card-description text-truncate mb-0">
                         {arr.description}
                       </p>
                       <p className="quantity mb-0">{arr.weight}</p>
-                      <div className="d-flex align-items-center mb-1 ">
+                      <div className="d-flex align-items-center mb-0 ">
                         <span className="price">
                           <strong style={{ color: "green" }}>
                             ₹ {arr.price}
@@ -181,79 +187,58 @@ const Home = () => {
         </div>
       </section>
 
-
       {/* ================= HERO SECTION 2 ================= */}
 
       <section className="p-0 mt-1">
-        <Slider
-          dots={false}
-          infinite={true}
-          speed={500}
-          slidesToShow={2}
-          slidesToScroll={1}
-          autoplay={true}
-          autoplaySpeed={3000}
-          swipe={true}
-          draggable={true}
-          touchMove={true}
-        >
-          <div>
-            <img
-              className="banner-img-1"
-              src={image4}
-              alt="Grocery Store Banner"
-            />
-          </div>
+        <div className="container">
+          <Slider
+            dots={false}
+            infinite={true}
+            speed={500}
+            slidesToShow={2}
+            slidesToScroll={1}
+            autoplay={true}
+            autoplaySpeed={3000}
+            swipe={true}
+            draggable={true}
+            touchMove={true}
+          >
+            <div>
+              <img
+                className="banner-img-1"
+                src={image4}
+                alt="Grocery Store Banner"
+              />
+            </div>
 
-          <div>
-            <img
-              className="banner-img-1"
-              src={image5}
-              alt="Organic Food Banner"
-            />
-
-          </div>
-          <div>
-            <img
-              className="banner-img-1"
-              src={image6}
-              alt="Organic Food Banner"
-            />
-
-          </div>
-        </Slider>
+            <div>
+              <img
+                className="banner-img-1"
+                src={image5}
+                alt="Organic Food Banner"
+              />
+            </div>
+            <div>
+              <img
+                className="banner-img-1"
+                src={image6}
+                alt="Organic Food Banner"
+              />
+            </div>
+          </Slider>
+        </div>
       </section>
-
-
-
-
-
-
-
-
-
-
-
-
 
       {/* ================= HERO SECTION 2 ================= */}
       <section className=" p-0 mb-4 ">
-        <div className="container-fluid flash-banner">
-          <img className="banner-img"
-            src={image}
-          />
+        <div className="container flash-banner">
+          <img className="banner-img-4" src={image} />
           <div className="timeout">
-            {String(days).padStart(2, "0")} :{" "}
-            {String(hours).padStart(2, "0")} :{" "}
-            {String(minutes).padStart(2, "0")} :{" "}
-            {String(secs).padStart(2, "0")}
+            {String(days).padStart(2, "0")} : {String(hours).padStart(2, "0")} :{" "}
+            {String(minutes).padStart(2, "0")} : {String(secs).padStart(2, "0")}
           </div>
-          <div className="btn btn-dark button-hero">
-            GRAB DEAL
-          </div>
+          <div className="btn btn-dark button-hero">GRAB DEAL</div>
         </div>
-
-
       </section>
 
       {/* ================= CATEGORIES ================= */}
@@ -334,11 +319,14 @@ const Home = () => {
       </section>
 
       {/* ================= PRODUCT SLIDER ================= */}
-     <section className="py-2">
+      <section className="py-2">
         <div className="container">
           <div className="d-flex justify-content-between align-items-center mb-2 mt-2">
             <h3 className="fw-bold Product-headding">Featured Products</h3>
-            <Link to="/product" className="btn btn-outline-dark headding-button">
+            <Link
+              to="/product"
+              className="btn btn-outline-dark headding-button"
+            >
               View All
             </Link>
           </div>
@@ -368,7 +356,9 @@ const Home = () => {
                     </Link>
                     {/* DETAILS */}
                     <div className="card-body">
-                      <h6 className="card-title text-truncate mb-1">{arr.name}</h6>
+                      <h6 className="card-title text-truncate mb-1">
+                        {arr.name}
+                      </h6>
                       <p className="card-description text-truncate mb-0">
                         {arr.description}
                       </p>
@@ -436,9 +426,12 @@ const Home = () => {
           <div className="row justify-content-center">
             <div className="col-md-8">
               <div className="p-3 bg-dark text-light rounded text-center shadow">
-                <h3 className="fw-bold mb-0 news-letter-headding">Get 10% Off Your First Order</h3>
+                <h3 className="fw-bold mb-0 news-letter-headding">
+                  Get 10% Off Your First Order
+                </h3>
                 <p className=" mb-4 news-letter-text">
-                  Subscribe to our newsletter for exclusive deals and updates Subscribe now!.
+                  Subscribe to our newsletter for exclusive deals and updates
+                  Subscribe now!.
                 </p>
 
                 <div className="d-flex gap-2 justify-content-center flex-wrap">
@@ -447,7 +440,9 @@ const Home = () => {
                     className="form-control w-100 input-news-letter"
                     placeholder="Enter your email"
                   />
-                  <button className="btn btn-light news-letter-button">Subscribe</button>
+                  <button className="btn btn-light news-letter-button">
+                    Subscribe
+                  </button>
                 </div>
               </div>
             </div>
@@ -489,17 +484,16 @@ const Home = () => {
       {/* Why Shop With Us Section */}
       <section className="why-shop-section py-5">
         <div className="container">
-
           <div className="text-center mb-5">
             <span className="text-danger fw-semibold">WHY CHOOSE US</span>
             <h2 className="fw-bold mt-2">Shopping Made Simple</h2>
             <p className="text-muted">
-              Everything you need for a smooth and enjoyable shopping experience.
+              Everything you need for a smooth and enjoyable shopping
+              experience.
             </p>
           </div>
 
           <div className="row g-3">
-
             {/* Card 1 */}
             <div className="col-md-6 col-lg-3">
               <div className="service-card text-center h-100">
@@ -510,13 +504,11 @@ const Home = () => {
                 <h5 className="fw-bold mt-4">Fast & Free Delivery</h5>
 
                 <p className="text-muted">
-                  Get your favorite products delivered quickly and safely to your
-                  doorstep.
+                  Get your favorite products delivered quickly and safely to
+                  your doorstep.
                 </p>
 
-                <div className="btn btn-dark">
-                  Learn More
-                </div>
+                <div className="btn btn-dark">Learn More</div>
               </div>
             </div>
 
@@ -530,13 +522,11 @@ const Home = () => {
                 <h5 className="fw-bold mt-4">Secure Shopping</h5>
 
                 <p className="text-muted">
-                  Your personal information and payments are protected with secure
-                  technology.
+                  Your personal information and payments are protected with
+                  secure technology.
                 </p>
 
-                <div className="btn btn-dark">
-                  Shop Securly
-                </div>
+                <div className="btn btn-dark">Shop Securly</div>
               </div>
             </div>
 
@@ -550,12 +540,11 @@ const Home = () => {
                 <h5 className="fw-bold mt-4">Easy Returns</h5>
 
                 <p className="text-muted">
-                  Changed your mind? Enjoy a simple and hassle-free return process.
+                  Changed your mind? Enjoy a simple and hassle-free return
+                  process.
                 </p>
 
-                <div className="btn btn-dark">
-                  View Policy
-                </div>
+                <div className="btn btn-dark">View Policy</div>
               </div>
             </div>
 
@@ -573,12 +562,9 @@ const Home = () => {
                   standards.
                 </p>
 
-                <div className="btn btn-dark">
-                  Explore Products
-                </div>
+                <div className="btn btn-dark">Explore Products</div>
               </div>
             </div>
-
           </div>
         </div>
       </section>
@@ -612,7 +598,9 @@ const Home = () => {
             ].map((review, index) => (
               <div key={index} className="px-3">
                 <div className="p-4 bg-white shadow-sm rounded text-center h-100">
-                  <p className="text-muted fst-italic text-1">“{review.text}”</p>
+                  <p className="text-muted fst-italic text-1">
+                    “{review.text}”
+                  </p>
                   <h6 className="fw-bold mt-3 mb-0 text-2">{review.name}</h6>
                 </div>
               </div>
@@ -620,9 +608,6 @@ const Home = () => {
           </Slider>
         </div>
       </section>
-
-
-
 
       {/* <section className="py-5">
         <div className="container">

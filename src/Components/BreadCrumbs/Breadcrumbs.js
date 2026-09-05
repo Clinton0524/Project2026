@@ -11,7 +11,7 @@ const Breadcrumbs = ({ customLabel }) => {
     <nav aria-label="breadcrumb">
       <ol className="breadcrumb">
         <li className="breadcrumb-item">
-          <Link className="text-decoration-none breadcrumbs" to="/home">Home</Link>
+          <Link className="text-decoration-none breadcrumbs" to="/">Home</Link>
         </li>
 
         {pathnames.map((name, index) => {

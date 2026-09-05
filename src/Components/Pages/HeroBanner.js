@@ -20,7 +20,7 @@ const HeroBanner = () => {
   return (
     <div>
       {/* ================= HERO SECTION ================= */}
-      <section className="p-0 mt-1">
+      <section className="p-0 mt-1 container">
         <Slider
           dots={false}
           infinite={true}

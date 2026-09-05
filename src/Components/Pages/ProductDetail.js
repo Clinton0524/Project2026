@@ -44,7 +44,7 @@ const ProductDetail = () => {
   const cartItems = cart.find((arr) => arr._id === id);
 
   return (
-    <div className="container-fluid product-detail-container mt-2">
+    <div className="container product-detail-container mt-2">
       <Breadcrumbs customLabel={product.name} />
       <div className="row mt-2">
         <div className="col-6">
