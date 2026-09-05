@@ -29,6 +29,16 @@
     height: auto;
   }
   
+   .banner-img-1 {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: auto;
+    padding: 3px;
+  }
+  
+
+  
 
   .timeout {
     position: absolute;

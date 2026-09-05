@@ -7,6 +7,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts, fetchExclusiveProducts } from "../Redux/ProductSlice";
 import image from '../Images/Red Orange Modern Flash Sale Facebok Post.png'
 import image1 from '../Images/Orange Green and White Modern Grocery Store Opening Banner.png'
+import image2 from '../Images/Green and Yellow Modern Organic Food Market Banner.png'
+import image3 from '../Images/Green Yellow Modern Grocery Store Banner.png'
+import image4 from '../Images/Green Modern Grocery Delivery Instagram Post.png'
+import image5 from '../Images/Green and White Modern Grocery Store Promotion Instagram Post .png'
+import image6 from '../Images/Yellow Green and Orange Modern Grocery Instagram Post.png'
+
+
 import googlePlay from "../Images/png-transparent-google-play-store-logo-google-play-app-store-android-wallets-text-label-logo.png";
 import appStore from "../Images/download-on-the-app-store-vector-11574169009ka9slrru5l.png";
 const Home = () => {
@@ -86,41 +93,45 @@ const Home = () => {
   return (
     <div className="home">
       {/* ================= HERO SECTION ================= */}
-      <section className=" p-0 mt-1">
-        <div className="container-fluid flash-banner">
-          {/* <div className="row align-items-center">
-            <div className="col-md-6">
-              <h1 className="fw-bold mb-3">
-                Shop Smart. <br /> Live Better.
-              </h1>
-              <p className=" mb-4">
-                Discover quality products at the best prices. Fast delivery,
-                secure payments, and easy returns.
-              </p>
+      <section className="p-0 mt-1">
+        <Slider
+          dots={false}
+          infinite={true}
+          speed={500}
+          slidesToShow={1}
+          slidesToScroll={1}
+          autoplay={true}
+          autoplaySpeed={3000}
+          swipe={true}
+          draggable={true}
+          touchMove={true}
+        >
+          <div>
+            <img
+              className="banner-img"
+              src={image1}
+              alt="Grocery Store Banner"
+            />
+          </div>
 
-              
-            </div> */}
+          <div>
+            <img
+              className="banner-img"
+              src={image2}
+              alt="Organic Food Banner"
+            />
 
-          {/* <div className="col-md-6 text-center">
-              <img
-                src="https://via.placeholder.com/450x300"
-                alt="Shopping"
-                className="img-fluid rounded"
-              />
-            </div> */}
-          {/* </div> */}
-          <img className="banner-img"
-            src={image1}
-          />
-          {/* <Link to="/products" className="btn btn-dark banner-btn px-4">
-                Shop Now
-              </Link> */}
-        </div>
+          </div>
+          <div>
+            <img
+              className="banner-img"
+              src={image3}
+              alt="Organic Food Banner"
+            />
+
+          </div>
+        </Slider>
       </section>
-
-
-
-
       {/* ================= EXCLUSIVE PRODUCT SLIDER ================= */}
       <section className="py-4">
         <div className="container">
@@ -220,7 +231,61 @@ const Home = () => {
 
 
       {/* ================= HERO SECTION 2 ================= */}
-      <section className=" p-0 mb-4">
+
+      <section className="p-0 mt-1">
+        <Slider
+          dots={false}
+          infinite={true}
+          speed={500}
+          slidesToShow={2}
+          slidesToScroll={1}
+          autoplay={true}
+          autoplaySpeed={3000}
+          swipe={true}
+          draggable={true}
+          touchMove={true}
+        >
+          <div>
+            <img
+              className="banner-img-1"
+              src={image4}
+              alt="Grocery Store Banner"
+            />
+          </div>
+
+          <div>
+            <img
+              className="banner-img-1"
+              src={image5}
+              alt="Organic Food Banner"
+            />
+
+          </div>
+          <div>
+            <img
+              className="banner-img-1"
+              src={image6}
+              alt="Organic Food Banner"
+            />
+
+          </div>
+        </Slider>
+      </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+      {/* ================= HERO SECTION 2 ================= */}
+      <section className=" p-0 mb-4 ">
         <div className="container-fluid flash-banner">
           <img className="banner-img"
             src={image}
@@ -238,8 +303,6 @@ const Home = () => {
 
 
       </section>
-
-
 
       {/* ================= CATEGORIES ================= */}
       <section className="py-4 bg-light">
@@ -446,122 +509,122 @@ const Home = () => {
               </p>
             </div>
 
-       <div className="col-md-4 justify-content-center d-flex gap-3">
-  <a href="#" target="_blank" rel="noreferrer">
-    <img
-      src={googlePlay}
-      alt="Get it on Google Play"
-      className="app-store-badge"
-    />
-  </a>
+            <div className="col-md-4 justify-content-center d-flex gap-3">
+              <a href="#" target="_blank" rel="noreferrer">
+                <img
+                  src={googlePlay}
+                  alt="Get it on Google Play"
+                  className="app-store-badge"
+                />
+              </a>
 
-  <a href="#" target="_blank" rel="noreferrer">
-    <img
-      src={appStore}
-      alt="Download on the App Store"
-      className="app-store-badge"
-    />
-  </a>
-</div>
+              <a href="#" target="_blank" rel="noreferrer">
+                <img
+                  src={appStore}
+                  alt="Download on the App Store"
+                  className="app-store-badge"
+                />
+              </a>
+            </div>
           </div>
         </div>
       </section>
-{/* Why Shop With Us Section */}
-<section className="why-shop-section py-5">
-  <div className="container">
+      {/* Why Shop With Us Section */}
+      <section className="why-shop-section py-5">
+        <div className="container">
 
-    <div className="text-center mb-5">
-      <span className="text-danger fw-semibold">WHY CHOOSE US</span>
-      <h2 className="fw-bold mt-2">Shopping Made Simple</h2>
-      <p className="text-muted">
-        Everything you need for a smooth and enjoyable shopping experience.
-      </p>
-    </div>
-
-    <div className="row g-3">
-
-      {/* Card 1 */}
-      <div className="col-md-6 col-lg-3">
-        <div className="service-card text-center h-100">
-          <div className="service-icon">
-            <i className="bi bi-truck"></i>
+          <div className="text-center mb-5">
+            <span className="text-danger fw-semibold">WHY CHOOSE US</span>
+            <h2 className="fw-bold mt-2">Shopping Made Simple</h2>
+            <p className="text-muted">
+              Everything you need for a smooth and enjoyable shopping experience.
+            </p>
           </div>
 
-          <h5 className="fw-bold mt-4">Fast & Free Delivery</h5>
+          <div className="row g-3">
 
-          <p className="text-muted">
-            Get your favorite products delivered quickly and safely to your
-            doorstep.
-          </p>
+            {/* Card 1 */}
+            <div className="col-md-6 col-lg-3">
+              <div className="service-card text-center h-100">
+                <div className="service-icon">
+                  <i className="bi bi-truck"></i>
+                </div>
 
-          <div className="btn btn-dark">
-          Learn More
+                <h5 className="fw-bold mt-4">Fast & Free Delivery</h5>
+
+                <p className="text-muted">
+                  Get your favorite products delivered quickly and safely to your
+                  doorstep.
+                </p>
+
+                <div className="btn btn-dark">
+                  Learn More
+                </div>
+              </div>
+            </div>
+
+            {/* Card 2 */}
+            <div className="col-md-6 col-lg-3">
+              <div className="service-card text-center h-100">
+                <div className="service-icon">
+                  <i className="bi bi-shield-check"></i>
+                </div>
+
+                <h5 className="fw-bold mt-4">Secure Shopping</h5>
+
+                <p className="text-muted">
+                  Your personal information and payments are protected with secure
+                  technology.
+                </p>
+
+                <div className="btn btn-dark">
+                  Shop Securly
+                </div>
+              </div>
+            </div>
+
+            {/* Card 3 */}
+            <div className="col-md-6 col-lg-3">
+              <div className="service-card text-center h-100">
+                <div className="service-icon">
+                  <i className="bi bi-arrow-repeat"></i>
+                </div>
+
+                <h5 className="fw-bold mt-4">Easy Returns</h5>
+
+                <p className="text-muted">
+                  Changed your mind? Enjoy a simple and hassle-free return process.
+                </p>
+
+                <div className="btn btn-dark">
+                  View Policy
+                </div>
+              </div>
+            </div>
+
+            {/* Card 4 */}
+            <div className="col-md-6 col-lg-3">
+              <div className="service-card text-center h-100">
+                <div className="service-icon">
+                  <i className="bi bi-star"></i>
+                </div>
+
+                <h5 className="fw-bold mt-4">Quality Products</h5>
+
+                <p className="text-muted">
+                  Discover carefully selected products that meet our quality
+                  standards.
+                </p>
+
+                <div className="btn btn-dark">
+                  Explore Products
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
-      </div>
-
-      {/* Card 2 */}
-      <div className="col-md-6 col-lg-3">
-        <div className="service-card text-center h-100">
-          <div className="service-icon">
-            <i className="bi bi-shield-check"></i>
-          </div>
-
-          <h5 className="fw-bold mt-4">Secure Shopping</h5>
-
-          <p className="text-muted">
-            Your personal information and payments are protected with secure
-            technology.
-          </p>
-
-          <div className="btn btn-dark">
-           Shop Securly
-          </div>
-        </div>
-      </div>
-
-      {/* Card 3 */}
-      <div className="col-md-6 col-lg-3">
-        <div className="service-card text-center h-100">
-          <div className="service-icon">
-            <i className="bi bi-arrow-repeat"></i>
-          </div>
-
-          <h5 className="fw-bold mt-4">Easy Returns</h5>
-
-          <p className="text-muted">
-            Changed your mind? Enjoy a simple and hassle-free return process.
-          </p>
-
-         <div className="btn btn-dark">
-           View Policy
-          </div>
-        </div>
-      </div>
-
-      {/* Card 4 */}
-      <div className="col-md-6 col-lg-3">
-        <div className="service-card text-center h-100">
-          <div className="service-icon">
-            <i className="bi bi-star"></i>
-          </div>
-
-          <h5 className="fw-bold mt-4">Quality Products</h5>
-
-          <p className="text-muted">
-            Discover carefully selected products that meet our quality
-            standards.
-          </p>
-
-          <div className="btn btn-dark">
-            Explore Products
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
+      </section>
       {/* ================= CUSTOMER REVIEWS ================= */}
       <section className="py-5 bg-light">
         <div className="container">

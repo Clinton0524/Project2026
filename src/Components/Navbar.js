@@ -31,8 +31,8 @@ const Navbar = () => {
     arr.name.toLowerCase().includes(search.toLowerCase())
   );
   const handleMenuClose = () => {
-  setMenuOpen(false);
-};
+    setMenuOpen(false);
+  };
 
   return (
     <nav className="navbar navbar-expand-lg bg-white shadow-sm sticky-top py-2">
@@ -75,7 +75,10 @@ const Navbar = () => {
                   key={arr._id}
                   to={`/product/${arr._id}`}
                   className="text-decoration-none text-dark"
-                  onClick={() => setModal(false)}
+                  onClick={() => {
+                    setModal(false);
+                    setSearch("");
+                  }}
                 >
                   <div className="d-flex align-items-center gap-3 px-3 py-2 search-item">
                     <img
@@ -109,27 +112,27 @@ const Navbar = () => {
           </button>
           <ul className="navbar-nav ms-auto d-flex flex-row align-items-center gap-4">
             <li className="nav-item">
-              <Link className="nav-link fw-semibold" to="/"  onClick={handleMenuClose}>
-              
+              <Link className="nav-link fw-semibold" to="/" onClick={handleMenuClose}>
+
                 Home
               </Link>
             </li>
 
             <li className="nav-item">
-              <Link className="nav-link fw-semibold" to="/product"  onClick={handleMenuClose}>
+              <Link className="nav-link fw-semibold" to="/product" onClick={handleMenuClose}>
                 Products
               </Link>
             </li>
 
             <li className="nav-item">
-              <Link className="nav-link fw-semibold" to="/home"  onClick={handleMenuClose}>
+              <Link className="nav-link fw-semibold" to="/home" onClick={handleMenuClose}>
                 About
               </Link>
             </li>
 
             {/* CART */}
             <li className="nav-item position-relative">
-              <Link className="nav-link fw-semibold" to="/cart"  onClick={handleMenuClose}>
+              <Link className="nav-link fw-semibold" to="/cart" onClick={handleMenuClose}>
                 Cart
                 {cart.length > 0 && (
                   <span className="badge bg-dark ms-1">{cart.length}</span>
@@ -146,7 +149,7 @@ const Navbar = () => {
                   </span>
                 </li>
 
-                
+
                 <li className="nav-item">
                   <button
                     className="btn btn-sm btn-outline-dark rounded-pill px-3"
@@ -154,14 +157,14 @@ const Navbar = () => {
                   >
                     Logout
                   </button>
-                </li> 
-               
+                </li>
+
               </>
             ) : (
               <li className="nav-item">
                 <Link
                   className="btn btn-dark btn-sm rounded-pill px-3"
-                  to="/login"  onClick={handleMenuClose}
+                  to="/login" onClick={handleMenuClose}
                 >
                   Login
                 </Link>
