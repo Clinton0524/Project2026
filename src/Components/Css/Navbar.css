@@ -403,17 +403,12 @@
   top: 0;
   right: 0;
   left: auto;
-
   width: 280px;
   height: 100vh;
-
   background: #ffffff;
   padding: 20px;
-
   box-shadow: -5px 0 20px rgba(0, 0, 0, 0.15);
-
   z-index: 5000;
-
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -429,11 +424,8 @@
 .mobile-menu-close {
   display: block;
   margin-left: auto;
-  margin-bottom: 25px;
-
   background: none;
   border: none;
-
   font-size: 24px;
   cursor: pointer;
 }
@@ -444,20 +436,14 @@
 
 .nav-scroll {
   display: flex !important;
-
   flex-direction: column !important;
   align-items: flex-start !important;
   justify-content: flex-start !important;
-
   width: 100%;
-
   gap: 20px !important;
-
   padding: 10px 5px;
-
   overflow-x: hidden !important;
   overflow-y: visible !important;
-
   white-space: normal;
 }
 
@@ -469,9 +455,7 @@
 .nav-scroll .nav-link {
   display: block;
   width: 100%;
-
-  padding: 8px 5px;
-
+  padding: 9px 5px;
   font-size: 16px;
 }
 
