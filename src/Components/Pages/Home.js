@@ -18,8 +18,14 @@ const Home = () => {
   const { products, exclusiveProducts } = useSelector(
     (state) => state.products,
   );
-  const { categories, cart, addToCart, decrementQty, incrementQty } =
-    useContext(myContext);
+  const {
+    categories,
+    cart,
+    addToCart,
+    decrementQty,
+    incrementQty,
+   
+  } = useContext(myContext);
 
   /* ===== SLIDER SETTINGS ===== */
   const getSlidesToShow = () => {

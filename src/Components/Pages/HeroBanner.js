@@ -2,6 +2,9 @@ import React, { useContext, useState, useEffect } from "react";
 import image1 from '../Images/Orange Green and White Modern Grocery Store Opening Banner.png'
 import image2 from '../Images/Green and Yellow Modern Organic Food Market Banner.png'
 import image3 from '../Images/Green Yellow Modern Grocery Store Banner.png'
+import image4 from "../Images/Green Modern Avocado Presentation.png";
+import image5 from "../Images/Green Modern Bold Vegetable Grocery Presentation.png";
+import image6 from "../Images/Yellow Green Red Playful Fruits Presentation.png";
 import "../Css/Home.css";
 import Slider from "react-slick";
 
@@ -36,7 +39,7 @@ const HeroBanner = () => {
           <div>
             <img
               className="banner-img"
-              src={image1}
+              src={image4}
               alt="Grocery Store Banner"
             />
           </div>
@@ -44,7 +47,7 @@ const HeroBanner = () => {
           <div>
             <img
               className="banner-img"
-              src={image2}
+              src={image5}
               alt="Organic Food Banner"
             />
 
@@ -52,7 +55,7 @@ const HeroBanner = () => {
           <div>
             <img
               className="banner-img"
-              src={image3}
+              src={image6}
               alt="Organic Food Banner"
             />
 

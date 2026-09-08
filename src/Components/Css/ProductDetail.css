@@ -19,7 +19,7 @@
 
     .product-detail-button {
         font-size: 15px;
-        width: 100%;
+        width: 100%; 
     }
     .text{
         font-size: 12px;
@@ -27,4 +27,8 @@
     .text-1{
         font-size: 13px;
     }
+}
+@media (min-width: 768px) {
+.product-detail-img{width: 200px;}
+
 }
