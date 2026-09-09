@@ -5,7 +5,7 @@ import {auth} from '../Firebase/Firebase'
 import { signOut } from "firebase/auth";
 
 export const myContext = createContext();
-
+const API_URL = process.env.REACT_APP_API_URL;
 export const MyProvider = ({ children }) => {
   // --- STATES ---
   const [data, setData] = useState([]);
@@ -87,7 +87,7 @@ export const MyProvider = ({ children }) => {
   const fetchCategories = async () => {
     try {
       const res = await axios.get(
-        "https://newback-aold.onrender.com/api/categories"
+        `${API_URL}/api/categories`
       );
       setCategories(res.data.categories);
     } catch (err) {

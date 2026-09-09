@@ -1,9 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+const API_URL = process.env.REACT_APP_API_URL;
 export const fetchProducts = createAsyncThunk("get/products", async () => {
-  const response = await fetch(
-    `https://newback-aold.onrender.com/api/products`
-  );
+  const response = await fetch(`${API_URL}/api/products`);;
   if (!response.ok) {
     throw new Error("error while fetching products");
   } else {
@@ -12,9 +11,7 @@ export const fetchProducts = createAsyncThunk("get/products", async () => {
 });
 
 export const fetchExclusiveProducts = createAsyncThunk("get/exclusiveproducts", async () => {
-  const response = await fetch(
-    `https://newback-aold.onrender.com/api/products/exclusive`
-  );
+  const response = await fetch(`${API_URL}/api/products/exclusive`);;
   if (!response.ok) {
     throw new Error("error while fetching products");
   } else {
