@@ -148,10 +148,10 @@ const Navbar = () => {
               <li className="nav-item">
                 <Link
                   className="nav-link fw-semibold"
-                  to="/home"
+                  to="/orders"
                   onClick={handleMenuClose}
                 >
-                  About
+                  Orders
                 </Link>
               </li>
 

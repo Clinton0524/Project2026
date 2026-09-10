@@ -1,26 +1,26 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
+
 import { myContext } from "../Context/Context";
 import { useNavigate } from "react-router-dom";
 
-/* ================= LOCAL STORAGE HELPERS ================= */
+const getSavedAddresses = (userId) => {
+  try {
+    const data = JSON.parse(localStorage.getItem(`address_${userId}`));
 
-const getSavedAddresses = (uid) => {
-  const data = JSON.parse(localStorage.getItem(`address_${uid}`));
-  return Array.isArray(data) ? data : [];
+    return Array.isArray(data) ? data : [];
+  } catch (error) {
+    return [];
+  }
 };
 
-
-const saveAddresses = (uid, addresses) => {
-  localStorage.setItem(`address_${uid}`, JSON.stringify(addresses));
+const saveAddresses = (userId, addresses) => {
+  localStorage.setItem(`address_${userId}`, JSON.stringify(addresses));
 };
-
-/* ================= COMPONENT ================= */
 
 const Checkout = () => {
   const { cart, currentUser } = useContext(myContext);
-  const navigate = useNavigate();
 
-  /* ---------------- ADDRESS STATE ---------------- */
+  const navigate = useNavigate();
 
   const [address, setAddress] = useState({
     fullName: "",
@@ -32,33 +32,70 @@ const Checkout = () => {
 
   const [savedAddresses, setSavedAddresses] = useState([]);
 
-  /* ---------------- LOAD SAVED ADDRESSES ---------------- */
+  const [loading, setLoading] = useState(false);
+
+  // =====================================================
+  // LOAD ADDRESSES
+  // =====================================================
 
   useEffect(() => {
-    if (currentUser?.uid) {
-      setSavedAddresses(getSavedAddresses(currentUser.uid));
+    if (currentUser?.id) {
+      setSavedAddresses(getSavedAddresses(currentUser.id));
     }
   }, [currentUser]);
 
-  /* ---------------- CART TOTALS ---------------- */
+  // =====================================================
+  // PROTECT CHECKOUT
+  // =====================================================
+
+  useEffect(() => {
+    if (!currentUser) {
+      navigate("/login");
+    }
+  }, [currentUser, navigate]);
+
+  // =====================================================
+  // TOTAL
+  // =====================================================
 
   const cartTotal = cart.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
+    (total, item) => total + Number(item.price) * Number(item.quantity),
+    0,
   );
 
-  const tax = Math.round(cartTotal * 0.05);
-  const finalTotal = cartTotal + tax;
+  const tax = Number((cartTotal * 0.05).toFixed(2));
 
-  /* ---------------- HANDLERS ---------------- */
+  const finalTotal = Number((cartTotal + tax).toFixed(2));
+
+  // =====================================================
+  // ADDRESS CHANGE
+  // =====================================================
 
   const handleChange = (e) => {
-    setAddress({ ...address, [e.target.name]: e.target.value });
+    setAddress({
+      ...address,
+      [e.target.name]: e.target.value,
+    });
   };
+
+  // =====================================================
+  // SAVE ADDRESS
+  // =====================================================
 
   const handleSaveAddress = () => {
     if (!currentUser) {
       alert("Please login");
+      return;
+    }
+
+    if (
+      !address.fullName ||
+      !address.phone ||
+      !address.addressLine ||
+      !address.city ||
+      !address.pincode
+    ) {
+      alert("Please complete the address");
       return;
     }
 
@@ -68,64 +105,108 @@ const Checkout = () => {
     };
 
     const updated = [...savedAddresses, newAddress];
+
     setSavedAddresses(updated);
-    saveAddresses(currentUser.uid, updated);
+
+    saveAddresses(currentUser.id, updated);
 
     alert("Address saved");
   };
 
+  // =====================================================
+  // SELECT ADDRESS
+  // =====================================================
+
   const handleSelectAddress = (addr) => {
-    setAddress(addr);
+    setAddress({
+      fullName: addr.fullName,
+      phone: addr.phone,
+      addressLine: addr.addressLine,
+      city: addr.city,
+      pincode: addr.pincode,
+    });
   };
+
+  // =====================================================
+  // DELETE ADDRESS
+  // =====================================================
 
   const handleDeleteAddress = (id) => {
     const updated = savedAddresses.filter((addr) => addr.id !== id);
+
     setSavedAddresses(updated);
-    saveAddresses(currentUser.uid, updated);
+
+    saveAddresses(currentUser.id, updated);
   };
+
+  // =====================================================
+  // PLACE ORDER
+  // =====================================================
 
   const handlePlaceOrder = () => {
     if (!currentUser) {
-      alert("Please login");
+      navigate("/login");
       return;
     }
 
-    if (!address.addressLine) {
-      alert("Please select or enter an address");
+    if (!cart.length) {
+      alert("Your cart is empty");
+      navigate("/products");
       return;
     }
 
-    console.log("ORDER DATA:", {
-      user: currentUser.uid,
-      address,
-      cart,
-      total: finalTotal,
+    if (
+      !address.fullName ||
+      !address.phone ||
+      !address.addressLine ||
+      !address.city ||
+      !address.pincode
+    ) {
+      alert("Please complete your shipping address");
+      return;
+    }
+
+    navigate("/payment-mock", {
+      state: {
+        address,
+      },
     });
-
-    navigate("/payment-mock");
   };
 
-  /* ================= UI ================= */
+  // =====================================================
+  // UI
+  // =====================================================
+
+  if (!currentUser) {
+    return null;
+  }
 
   return (
-    <div className="container mt-4">
+    <div className="container mt-4 mb-5">
       <h4 className="mb-4">Checkout</h4>
 
       <div className="row">
-        {/* ================= LEFT SIDE ================= */}
+        {/* ============================================
+            LEFT
+        ============================================ */}
+
         <div className="col-md-8">
-          {/* USER INFO */}
+          {/* USER */}
+
           <div className="card mb-3 p-3">
             <h6>User Details</h6>
+
             <p className="mb-1">
-              <strong>Name:</strong> {currentUser?.displayName || "User"}
+              <strong>Name:</strong> {currentUser.name || "User"}
             </p>
+
             <p className="mb-0">
-              <strong>Email:</strong> {currentUser?.email}
+              <strong>Email:</strong> {currentUser.email}
             </p>
           </div>
 
           {/* SAVED ADDRESSES */}
+
           {savedAddresses.length > 0 && (
             <div className="card mb-3 p-3">
               <h6>Saved Addresses</h6>
@@ -136,13 +217,17 @@ const Checkout = () => {
                   className="border rounded p-2 mb-2 d-flex justify-content-between"
                 >
                   <div
-                    style={{ cursor: "pointer" }}
+                    style={{
+                      cursor: "pointer",
+                    }}
                     onClick={() => handleSelectAddress(addr)}
                   >
                     <strong>{addr.fullName}</strong>
+
                     <p className="mb-0">
                       {addr.addressLine}, {addr.city} - {addr.pincode}
                     </p>
+
                     <small>{addr.phone}</small>
                   </div>
 
@@ -157,7 +242,8 @@ const Checkout = () => {
             </div>
           )}
 
-          {/* ADDRESS FORM */}
+          {/* ADDRESS */}
+
           <div className="card p-3">
             <h6>Shipping Address</h6>
 
@@ -217,12 +303,14 @@ const Checkout = () => {
           </div>
         </div>
 
-        {/* ================= RIGHT SIDE ================= */}
+        {/* ============================================
+            RIGHT
+        ============================================ */}
+
         <div className="col-md-4">
           <div className="card p-3 shadow-sm">
             <h6 className="mb-3">Order Summary</h6>
 
-            {/* 🔹 CART ITEMS (NOT REMOVED) */}
             {cart.map((item) => (
               <div
                 key={item._id}
@@ -231,7 +319,8 @@ const Checkout = () => {
                 <span>
                   {item.name} × {item.quantity}
                 </span>
-                <span>{item.price * item.quantity} rs/-</span>
+
+                <span>₹{(item.price * item.quantity).toFixed(2)}</span>
               </div>
             ))}
 
@@ -239,24 +328,28 @@ const Checkout = () => {
 
             <div className="d-flex justify-content-between">
               <span>Subtotal</span>
-              <span>{cartTotal} rs/-</span>
+
+              <span>₹{cartTotal.toFixed(2)}</span>
             </div>
 
             <div className="d-flex justify-content-between">
               <span>Tax (5%)</span>
-              <span>{tax} rs/-</span>
+
+              <span>₹{tax.toFixed(2)}</span>
             </div>
 
             <hr />
 
             <div className="d-flex justify-content-between fw-bold">
               <span>Total</span>
-              <span>{finalTotal} rs/-</span>
+
+              <span>₹{finalTotal.toFixed(2)}</span>
             </div>
 
             <button
               className="btn btn-dark w-100 mt-3"
               onClick={handlePlaceOrder}
+              disabled={loading}
             >
               Place Order & Pay
             </button>

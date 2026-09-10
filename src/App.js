@@ -11,11 +11,13 @@ import ProductDetail from "./Components/Pages/ProductDetail";
 import Footer from "./Components/Footer";
 import Checkout from "./Components/Pages/Checkout";
 import PaymentMock from "./Components/Pages/PaymentMock";
-import OrderSuccess from "./Components/Pages/Order-success";
 import Store from "./Components/Redux/Store";
 import { Provider } from "react-redux";
 import CategoryProducts from "./Components/Pages/CategoryProducts";
 import ScrollToTop from "./Components/ScrollToTop";
+import Orders from "./Components/Pages/Orders";
+import OrderDetails from "./Components/Pages/OrderDetails";
+import OrderSuccess from "./Components/Pages/OrderSuccess";
 function App() {
   return (
     <Provider store={Store}>
@@ -26,7 +28,6 @@ function App() {
             <Navbar />
 
             <main className="content">
-                
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/cart" element={<Cart />} />
@@ -34,10 +35,12 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/product" element={<Products />} />
                 <Route path="/payment-mock" element={<PaymentMock />} />
-                <Route path="/orderSuccess" element={<OrderSuccess />} />
+                <Route path="/order-success" element={<OrderSuccess />} />
                 <Route path="/product/:id" element={<ProductDetail />} />
                 <Route path="/checkout" element={<Checkout />} />
-                 <Route path="/category/:catid" element={<CategoryProducts />} />
+                <Route path="/orders" element={<Orders />} />
+                <Route path="/category/:catid" element={<CategoryProducts />} />
+                <Route path="/orders/:orderId" element={<OrderDetails />} />
               </Routes>
             </main>
 
