@@ -1,7 +1,9 @@
 /* =====================================================
    MAIN NAVBAR
 ===================================================== */
-
+.logo-img{
+  width: 90px;
+}
 .navbar {
   background: #ffffff;
   z-index: 3000;
@@ -360,28 +362,21 @@
 
   .mobile-search-wrapper {
     display: flex;
-
     align-items: center;
-
     flex: 1;
-
     min-width: 0;
-
-    gap: 6px;
+    gap: 20px;
+    padding: 4px;
   }
 
   .search-container {
-    width: 100%;
-
+    width: 80%;
     min-width: 0;
   }
 
   .search-input {
     width: 100%;
-
-    height: 38px;
-
-    font-size: 16px !important;
+    font-size: 12px !important;
   }
 
   /* ---------------------------------------------
@@ -525,9 +520,7 @@
 
   .category-dropdown-btn {
     font-size: 13px;
-
     padding: 0;
-
     white-space: nowrap;
   }
 
@@ -540,23 +533,24 @@
     position: absolute;
     top: 100%;
     left: 10px;
-    min-width: 180px;
+    min-width: 145px!important;
     background: #ffffff;
     border-radius: 8px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-    padding: 8px 0;
+    padding: 1px 0;
     z-index: 99999;
   }
+  .cat-dropdown-img{
+    width: 20px;
+    height: 20px;
+  }
+  
 
   .category-dropdown-menu a {
     display: block;
-
-    padding: 8px 15px;
-
+    padding: 3px 15px;
     font-size: 13px;
-
     color: #222;
-
     text-decoration: none;
   }
 

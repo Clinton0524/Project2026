@@ -4,6 +4,7 @@ import "./Css/Navbar.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "./Redux/ProductSlice";
 import { myContext } from "./Context/Context";
+import Image from "../Components/Images/Pink and Blue Playful Kids Clothing Store Logo.png";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -45,14 +46,14 @@ const Navbar = () => {
           {/* LOGO */}
           <Link
             className="navbar-brand fw-bold fs-5"
-            to="/home"
+            to="/"
             onClick={() => {
               setSearch("");
               setModal(false);
               handleMenuClose();
             }}
           >
-            Entavo
+            <img className="logo-img" src={Image} />
           </Link>
 
           {/* ================= MOBILE SEARCH + HAMBURGER ================= */}
@@ -175,7 +176,7 @@ const Navbar = () => {
                   {/* USER */}
                   <li className="nav-item user-name">
                     <span className="text-muted">
-                      Hi, <strong>{currentUser.displayName}</strong>
+                      Hi, <strong>{currentUser.name}</strong>
                     </span>
                   </li>
 
@@ -226,35 +227,34 @@ const Navbar = () => {
               </button>
             </li>
 
+            {/* MEN */}
+            <li>
+              <Link to="/">Home</Link>
+            </li>
             {/* ALL PRODUCTS */}
             <li>
               <Link to="/product">All Products</Link>
             </li>
 
-            {/* MEN */}
-            <li>
-              <Link to="/product?category=men">Men</Link>
-            </li>
-
             {/* WOMEN */}
-            <li>
+            {/* <li>
               <Link to="/product?category=women">Women</Link>
-            </li>
+            </li> */}
 
             {/* ELECTRONICS */}
-            <li>
+            {/* <li>
               <Link to="/product?category=electronics">Electronics</Link>
-            </li>
+            </li> */}
 
             {/* SHOES */}
-            <li>
+            {/* <li>
               <Link to="/product?category=shoes">Shoes</Link>
-            </li>
+            </li> */}
 
             {/* ACCESSORIES */}
-            <li>
+            {/* <li>
               <Link to="/product?category=accessories">Accessories</Link>
-            </li>
+            </li> */}
 
             {/* OFFERS */}
             <li>
@@ -273,7 +273,10 @@ const Navbar = () => {
                     to={`/category/${arr._id}`}
                   >
                     {" "}
-                    <p>{arr.name}</p>
+                    <div className="d-flex gap-3">
+                      <img className="cat-dropdown-img" src={arr.image} />
+                      <p className="catdropdown-name">{arr.name}</p>
+                    </div>
                   </Link>
                 </div>
               ))}

@@ -46,8 +46,8 @@ const ProductDetail = () => {
   return (
     <div className="container product-detail-container mt-2">
       <Breadcrumbs customLabel={product.name} />
-      <div className="row mt-2">
-        <div className="col-6">
+      <div className="row mt-3">
+        <div className="col-5">
           <div className="">
             <img
               className="mx-auto product-detail-img"
@@ -57,13 +57,16 @@ const ProductDetail = () => {
           </div>
         </div>
 
-        <div className="col-6 mt-2 text-start">
-          <h5>{product.name}</h5>
-          <p className="mb-0">{product.weight}</p>
+        <div className="col-7 mt-2 text-start">
+          <h5 className="product-detail-name">{product.name}</h5>
+          <p className="mb-0 product-detail-weight">Quantity: {product.weight}</p>
+          <p className="mb-0 product-detail-weight">Category: {product?.category?.name}</p>
+          <p className="mb-0 product-detail-weight">Description: {product.description}</p>
+
           <p className="product-detail-price">${product.price}.00</p>
           {!cartItems ? (
             <button
-              className="btn btn-dark mt-2 p-1 product-detail-button "
+              className="btn btn-dark mt-0 p-1 product-detail-button "
               onClick={() => addToCart(product)}
             >
               Add To Cart
@@ -91,7 +94,7 @@ const ProductDetail = () => {
         </div>
       </div>
 
-      <div className="row mt-5">
+      <div className="row mt-3">
         <div className="col col-md-8 text-start product-description">
           <h6>Description</h6>
           <p className="mt-3 text-muted">

@@ -8,35 +8,52 @@ const Breadcrumbs = ({ customLabel }) => {
     .filter((x) => x);
 
   return (
-    <nav aria-label="breadcrumb">
-      <ol className="breadcrumb">
-        <li className="breadcrumb-item">
-          <Link className="text-decoration-none breadcrumbs" to="/">Home</Link>
+   <nav aria-label="breadcrumb">
+  <ol className="breadcrumb">
+    <li className="breadcrumb-item breadcrumb-text">
+      <Link
+        className="text-decoration-none breadcrumbs"
+        to="/"
+      >
+        Home
+      </Link>
+    </li>
+
+    {pathnames.map((name, index) => {
+      const routeTo =
+        "/" + pathnames.slice(0, index + 1).join("/");
+
+      const isLast = index === pathnames.length - 1;
+
+      const label =
+        isLast && customLabel
+          ? customLabel
+          : decodeURIComponent(name);
+
+      return isLast ? (
+        <li
+          key={index}
+          className="breadcrumb-item active breadcrumb-text"
+          aria-current="page"
+        >
+          {label}
         </li>
-
-        {pathnames.map((name, index) => {
-          const routeTo = "/" + pathnames.slice(0, index + 1).join("/");
-          const isLast = index === pathnames.length - 1;
-
-          const label =
-            isLast && customLabel ? customLabel : decodeURIComponent(name);
-
-          return isLast ? (
-            <li
-              key={index}
-              className="breadcrumb-item active breadcrumbs"
-              aria-current="page"
-            >
-              {label}
-            </li>
-          ) : (
-            <li key={index} className="breadcrumb-item ">
-              <Link className="text-decoration-none" to={routeTo}>{decodeURIComponent(name)}</Link>
-            </li>
-          );
-        })}
-      </ol>
-    </nav>
+      ) : (
+        <li
+          key={index}
+          className="breadcrumb-item breadcrumb-text"
+        >
+          <Link
+            className="text-decoration-none"
+            to={routeTo}
+          >
+            {decodeURIComponent(name)}
+          </Link>
+        </li>
+      );
+    })}
+  </ol>
+</nav>
   );
 };
 

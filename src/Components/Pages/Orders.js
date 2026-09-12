@@ -1,8 +1,4 @@
-import React, {
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { myContext } from "../Context/Context";
 import { useNavigate } from "react-router-dom";
@@ -11,23 +7,17 @@ import api from "../Api/Api";
 import "../Css/Orders.css";
 
 const Orders = () => {
-  const {
-    currentUser,
-  } = useContext(myContext);
+  const { currentUser } = useContext(myContext);
 
   const navigate = useNavigate();
 
-  const [orders, setOrders] =
-    useState([]);
+  const [orders, setOrders] = useState([]);
 
-  const [loading, setLoading] =
-    useState(true);
+  const [loading, setLoading] = useState(true);
 
-  const [error, setError] =
-    useState("");
+  const [error, setError] = useState("");
 
-  const [cancelling, setCancelling] =
-    useState(null);
+  const [cancelling, setCancelling] = useState(null);
 
   // =====================================================
   // FETCH ORDERS
@@ -47,41 +37,25 @@ const Orders = () => {
       setLoading(true);
       setError("");
 
-      const response = await api.get(
-        `/orders/${currentUser.id}`
-      );
+      const response = await api.get(`/orders/${currentUser.id}`);
 
       if (response.data.success) {
-        setOrders(
-          response.data.orders || []
-        );
+        setOrders(response.data.orders || []);
       }
     } catch (error) {
-      console.error(
-        "Fetch orders error:",
-        error
-      );
+      console.error("Fetch orders error:", error);
 
-      if (
-        error.response?.status === 401
-      ) {
-        localStorage.removeItem(
-          "token"
-        );
+      if (error.response?.status === 401) {
+        localStorage.removeItem("token");
 
-        localStorage.removeItem(
-          "user"
-        );
+        localStorage.removeItem("user");
 
         navigate("/login");
 
         return;
       }
 
-      setError(
-        error.response?.data?.message ||
-          "Failed to load your orders"
-      );
+      setError(error.response?.data?.message || "Failed to load your orders");
     } finally {
       setLoading(false);
     }
@@ -91,13 +65,10 @@ const Orders = () => {
   // CANCEL
   // =====================================================
 
-  const handleCancel = async (
-    orderId
-  ) => {
-    const confirmCancel =
-      window.confirm(
-        "Are you sure you want to cancel this order?"
-      );
+  const handleCancel = async (orderId) => {
+    const confirmCancel = window.confirm(
+      "Are you sure you want to cancel this order?",
+    );
 
     if (!confirmCancel) {
       return;
@@ -106,32 +77,19 @@ const Orders = () => {
     try {
       setCancelling(orderId);
 
-      const response =
-        await api.put(
-          `/orders/cancel/${orderId}`
-        );
+      const response = await api.put(`/orders/cancel/${orderId}`);
 
       if (response.data.success) {
-        setOrders(
-          (previousOrders) =>
-            previousOrders.map(
-              (order) =>
-                order._id === orderId
-                  ? response.data.order
-                  : order
-            )
+        setOrders((previousOrders) =>
+          previousOrders.map((order) =>
+            order._id === orderId ? response.data.order : order,
+          ),
         );
       }
     } catch (error) {
-      console.error(
-        "Cancel order error:",
-        error
-      );
+      console.error("Cancel order error:", error);
 
-      alert(
-        error.response?.data?.message ||
-          "Failed to cancel order"
-      );
+      alert(error.response?.data?.message || "Failed to cancel order");
     } finally {
       setCancelling(null);
     }
@@ -141,9 +99,7 @@ const Orders = () => {
   // STATUS CLASS
   // =====================================================
 
-  const getStatusClass = (
-    status
-  ) => {
+  const getStatusClass = (status) => {
     switch (status) {
       case "Delivered":
         return "status-delivered";
@@ -175,14 +131,10 @@ const Orders = () => {
     return (
       <div className="orders-page">
         <div className="orders-error">
-          <h3>
-            Please login
-          </h3>
+          <h3>Please login</h3>
 
           <button
-            onClick={() =>
-              navigate("/login")
-            }
+            onClick={() => navigate("/login")}
             className="orders-login-btn"
           >
             Login
@@ -200,13 +152,9 @@ const Orders = () => {
     return (
       <div className="orders-page">
         <div className="orders-loading">
-
           <div className="spinner-border" />
 
-          <p>
-            Loading your orders...
-          </p>
-
+          <p>Loading your orders...</p>
         </div>
       </div>
     );
@@ -219,26 +167,15 @@ const Orders = () => {
   if (error) {
     return (
       <div className="orders-page">
-
         <div className="orders-error">
+          <h3>Unable to load orders</h3>
 
-          <h3>
-            Unable to load orders
-          </h3>
+          <p>{error}</p>
 
-          <p>
-            {error}
-          </p>
-
-          <button
-            onClick={fetchOrders}
-            className="orders-login-btn"
-          >
+          <button onClick={fetchOrders} className="orders-login-btn">
             Try Again
           </button>
-
         </div>
-
       </div>
     );
   }
@@ -249,243 +186,129 @@ const Orders = () => {
 
   return (
     <div className="orders-page">
-
       <div className="orders-container">
-
         <div className="orders-header">
-
           <div>
-            <h1>
-              My Orders
-            </h1>
+            <div className="orders-title">
+              <h1>My Orders</h1>
 
-            <p>
-              Track and manage your purchases
-            </p>
+              <div className="orders-count">
+                {orders.length} {orders.length === 1 ? "Order" : "Orders"}
+              </div>
+            </div>
+
+            <p>Track and manage your purchases</p>
           </div>
-
-          <div className="orders-count">
-            {orders.length}{" "}
-            {orders.length === 1
-              ? "Order"
-              : "Orders"}
-          </div>
-
         </div>
 
         {orders.length === 0 ? (
-
           <div className="empty-orders">
+            <div className="empty-orders-icon">🛒</div>
 
-            <div className="empty-orders-icon">
-              🛒
-            </div>
+            <h2>No orders yet</h2>
 
-            <h2>
-              No orders yet
-            </h2>
+            <p>You haven't placed any orders yet.</p>
 
-            <p>
-              You haven't placed any
-              orders yet.
-            </p>
-
-            <button
-              onClick={() =>
-                navigate("/products")
-              }
-            >
+            <button onClick={() => navigate("/products")}>
               Start Shopping
             </button>
-
           </div>
-
         ) : (
-
           <div className="orders-list">
-
             {orders.map((order) => (
-
-              <div
-                className="order-card"
-                key={order._id}
-              >
-
+              <div className="order-card" key={order._id}>
                 <div className="order-card-header">
-
-                  <div>
-
-                    <span className="order-label">
-                      ORDER ID
+                  <div className="d-flex ">
+                    <span className="order-label">ORDER ID</span>
+                    <span className="order-id mx-2">
+                      #{order._id.slice(-8).toUpperCase()}
                     </span>
-
-                    <strong>
-                      #
-                      {order._id
-                        .slice(-8)
-                        .toUpperCase()}
-                    </strong>
-
                   </div>
 
                   <div className="order-date">
-                    {new Date(
-                      order.createdAt
-                    ).toLocaleDateString(
-                      "en-IN",
-                      {
-                        day: "2-digit",
-                        month: "short",
-                        year: "numeric",
-                      }
-                    )}
+                    {new Date(order.createdAt).toLocaleDateString("en-IN", {
+                      day: "2-digit",
+                      month: "short",
+                      year: "numeric",
+                    })}
                   </div>
-
                 </div>
 
                 <div className="order-products">
+                  {order.items.map((item, index) => {
+                    const product = item.productId;
 
-                  {order.items.map(
-                    (item, index) => {
+                    return (
+                      <div
+                        className="order-product"
+                        key={product?._id || index}
+                      >
+                        <img
+                          src={product?.imageUrl || "/placeholder.png"}
+                          alt={product?.name || "Product"}
+                        />
 
-                      const product =
-                        item.productId;
+                        <div className="order-product-info">
+                          <h4>{product?.name || "Product unavailable"}</h4>
 
-                      return (
-                        <div
-                          className="order-product"
-                          key={
-                            product?._id ||
-                            index
-                          }
-                        >
+                          <p>Qty: {item.quantity}</p>
 
-                          <img
-                            src={
-                              product?.imageUrl ||
-                              "/placeholder.png"
-                            }
-                            alt={
-                              product?.name ||
-                              "Product"
-                            }
-                          />
-
-                          <div className="order-product-info">
-
-                            <h4>
-                              {product?.name ||
-                                "Product unavailable"}
-                            </h4>
-
-                            <p>
-                              Qty:{" "}
-                              {item.quantity}
-                            </p>
-
-                            <span>
-                              ₹
-                              {Number(
-                                item.price
-                              ).toFixed(2)}
-                            </span>
-
-                          </div>
-
+                          <span>₹{Number(item.price).toFixed(2)}</span>
                         </div>
-                      );
-                    }
-                  )}
-
+                      </div>
+                    );
+                  })}
                 </div>
 
                 <div className="order-footer">
-
                   <div className="order-summary">
-
                     <div>
-                      <span>
-                        Payment
-                      </span>
+                      <span>Payment</span>
 
-                      <strong>
-                        {order.paymentMethod}
-                      </strong>
+                      <strong>{order.paymentMethod}</strong>
                     </div>
 
                     <div>
-                      <span>
-                        Total
-                      </span>
+                      <span>Total</span>
 
-                      <strong>
-                        ₹
-                        {Number(
-                          order.totalAmount
-                        ).toFixed(2)}
-                      </strong>
+                      <strong>₹{Number(order.totalAmount).toFixed(2)}</strong>
                     </div>
-
                   </div>
 
                   <div className="order-status-section">
-
                     <span
-                      className={`order-status ${getStatusClass(
-                        order.status
-                      )}`}
+                      className={`order-status ${getStatusClass(order.status)}`}
                     >
                       {order.status}
                     </span>
 
                     <div className="order-actions">
-
                       <button
                         className="view-order-btn"
-                        onClick={() =>
-                          navigate(
-                            `/orders/${order._id}`
-                          )
-                        }
+                        onClick={() => navigate(`/orders/${order._id}`)}
                       >
                         View Details
                       </button>
 
-                      {order.status ===
-                        "Pending" && (
+                      {order.status === "Pending" && (
                         <button
                           className="cancel-order-btn"
-                          disabled={
-                            cancelling ===
-                            order._id
-                          }
-                          onClick={() =>
-                            handleCancel(
-                              order._id
-                            )
-                          }
+                          disabled={cancelling === order._id}
+                          onClick={() => handleCancel(order._id)}
                         >
-                          {cancelling ===
-                          order._id
+                          {cancelling === order._id
                             ? "Cancelling..."
                             : "Cancel Order"}
                         </button>
                       )}
-
                     </div>
-
                   </div>
-
                 </div>
-
               </div>
             ))}
-
           </div>
         )}
-
       </div>
-
     </div>
   );
 };

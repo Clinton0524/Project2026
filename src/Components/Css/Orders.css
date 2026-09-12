@@ -449,18 +449,35 @@
     padding: 18px 10px;
   }
 
+  .orders-title {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .orders-title h1 {
+    margin: 0;
+  }
+
+  .orders-count {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 20px;
+    background-color: #f1f1f1;
+  }
   .orders-header {
     flex-direction: column;
-    gap: 15px;
+    gap: 5px;
     margin-bottom: 20px;
   }
 
   .orders-header h1 {
-    font-size: 24px;
+    font-size: 20px;
   }
 
   .orders-header p {
-    font-size: 13px;
+    font-size: 11px;
   }
 
   .orders-count {
@@ -481,7 +498,7 @@
   }
 
   .order-product {
-    gap: 10px;
+    gap: 15px;
   }
 
   .order-product img {
@@ -517,6 +534,10 @@
 
   .order-status {
     width: 100%;
+  }
+  .order-id {
+    font-size: 11px;
+    font-weight: 500;
   }
 
   .order-actions {

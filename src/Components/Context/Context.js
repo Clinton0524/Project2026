@@ -89,7 +89,7 @@ export const MyProvider = ({ children }) => {
   const fetchCategories = async () => {
     try {
       const response = await axios.get(
-        `${API_URL}/api/categories`
+        `${API_URL}/api/categories?limit=50`
       );
 
       setCategories(response.data.categories || []);

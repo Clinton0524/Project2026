@@ -1,15 +1,14 @@
-.breadcrumb {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0;
+.breadcrumb-text {
+  font-size: 10px !important;
+  font-weight: 400;
 }
 
-.breadcrumb-item {
-  display: flex;
-  align-items: center;
+.breadcrumb-text a {
+  font-size: 10px !important;
+  font-weight: 400;
 }
 
-.breadcrumbs {
-  color: black;
-  font-size: 12px;
+.breadcrumb-text.active {
+  font-size: 10px !important;
+  font-weight: 400;
 }

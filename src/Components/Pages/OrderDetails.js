@@ -11,6 +11,7 @@ import {
 
 import { myContext } from "../Context/Context";
 import api from "../Api/Api";
+import "../Css/OrderDetails.css";
 
 const STATUS_LIST = [
   "Pending",
@@ -23,26 +24,16 @@ const STATUS_LIST = [
 ];
 
 const OrderDetails = () => {
-  const { orderId } =
-    useParams();
+  const { orderId } = useParams();
 
-  const { currentUser } =
-    useContext(myContext);
+  const { currentUser } = useContext(myContext);
 
-  const navigate =
-    useNavigate();
+  const navigate = useNavigate();
 
-  const [order, setOrder] =
-    useState(null);
-
-  const [loading, setLoading] =
-    useState(true);
-
-  const [error, setError] =
-    useState("");
-
-  const [cancelling, setCancelling] =
-    useState(false);
+  const [order, setOrder] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [cancelling, setCancelling] = useState(false);
 
   // =====================================================
   // FETCH ORDER
@@ -55,25 +46,19 @@ const OrderDetails = () => {
     }
 
     fetchOrder();
-  }, [
-    currentUser,
-    orderId,
-  ]);
+  }, [currentUser, orderId]);
 
   const fetchOrder = async () => {
     try {
       setLoading(true);
       setError("");
 
-      const response =
-        await api.get(
-          `/orders/order/${orderId}`
-        );
+      const response = await api.get(
+        `/orders/order/${orderId}`
+      );
 
       if (response.data.success) {
-        setOrder(
-          response.data.order
-        );
+        setOrder(response.data.order);
       }
     } catch (error) {
       console.error(
@@ -91,7 +76,7 @@ const OrderDetails = () => {
   };
 
   // =====================================================
-  // CANCEL
+  // CANCEL ORDER
   // =====================================================
 
   const handleCancel = async () => {
@@ -106,15 +91,12 @@ const OrderDetails = () => {
     try {
       setCancelling(true);
 
-      const response =
-        await api.put(
-          `/orders/cancel/${orderId}`
-        );
+      const response = await api.put(
+        `/orders/cancel/${orderId}`
+      );
 
       if (response.data.success) {
-        setOrder(
-          response.data.order
-        );
+        setOrder(response.data.order);
       }
     } catch (error) {
       alert(
@@ -132,8 +114,9 @@ const OrderDetails = () => {
 
   if (loading) {
     return (
-      <div className="container mt-5 text-center">
-        <div className="spinner-border" />
+      <div className="container order-loading">
+        <div className="spinner-border text-success" />
+
         <p className="mt-3">
           Loading order...
         </p>
@@ -150,15 +133,12 @@ const OrderDetails = () => {
       <div className="container mt-5 text-center">
 
         <h4>
-          {error ||
-            "Order not found"}
+          {error || "Order not found"}
         </h4>
 
         <button
           className="btn btn-dark mt-3"
-          onClick={() =>
-            navigate("/orders")
-          }
+          onClick={() => navigate("/orders")}
         >
           Back to Orders
         </button>
@@ -173,14 +153,17 @@ const OrderDetails = () => {
 
   const completedStatuses =
     order.statusHistory?.map(
-      (history) =>
-        history.status
+      (history) => history.status
     ) || [];
 
   return (
-    <div className="container mt-4 mb-5">
+    <div className="container mt-4 mb-5 order-details-page">
 
-      <div className="d-flex justify-content-between align-items-center mb-4">
+      {/* =================================================
+          HEADER
+      ================================================= */}
+
+      <div className="d-flex justify-content-between align-items-center order-page-header">
 
         <div>
           <h3>
@@ -197,16 +180,17 @@ const OrderDetails = () => {
 
         <button
           className="btn btn-outline-dark"
-          onClick={() =>
-            navigate("/orders")
-          }
+          onClick={() => navigate("/orders")}
         >
           Back to Orders
         </button>
 
       </div>
 
-      {/* STATUS */}
+
+      {/* =================================================
+          ORDER STATUS
+      ================================================= */}
 
       <div className="card p-4 mb-4">
 
@@ -214,7 +198,7 @@ const OrderDetails = () => {
           Order Status
         </h5>
 
-        <div className="mt-4">
+        <div className="order-status-list mt-4">
 
           {STATUS_LIST.map(
             (status, index) => {
@@ -224,46 +208,51 @@ const OrderDetails = () => {
                   status
                 );
 
+              const isLast =
+                index ===
+                STATUS_LIST.length - 1;
+
               return (
                 <div
                   key={status}
-                  className="d-flex align-items-start mb-3"
+                  className={`order-status-item ${
+                    completed
+                      ? "status-completed"
+                      : ""
+                  } ${
+                    isLast
+                      ? "status-last"
+                      : ""
+                  }`}
                 >
 
+                  {/* STATUS CIRCLE */}
+
                   <div
-                    className={`rounded-circle border ${
+                    className={`order-status-circle ${
                       completed
-                        ? "bg-success text-white"
-                        : "bg-light"
+                        ? "completed"
+                        : "pending"
                     }`}
-                    style={{
-                      width: "32px",
-                      height: "32px",
-                      display: "flex",
-                      alignItems:
-                        "center",
-                      justifyContent:
-                        "center",
-                      flexShrink: 0,
-                    }}
                   >
                     {completed
                       ? "✓"
                       : index + 1}
                   </div>
 
-                  <div className="ms-3">
+
+                  {/* STATUS TEXT */}
+
+                  <div className="order-status-content">
 
                     <strong>
                       {status}
                     </strong>
 
                     {completed && (
-                      <div>
-                        <small className="text-muted">
-                          Completed
-                        </small>
-                      </div>
+                      <small>
+                        Completed
+                      </small>
                     )}
 
                   </div>
@@ -277,7 +266,10 @@ const OrderDetails = () => {
 
       </div>
 
-      {/* PRODUCTS */}
+
+      {/* =================================================
+          PRODUCTS
+      ================================================= */}
 
       <div className="card p-4 mb-4">
 
@@ -297,10 +289,11 @@ const OrderDetails = () => {
                   product?._id ||
                   index
                 }
-                className="d-flex align-items-center border-bottom py-3"
+                className="order-product"
               >
 
                 <img
+                  className="order-product-image"
                   src={
                     product?.imageUrl ||
                     "/placeholder.png"
@@ -309,28 +302,23 @@ const OrderDetails = () => {
                     product?.name ||
                     "Product"
                   }
-                  style={{
-                    width: "80px",
-                    height: "80px",
-                    objectFit: "cover",
-                  }}
                 />
 
-                <div className="ms-3 flex-grow-1">
+                <div className="order-product-info">
 
-                  <h6>
+                  <h6 className="order-product-name">
                     {product?.name ||
                       "Product unavailable"}
                   </h6>
 
-                  <p className="mb-0">
+                  <p className="order-product-quantity">
                     Quantity:{" "}
                     {item.quantity}
                   </p>
 
                 </div>
 
-                <strong>
+                <strong className="order-product-price">
                   ₹
                   {(
                     item.price *
@@ -345,7 +333,10 @@ const OrderDetails = () => {
 
       </div>
 
-      {/* ADDRESS */}
+
+      {/* =================================================
+          SHIPPING ADDRESS
+      ================================================= */}
 
       <div className="card p-4 mb-4">
 
@@ -353,29 +344,51 @@ const OrderDetails = () => {
           Shipping Address
         </h5>
 
-        <p className="mb-1">
-          <strong>
-            {order.shippingAddress?.fullName}
-          </strong>
-        </p>
+        <div className="order-address">
 
-        <p className="mb-1">
-          {order.shippingAddress?.addressLine}
-        </p>
+          <p className="mb-1">
+            <strong>
+              {
+                order.shippingAddress
+                  ?.fullName
+              }
+            </strong>
+          </p>
 
-        <p className="mb-1">
-          {order.shippingAddress?.city} -{" "}
-          {order.shippingAddress?.pincode}
-        </p>
+          <p className="mb-1">
+            {
+              order.shippingAddress
+                ?.addressLine
+            }
+          </p>
 
-        <p className="mb-0">
-          Phone:{" "}
-          {order.shippingAddress?.phone}
-        </p>
+          <p className="mb-1">
+            {
+              order.shippingAddress?.city
+            }{" "}
+            -{" "}
+            {
+              order.shippingAddress
+                ?.pincode
+            }
+          </p>
+
+          <p className="mb-0">
+            Phone:{" "}
+            {
+              order.shippingAddress
+                ?.phone
+            }
+          </p>
+
+        </div>
 
       </div>
 
-      {/* PAYMENT */}
+
+      {/* =================================================
+          PAYMENT
+      ================================================= */}
 
       <div className="card p-4 mb-4">
 
@@ -383,34 +396,53 @@ const OrderDetails = () => {
           Payment
         </h5>
 
-        <p>
-          Method:{" "}
-          <strong>
-            {order.paymentMethod}
-          </strong>
-        </p>
+        <div className="order-payment">
 
-        <p>
-          Payment Status:{" "}
-          <strong>
-            {order.paymentStatus}
-          </strong>
-        </p>
+          <p>
+            <span>
+              Method
+            </span>
 
-        {order.paymentId && (
-          <p className="mb-0">
-            Payment ID:{" "}
-            {order.paymentId}
+            <strong>
+              {order.paymentMethod}
+            </strong>
           </p>
-        )}
+
+          <p>
+            <span>
+              Payment Status
+            </span>
+
+            <strong>
+              {order.paymentStatus}
+            </strong>
+          </p>
+
+          {order.paymentId && (
+            <p className="mb-0">
+              <span>
+                Payment ID
+              </span>
+
+              <strong>
+                {order.paymentId}
+              </strong>
+            </p>
+          )}
+
+        </div>
 
       </div>
 
-      {/* TOTAL */}
+
+      {/* =================================================
+          TOTAL
+      ================================================= */}
 
       <div className="card p-4">
 
-        <div className="d-flex justify-content-between">
+        <div className="order-total-row">
+
           <span>
             Subtotal
           </span>
@@ -421,9 +453,12 @@ const OrderDetails = () => {
               order.subtotal
             ).toFixed(2)}
           </span>
+
         </div>
 
-        <div className="d-flex justify-content-between mt-2">
+
+        <div className="order-total-row">
+
           <span>
             Tax
           </span>
@@ -434,11 +469,15 @@ const OrderDetails = () => {
               order.tax
             ).toFixed(2)}
           </span>
+
         </div>
+
 
         <hr />
 
-        <div className="d-flex justify-content-between fw-bold">
+
+        <div className="order-total-final">
+
           <span>
             Total
           </span>
@@ -449,12 +488,17 @@ const OrderDetails = () => {
               order.totalAmount
             ).toFixed(2)}
           </span>
+
         </div>
+
+
+        {/* CANCEL */}
 
         {order.status ===
           "Pending" && (
+
           <button
-            className="btn btn-outline-danger mt-4"
+            className="btn btn-outline-danger order-cancel-btn mt-4"
             onClick={handleCancel}
             disabled={cancelling}
           >
@@ -462,6 +506,7 @@ const OrderDetails = () => {
               ? "Cancelling..."
               : "Cancel Order"}
           </button>
+
         )}
 
       </div>
