@@ -1,7 +1,51 @@
 /* =====================================================
    MAIN NAVBAR
 ===================================================== */
-.logo-img{
+
+/* =====================================================
+   DESKTOP NAVIGATION
+===================================================== */
+
+.desktop-menu {
+  margin-left: auto;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 20px;
+}
+
+.desktop-nav-link {
+  color: #222;
+
+  text-decoration: none;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  white-space: nowrap;
+
+  transition: color 0.2s ease;
+}
+
+.desktop-nav-link:hover {
+  color: #777;
+}
+
+.desktop-user-name {
+  color: #777;
+
+  font-size: 13px;
+
+  white-space: nowrap;
+}
+
+.desktop-user-name strong {
+  color: #222;
+}
+.logo-img {
   width: 90px;
 }
 .navbar {
@@ -106,6 +150,7 @@
 
 .mobile-menu {
   margin-left: auto;
+  display: none;
 }
 
 .nav-scroll {
@@ -326,7 +371,9 @@
   /* ---------------------------------------------
      MAIN NAVBAR
   --------------------------------------------- */
-
+  .desktop-menu {
+    display: none;
+  }
   .navbar {
     position: sticky;
     top: 0;
@@ -388,81 +435,554 @@
 
     flex-shrink: 0;
   }
-/* =========================================
+  /* =========================================
    MOBILE SIDE MENU
 ========================================= */
 
-.mobile-menu {
-  display: none;
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: auto;
-  width: 280px;
-  height: 100vh;
-  background: #ffffff;
-  padding: 20px;
-  box-shadow: -5px 0 20px rgba(0, 0, 0, 0.15);
-  z-index: 5000;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
+  /* =========================================
+   MOBILE SIDE MENU
+========================================= */
 
-.mobile-menu.show {
-  display: block;
-}
+  .mobile-menu {
+    display: none;
+    position: fixed;
 
-/* =========================================
+    top: 0;
+    right: 0;
+
+    width: 320px;
+    max-width: 88vw;
+    height: 100vh;
+
+    background: #ffffff;
+
+    padding: 0;
+
+    box-shadow: -8px 0 30px rgba(0, 0, 0, 0.18);
+
+    z-index: 5000;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    animation: mobileMenuSlide 0.25s ease;
+  }
+
+  .mobile-menu.show {
+    display: block;
+  }
+
+  @keyframes mobileMenuSlide {
+    from {
+      transform: translateX(100%);
+      opacity: 0.7;
+    }
+
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  /* =========================================
+   MENU HEADER
+========================================= */
+
+  .mobile-menu-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 18px 18px 16px;
+
+    border-bottom: 1px solid #eeeeee;
+
+    background: #ffffff;
+  }
+
+  .mobile-menu-brand {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+  }
+
+  .mobile-menu-brand img {
+    width: 55px;
+    height: 40px;
+
+    object-fit: contain;
+  }
+
+  .mobile-menu-brand h5 {
+    margin: 0;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    color: #222;
+  }
+
+  .mobile-menu-brand p {
+    margin: 2px 0 0;
+
+    font-size: 12px;
+
+    color: #777;
+  }
+
+  /* =========================================
    CLOSE BUTTON
 ========================================= */
 
-.mobile-menu-close {
-  display: block;
-  margin-left: auto;
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-}
+  .mobile-menu-close {
+    display: flex;
 
-/* =========================================
-   MOBILE NAVIGATION - VERTICAL
+    align-items: center;
+    justify-content: center;
+
+    width: 36px;
+    height: 36px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #f5f5f5;
+
+    color: #222;
+
+    font-size: 19px;
+
+    cursor: pointer;
+
+    flex-shrink: 0;
+
+    transition: 0.2s;
+  }
+
+  .mobile-menu-close:hover {
+    background: #eeeeee;
+  }
+
+  /* =========================================
+   USER CARD
 ========================================= */
 
-.nav-scroll {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: flex-start !important;
-  justify-content: flex-start !important;
-  width: 100%;
-  gap: 20px !important;
-  padding: 10px 5px;
-  overflow-x: hidden !important;
-  overflow-y: visible !important;
-  white-space: normal;
-}
+  .mobile-user-card {
+    display: flex;
 
-.nav-scroll .nav-item {
-  width: 100%;
-  flex-shrink: 0;
-}
+    align-items: center;
 
-.nav-scroll .nav-link {
-  display: block;
-  width: 100%;
-  padding: 9px 5px;
-  font-size: 16px;
-}
+    gap: 12px;
 
-.user-name {
-  width: 100%;
-}
+    margin: 16px;
 
-/* Login / Logout buttons */
+    padding: 13px;
 
-.nav-scroll .btn {
-  margin-top: 5px;
-}
+    border-radius: 12px;
+
+    background: #f7f7f7;
+  }
+
+  .mobile-user-icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #222;
+
+    color: white;
+
+    font-size: 20px;
+
+    flex-shrink: 0;
+  }
+
+  .mobile-user-info {
+    display: flex;
+
+    flex-direction: column;
+  }
+
+  .mobile-user-info span {
+    font-size: 11px;
+
+    color: #777;
+  }
+
+  .mobile-user-info strong {
+    font-size: 14px;
+
+    color: #222;
+  }
+
+  /* =========================================
+   LOGIN CARD
+========================================= */
+
+  .mobile-login-card {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin: 16px;
+
+    padding: 14px;
+
+    border-radius: 12px;
+
+    background: #f7f7f7;
+
+    color: #222;
+
+    text-decoration: none;
+  }
+
+  .mobile-login-card > div:nth-child(2) {
+    display: flex;
+
+    flex-direction: column;
+
+    flex: 1;
+  }
+
+  .mobile-login-card strong {
+    font-size: 14px;
+  }
+
+  .mobile-login-card span {
+    font-size: 11px;
+
+    color: #777;
+  }
+
+  /* =========================================
+   MENU TITLE
+========================================= */
+
+  .mobile-menu-title {
+    padding: 4px 18px 8px;
+  }
+
+  .mobile-menu-title span {
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    color: #999;
+  }
+
+  /* =========================================
+   NAVIGATION
+========================================= */
+
+  .nav-scroll {
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    align-items: stretch !important;
+
+    width: 100%;
+
+    gap: 4px !important;
+
+    padding: 0 12px !important;
+
+    margin: 0;
+
+    list-style: none;
+
+    overflow: visible !important;
+  }
+
+  .nav-scroll .nav-item {
+    width: 100%;
+
+    flex-shrink: 0;
+  }
+
+  /* =========================================
+   MENU LINK
+========================================= */
+
+  .mobile-menu-link {
+    display: flex;
+
+    align-items: center;
+
+    width: 100%;
+
+    min-height: 58px;
+
+    padding: 8px 10px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: transparent;
+
+    color: #222;
+
+    text-decoration: none;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+  }
+
+  .mobile-menu-link:hover {
+    background: #f7f7f7;
+  }
+
+  /* =========================================
+   MENU ICON
+========================================= */
+
+  .mobile-menu-icon {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #f5f5f5;
+
+    border-radius: 10px;
+
+    font-size: 19px;
+
+    flex-shrink: 0;
+  }
+
+  /* =========================================
+   MENU TEXT
+========================================= */
+
+  .mobile-menu-text {
+    display: flex;
+
+    flex-direction: column;
+
+    flex: 1;
+
+    margin-left: 12px;
+
+    min-width: 0;
+  }
+
+  .mobile-menu-text strong {
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color: #222;
+  }
+
+  .mobile-menu-text small {
+    margin-top: 2px;
+
+    font-size: 10px;
+
+    color: #999;
+  }
+
+  /* =========================================
+   ARROW
+========================================= */
+
+  .mobile-arrow {
+    font-size: 22px;
+
+    color: #aaa;
+
+    margin-left: 8px;
+  }
+
+  /* =========================================
+   BUTTON LINK
+========================================= */
+
+  .mobile-menu-button {
+    font-family: inherit;
+
+    appearance: none;
+  }
+
+  /* =========================================
+   OFFERS
+========================================= */
+
+  .offer-menu-link {
+    background: #fff8f5;
+  }
+
+  .offer-menu-link .mobile-menu-icon {
+    background: #fff0eb;
+  }
+
+  .mobile-offer-badge {
+    padding: 4px 7px;
+
+    border-radius: 5px;
+
+    background: #222;
+
+    color: white;
+
+    font-size: 9px;
+
+    font-weight: 700;
+  }
+
+  /* =========================================
+   CART COUNT
+========================================= */
+
+  .mobile-cart-count {
+    min-width: 24px;
+    height: 24px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #222;
+
+    color: white;
+
+    font-size: 11px;
+
+    font-weight: 700;
+  }
+
+  /* =========================================
+   DIVIDER
+========================================= */
+
+  .mobile-menu-divider {
+    height: 1px;
+
+    background: #eeeeee;
+
+    margin: 12px 18px;
+  }
+
+  /* =========================================
+   ACCOUNT
+========================================= */
+
+  .mobile-account-section {
+    padding: 0 16px;
+  }
+
+  .mobile-account-action {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    width: 100%;
+
+    padding: 12px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #f7f7f7;
+
+    color: #222;
+
+    text-decoration: none;
+
+    font-family: inherit;
+
+    text-align: left;
+
+    cursor: pointer;
+  }
+
+  .mobile-account-action span {
+    font-size: 18px;
+  }
+
+  .mobile-account-action strong {
+    font-size: 13px;
+  }
+
+  .logout-action {
+    background: #fff4f4;
+
+    color: #b00020;
+  }
+
+  /* =========================================
+   BOTTOM MESSAGE
+========================================= */
+
+  .mobile-menu-bottom {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin: 20px 16px;
+
+    padding: 13px;
+
+    border-radius: 12px;
+
+    background: #f8f8f8;
+  }
+
+  .mobile-bottom-icon {
+    font-size: 22px;
+  }
+
+  .mobile-menu-bottom div:last-child {
+    display: flex;
+
+    flex-direction: column;
+  }
+
+  .mobile-menu-bottom strong {
+    font-size: 12px;
+
+    color: #333;
+  }
+
+  .mobile-menu-bottom span {
+    font-size: 10px;
+
+    color: #999;
+
+    margin-top: 2px;
+  }
 
   /* ---------------------------------------------
      SECOND CATEGORY NAVBAR
@@ -533,18 +1053,17 @@
     position: absolute;
     top: 100%;
     left: 10px;
-    min-width: 145px!important;
+    min-width: 145px !important;
     background: #ffffff;
     border-radius: 8px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
     padding: 1px 0;
     z-index: 99999;
   }
-  .cat-dropdown-img{
+  .cat-dropdown-img {
     width: 20px;
     height: 20px;
   }
-  
 
   .category-dropdown-menu a {
     display: block;
@@ -578,7 +1097,6 @@
 
   .search-input {
     height: 36px;
-
     font-size: 12px;
   }
 

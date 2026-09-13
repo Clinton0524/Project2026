@@ -6,6 +6,7 @@ import "../Css/Cart.css";
 
 const Cart = () => {
   const navigate = useNavigate();
+
   const { cart, incrementQty, decrementQty, currentUser } =
     useContext(myContext);
 
@@ -13,119 +14,154 @@ const Cart = () => {
     return total + item.price * item.quantity;
   }, 0);
 
+  const tax = Math.round(cartTotal * 0.05);
+  const grandTotal = cartTotal + tax;
+
   const handleCheckout = () => {
     if (!currentUser) {
-      alert("login to proceed")
+      alert("login to proceed");
       return;
     }
+
     navigate("/checkout");
   };
 
   return (
-    <div className="container mt-3">
+    <div className="container cart-page mt-3 mb-5">
       <Breadcrumbs />
 
+      <div className="cart-heading">
+        <h3></h3>
+        {/* {cart.length > 0 && (
+          <span>
+            {cart.length} {cart.length === 1 ? "Item" : "Items"}
+          </span>
+        )} */}
+      </div>
+
       {cart.length === 0 ? (
-        <h6>Cart is empty add items to cart</h6>
+        <div className="empty-cart">
+          <h5>Your cart is empty</h5>
+          <p>Add some products to your cart to continue shopping.</p>
+
+          <button
+            className="btn btn-dark"
+            onClick={() => navigate("/products")}
+          >
+            Continue Shopping
+          </button>
+        </div>
       ) : (
-        <>
-          <div className="row">
-            {/* CART ITEMS */}
-            <div className="col-12 col-md-9">
-              <div className="cart-container">
-                {cart.map((arr, index) => (
-                  <div className="card mb-3 cart-card" key={index}>
-                    <div className="card-body">
-                      <div className="row">
-                        {/* LEFT SECTION - Image + Quantity */}
-                        <div className="col col-sm-4 col-md-2 text-center">
-                          {/* Image */}
-                          <img
-                            src={arr.imageUrl}
-                            alt={arr.name}
-                            className="img-fluid cart-image mb-3"
-                          />
+        <div className="row g-4">
+          {/* ================= CART ITEMS ================= */}
+          <div className="col-12 col-lg-8">
+            <div className="cart-items-container">
+              {cart.map((arr) => (
+                <div className="cart-card" key={arr._id}>
+                  <div className="cart-product">
+                    {/* PRODUCT IMAGE */}
+                    <div className="cart-image-section">
+                      <img
+                        src={arr.imageUrl}
+                        alt={arr.name}
+                        className="cart-image"
+                      />
+                    </div>
 
-                          {/* Quantity */}
-                          <div className="d-flex justify-content-center align-items-center mt-2">
-                            <button
-                              className="btn btn-dark incdrec-btn"
-                              onClick={() => decrementQty(arr._id)}
-                            >
-                              -
-                            </button>
+                    {/* PRODUCT DETAILS */}
+                    <div className="cart-product-details">
+                      <h5 className="cart-name">{arr.name}</h5>
 
-                            <h6 className="mb-0 mx-2">{arr.quantity}</h6>
+                      <p className="cart-description">
+                        {arr.description}
+                      </p>
 
-                            <button
-                              className="btn btn-dark incdrec-btn"
-                              onClick={() => incrementQty(arr._id)}
-                            >
-                              +
-                            </button>
-                          </div>
-                        </div>
+                      <div className="cart-price">
+                        ₹ {arr.price} /-
+                      </div>
 
-                        {/* RIGHT SECTION - Product Details */}
-                        <div className="col-8">
-                          {/* Name */}
-                          <h6 className="cart-name mb-2">{arr.name}</h6>
+                      {/* QUANTITY */}
+                      <div className="cart-quantity">
+                        <span className="quantity-label">Quantity</span>
 
-                          {/* Description */}
-                          <p className="cart-description mb-2">
-                            {arr.description}
-                          </p>
+                        <div className="quantity-controls">
+                          <button
+                            className="incdrec-btn"
+                            onClick={() => decrementQty(arr._id)}
+                          >
+                            −
+                          </button>
 
-                          {/* Price */}
-                          <h6 className="cart-price mb-2">₹ {arr.price} /-</h6>
+                          <span className="quantity-number">
+                            {arr.quantity}
+                          </span>
 
-                          {/* Total */}
-                          <h6 className="price-total fw-bold">
-                            Total: ₹ {arr.price * arr.quantity} /-
-                          </h6>
+                          <button
+                            className="incdrec-btn"
+                            onClick={() => incrementQty(arr._id)}
+                          >
+                            +
+                          </button>
                         </div>
                       </div>
                     </div>
+
+                    {/* PRODUCT TOTAL */}
+                    <div className="cart-product-total">
+                      <span>Total</span>
+                      <strong>
+                        ₹ {arr.price * arr.quantity} /-
+                      </strong>
+                    </div>
                   </div>
-                ))}
-              </div>
-            </div>
-
-            {/* CART SUMMARY */}
-            <div className="col-12 col-md-3">
-              <div className="card shadow-sm p-3">
-                <h5 className="text-center mb-3">Cart Summary</h5>
-
-                <div className="d-flex justify-content-between mb-2">
-                  <span>Subtotal</span>
-                  <span>{cartTotal} rs/-</span>
                 </div>
-
-                <div className="d-flex justify-content-between mb-2">
-                  <span>Delivery</span>
-                  <span>Free</span>
-                </div>
-
-                <div className="d-flex justify-content-between mb-2">
-                  <span>Tax (5%)</span>
-                  <span>{Math.round(cartTotal * 0.05)} rs/-</span>
-                </div>
-
-                <hr />
-
-                <div className="d-flex justify-content-between fw-bold fs-5 mb-3">
-                  <span>Total</span>
-
-                  <span>{cartTotal + Math.round(cartTotal * 0.05)} rs/-</span>
-                </div>
-
-                <button className="btn btn-dark w-100" onClick={handleCheckout}>
-                  Proceed to Checkout
-                </button>
-              </div>
+              ))}
             </div>
           </div>
-        </>
+
+          {/* ================= CART SUMMARY ================= */}
+          <div className="col-12 col-lg-4">
+            <div className="cart-summary">
+              <h4>Cart Summary</h4>
+
+              <div className="summary-row">
+                <span>Subtotal</span>
+                <span>₹ {cartTotal} /-</span>
+              </div>
+
+              <div className="summary-row">
+                <span>Delivery</span>
+                <span className="free-text">Free</span>
+              </div>
+
+              <div className="summary-row">
+                <span>Tax (5%)</span>
+                <span>₹ {tax} /-</span>
+              </div>
+
+              <div className="summary-divider"></div>
+
+              <div className="summary-total">
+                <span>Total</span>
+                <strong>₹ {grandTotal} /-</strong>
+              </div>
+
+              <button
+                className="checkout-btn"
+                onClick={handleCheckout}
+              >
+                Proceed to Checkout
+              </button>
+
+              <button
+                className="continue-shopping-btn"
+                onClick={() => navigate("/products")}
+              >
+                Continue Shopping
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

@@ -1,50 +1,104 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { lazy, Suspense } from "react";
+
 import { MyProvider } from "./Components/Context/Context";
 import Navbar from "./Components/Navbar";
-import Home from "./Components/Pages/Home";
-import Cart from "./Components/Pages/Cart";
-import Login from "./Components/Pages/Login";
-import Register from "./Components/Pages/Register";
-import Products from "./Components/Pages/Products";
-import ProductDetail from "./Components/Pages/ProductDetail";
 import Footer from "./Components/Footer";
-import Checkout from "./Components/Pages/Checkout";
-import PaymentMock from "./Components/Pages/PaymentMock";
+import ScrollToTop from "./Components/ScrollToTop";
+
 import Store from "./Components/Redux/Store";
 import { Provider } from "react-redux";
-import CategoryProducts from "./Components/Pages/CategoryProducts";
-import ScrollToTop from "./Components/ScrollToTop";
-import Orders from "./Components/Pages/Orders";
-import OrderDetails from "./Components/Pages/OrderDetails";
-import OrderSuccess from "./Components/Pages/OrderSuccess";
-import Offers from "./Components/Pages/Offers";
+
+// ==================== NORMAL IMPORT ====================
+// Keep Products normal so its existing product-card styling
+// and CSS loading behavior remain unchanged.
+import Products from "./Components/Pages/Products";
+
+// ==================== LAZY LOADED PAGES ====================
+
+const Home = lazy(() => import("./Components/Pages/Home"));
+
+const Cart = lazy(() => import("./Components/Pages/Cart"));
+
+const Login = lazy(() => import("./Components/Pages/Login"));
+
+const Register = lazy(() => import("./Components/Pages/Register"));
+
+const ProductDetail = lazy(() => import("./Components/Pages/ProductDetail"));
+
+const Checkout = lazy(() => import("./Components/Pages/Checkout"));
+
+const PaymentMock = lazy(() => import("./Components/Pages/PaymentMock"));
+
+const OrderSuccess = lazy(() => import("./Components/Pages/OrderSuccess"));
+
+const CategoryProducts = lazy(
+  () => import("./Components/Pages/CategoryProducts"),
+);
+
+const Orders = lazy(() => import("./Components/Pages/Orders"));
+
+const OrderDetails = lazy(() => import("./Components/Pages/OrderDetails"));
+
+const Offers = lazy(() => import("./Components/Pages/Offers"));
+
 function App() {
   return (
     <Provider store={Store}>
       <MyProvider>
         <Router>
           <ScrollToTop />
+
           <div className="app-layout">
             <Navbar />
 
             <main className="content">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/product" element={<Products />} />
-                <Route path="/payment-mock" element={<PaymentMock />} />
-                <Route path="/order-success" element={<OrderSuccess />} />
-                <Route path="/product/:id" element={<ProductDetail />} />
-                <Route path="/checkout" element={<Checkout />} />
-                <Route path="/orders" element={<Orders />} />
-                <Route path="/offers" element={<Offers />} />
+              <Suspense fallback={null}>
+                <Routes>
+                  {/* HOME */}
+                  <Route path="/" element={<Home />} />
 
-                <Route path="/category/:catid" element={<CategoryProducts />} />
-                <Route path="/orders/:orderId" element={<OrderDetails />} />
-              </Routes>
+                  {/* CART */}
+                  <Route path="/cart" element={<Cart />} />
+
+                  {/* LOGIN */}
+                  <Route path="/login" element={<Login />} />
+
+                  {/* REGISTER */}
+                  <Route path="/register" element={<Register />} />
+
+                  {/* PRODUCTS */}
+                  <Route path="/product" element={<Products />} />
+
+                  {/* PRODUCT DETAIL */}
+                  <Route path="/product/:id" element={<ProductDetail />} />
+
+                  {/* CATEGORY PRODUCTS */}
+                  <Route
+                    path="/category/:catid"
+                    element={<CategoryProducts />}
+                  />
+
+                  {/* OFFERS */}
+                  <Route path="/offers" element={<Offers />} />
+
+                  {/* CHECKOUT */}
+                  <Route path="/checkout" element={<Checkout />} />
+
+                  {/* PAYMENT */}
+                  <Route path="/payment-mock" element={<PaymentMock />} />
+
+                  {/* ORDERS */}
+                  <Route path="/orders" element={<Orders />} />
+
+                  {/* ORDER DETAILS */}
+                  <Route path="/orders/:orderId" element={<OrderDetails />} />
+
+                  {/* ORDER SUCCESS */}
+                  <Route path="/order-success" element={<OrderSuccess />} />
+                </Routes>
+              </Suspense>
             </main>
 
             <Footer />

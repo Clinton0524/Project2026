@@ -67,6 +67,7 @@ const Navbar = () => {
                 type="text"
                 className="form-control ps-4 search-input"
                 placeholder="Search products..."
+                
               />
 
               {/* SEARCH DROPDOWN */}
@@ -113,100 +114,483 @@ const Navbar = () => {
 
           {/* ================= NAVIGATION LINKS ================= */}
 
-          <div className={`mobile-menu ${menuOpen ? "show" : ""}`}>
-            {/* CLOSE BUTTON */}
-            <button
-              className="mobile-menu-close"
-              onClick={() => setMenuOpen(false)}
-            >
-              ✕
-            </button>
+       {/* ================= DESKTOP NAVIGATION ================= */}
 
-            <ul className="navbar-nav nav-scroll d-flex flex-row align-items-center gap-4">
-              {/* HOME */}
-              <li className="nav-item">
-                <Link
-                  className="nav-link fw-semibold"
-                  to="/"
-                  onClick={handleMenuClose}
-                >
-                  Home
-                </Link>
-              </li>
+<div className="desktop-menu">
 
-              {/* PRODUCTS */}
-              <li className="nav-item">
-                <Link
-                  className="nav-link fw-semibold"
-                  to="/product"
-                  onClick={handleMenuClose}
-                >
-                  Products
-                </Link>
-              </li>
+  {/* HOME */}
+  <Link
+    className="desktop-nav-link"
+    to="/"
+  >
+    Home
+  </Link>
 
-              {/* ABOUT */}
-              <li className="nav-item">
-                <Link
-                  className="nav-link fw-semibold"
-                  to="/orders"
-                  onClick={handleMenuClose}
-                >
-                  Orders
-                </Link>
-              </li>
+  {/* PRODUCTS */}
+  <Link
+    className="desktop-nav-link"
+    to="/product"
+  >
+    Products
+  </Link>
 
-              {/* CART */}
-              <li className="nav-item position-relative">
-                <Link
-                  className="nav-link fw-semibold"
-                  to="/cart"
-                  onClick={handleMenuClose}
-                >
-                  Cart
-                  {cart.length > 0 && (
-                    <span className="badge bg-dark ms-1">{cart.length}</span>
-                  )}
-                </Link>
-              </li>
+  {/* ORDERS */}
+  <Link
+    className="desktop-nav-link"
+    to="/orders"
+  >
+    Orders
+  </Link>
 
-              {/* AUTH */}
-              {currentUser ? (
-                <>
-                  {/* USER */}
-                  <li className="nav-item user-name">
-                    <span className="text-muted">
-                      Hi, <strong>{currentUser.name}</strong>
-                    </span>
-                  </li>
+  {/* CART */}
+  <Link
+    className="desktop-nav-link"
+    to="/cart"
+  >
+    Cart
 
-                  {/* LOGOUT */}
-                  <li className="nav-item">
-                    <button
-                      className="btn btn-sm btn-outline-dark  px-3"
-                      onClick={() => {
-                        handleLogout();
-                        handleMenuClose();
-                      }}
-                    >
-                      Logout
-                    </button>
-                  </li>
-                </>
-              ) : (
-                /* LOGIN */
-                <li className="nav-item">
-                  <Link
-                    className="btn btn-dark btn-sm  px-3"
-                    to="/login"
-                    onClick={handleMenuClose}
-                  >
-                    Login
-                  </Link>
-                </li>
-              )}
-            </ul>
-          </div>
+    {cart.length > 0 && (
+      <span className="badge bg-dark ms-1">
+        {cart.length}
+      </span>
+    )}
+  </Link>
+
+  {/* AUTH */}
+  {currentUser ? (
+    <>
+      <span className="desktop-user-name">
+        Hi, <strong>{currentUser.name}</strong>
+      </span>
+
+      <button
+        className="btn btn-sm btn-outline-dark px-3"
+        onClick={handleLogout}
+      >
+        Logout
+      </button>
+    </>
+  ) : (
+    <Link
+      className="btn btn-dark btn-sm px-3"
+      to="/login"
+    >
+      Login
+    </Link>
+  )}
+
+</div>
+
+
+{/* ================= MOBILE SIDE MENU ================= */}
+
+<div className={`mobile-menu ${menuOpen ? "show" : ""}`}>
+
+  {/* HEADER */}
+  <div className="mobile-menu-header">
+
+    <div className="mobile-menu-brand">
+
+      <img
+        src={Image}
+        alt="Logo"
+      />
+
+      <div>
+
+        <h5>Welcome</h5>
+
+        {currentUser ? (
+          <p>{currentUser.name}</p>
+        ) : (
+          <p>Shop with us</p>
+        )}
+
+      </div>
+
+    </div>
+
+    <button
+      className="mobile-menu-close"
+      onClick={() => setMenuOpen(false)}
+      type="button"
+    >
+      ✕
+    </button>
+
+  </div>
+
+
+  {/* USER SECTION */}
+
+  {currentUser ? (
+
+    <div className="mobile-user-card">
+
+      <div className="mobile-user-icon">
+        👤
+      </div>
+
+      <div className="mobile-user-info">
+
+        <span>Hello,</span>
+
+        <strong>
+          {currentUser.name}
+        </strong>
+
+      </div>
+
+    </div>
+
+  ) : (
+
+    <Link
+      to="/login"
+      className="mobile-login-card"
+      onClick={handleMenuClose}
+    >
+
+      <div className="mobile-user-icon">
+        👤
+      </div>
+
+      <div>
+
+        <strong>
+          Login / Register
+        </strong>
+
+        <span>
+          Access your account
+        </span>
+
+      </div>
+
+      <span className="mobile-arrow">
+        ›
+      </span>
+
+    </Link>
+
+  )}
+
+
+  {/* MENU TITLE */}
+
+  <div className="mobile-menu-title">
+    <span>SHOP & EXPLORE</span>
+  </div>
+
+
+  {/* MAIN LINKS */}
+
+  <ul className="nav-scroll">
+
+    {/* HOME */}
+
+    <li className="nav-item">
+
+      <Link
+        className="mobile-menu-link"
+        to="/"
+        onClick={handleMenuClose}
+      >
+
+        <span className="mobile-menu-icon">
+          🏠
+        </span>
+
+        <span className="mobile-menu-text">
+
+          <strong>
+            Home
+          </strong>
+
+          <small>
+            Discover our products
+          </small>
+
+        </span>
+
+        <span className="mobile-arrow">
+          ›
+        </span>
+
+      </Link>
+
+    </li>
+
+
+    {/* PRODUCTS */}
+
+    <li className="nav-item">
+
+      <Link
+        className="mobile-menu-link"
+        to="/product"
+        onClick={handleMenuClose}
+      >
+
+        <span className="mobile-menu-icon">
+          🛍️
+        </span>
+
+        <span className="mobile-menu-text">
+
+          <strong>
+            All Products
+          </strong>
+
+          <small>
+            Browse our collection
+          </small>
+
+        </span>
+
+        <span className="mobile-arrow">
+          ›
+        </span>
+
+      </Link>
+
+    </li>
+
+
+    {/* CATEGORIES */}
+
+    <li className="nav-item">
+
+      <button
+        type="button"
+        className="mobile-menu-link mobile-menu-button"
+        onClick={() => {
+
+          setCategoryOpen(true);
+          setMenuOpen(false);
+
+        }}
+      >
+
+        <span className="mobile-menu-icon">
+          📂
+        </span>
+
+        <span className="mobile-menu-text">
+
+          <strong>
+            Categories
+          </strong>
+
+          <small>
+            Shop by category
+          </small>
+
+        </span>
+
+        <span className="mobile-arrow">
+          ›
+        </span>
+
+      </button>
+
+    </li>
+
+
+    {/* OFFERS */}
+
+    <li className="nav-item">
+
+      <Link
+        className="mobile-menu-link offer-menu-link"
+        to="/offers"
+        onClick={handleMenuClose}
+      >
+
+        <span className="mobile-menu-icon">
+          🔥
+        </span>
+
+        <span className="mobile-menu-text">
+
+          <strong>
+            Special Offers
+          </strong>
+
+          <small>
+            Grab the latest deals
+          </small>
+
+        </span>
+
+        <span className="mobile-offer-badge">
+          HOT
+        </span>
+
+      </Link>
+
+    </li>
+
+
+    {/* ORDERS */}
+
+    <li className="nav-item">
+
+      <Link
+        className="mobile-menu-link"
+        to="/orders"
+        onClick={handleMenuClose}
+      >
+
+        <span className="mobile-menu-icon">
+          📦
+        </span>
+
+        <span className="mobile-menu-text">
+
+          <strong>
+            My Orders
+          </strong>
+
+          <small>
+            Track your orders
+          </small>
+
+        </span>
+
+        <span className="mobile-arrow">
+          ›
+        </span>
+
+      </Link>
+
+    </li>
+
+
+    {/* CART */}
+
+    <li className="nav-item">
+
+      <Link
+        className="mobile-menu-link"
+        to="/cart"
+        onClick={handleMenuClose}
+      >
+
+        <span className="mobile-menu-icon">
+          🛒
+        </span>
+
+        <span className="mobile-menu-text">
+
+          <strong>
+            My Cart
+          </strong>
+
+          <small>
+
+            {cart.length > 0
+              ? `${cart.length} item${cart.length > 1 ? "s" : ""} in cart`
+              : "Your cart is empty"}
+
+          </small>
+
+        </span>
+
+        {cart.length > 0 && (
+
+          <span className="mobile-cart-count">
+            {cart.length}
+          </span>
+
+        )}
+
+      </Link>
+
+    </li>
+
+  </ul>
+
+
+  {/* ACCOUNT */}
+
+  <div className="mobile-menu-divider"></div>
+
+  <div className="mobile-menu-title">
+    <span>ACCOUNT</span>
+  </div>
+
+  <div className="mobile-account-section">
+
+    {currentUser ? (
+
+      <button
+        type="button"
+        className="mobile-account-action logout-action"
+        onClick={() => {
+
+          handleLogout();
+          handleMenuClose();
+
+        }}
+      >
+
+        <span>
+          🚪
+        </span>
+
+        <strong>
+          Logout
+        </strong>
+
+      </button>
+
+    ) : (
+
+      <Link
+        to="/login"
+        className="mobile-account-action"
+        onClick={handleMenuClose}
+      >
+
+        <span>
+          🔐
+        </span>
+
+        <strong>
+          Login
+        </strong>
+
+      </Link>
+
+    )}
+
+  </div>
+
+
+  {/* BOTTOM */}
+
+  <div className="mobile-menu-bottom">
+
+    <div className="mobile-bottom-icon">
+      🛒
+    </div>
+
+    <div>
+
+      <strong>
+        Happy Shopping!
+      </strong>
+
+      <span>
+        Find something you love today.
+      </span>
+
+    </div>
+
+  </div>
+
+</div>
         </div>
       </nav>
 
@@ -258,8 +642,12 @@ const Navbar = () => {
 
             {/* OFFERS */}
             <li>
+              <Link to="/cart"> 🛒 Cart</Link>
+            </li>
+            <li>
               <Link to="/offers">🔥 Offers</Link>
             </li>
+             
           </ul>
 
           {/* ================= CATEGORY DROPDOWN ================= */}

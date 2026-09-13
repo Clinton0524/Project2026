@@ -65,11 +65,13 @@
 ========================================= */
 
 .product-out-of-stock {
-  opacity: 0.55;
-  filter: grayscale(100%);
   position: relative;
 }
 
+.product-out-of-stock .product-image-wrapper {
+  opacity: 0.55;
+  filter: grayscale(100%);
+}
 /* Prevent clicking anything inside an
    out-of-stock card */
 .product-out-of-stock .card-img-top {

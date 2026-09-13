@@ -1,4 +1,3 @@
-
 import { useContext, useEffect, useState } from "react";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
@@ -6,11 +5,12 @@ import { myContext } from "../Context/Context";
 import "../Css/Home.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts, fetchExclusiveProducts } from "../Redux/ProductSlice";
-import image from "../Images/Red Orange Modern Flash Sale Facebok Post.png";
+import video1 from "../Images/Green Yellow Financial Grocery Plan Instagram Reel Mobile Video.mp4";
 import image4 from "../Images/Green Modern Grocery Delivery Instagram Post.png";
-import image5 from "../Images/Green and White Modern Grocery Store Promotion Instagram Post .png";
 import image6 from "../Images/Yellow Green and Orange Modern Grocery Instagram Post.png";
 import googlePlay from "../Images/png-transparent-google-play-store-logo-google-play-app-store-android-wallets-text-label-logo.png";
+import imge from "../Images/Blue and White Simple Grocery Store Promotion Instagram Post.png";
+
 import appStore from "../Images/download-on-the-app-store-vector-11574169009ka9slrru5l.png";
 import HeroBanner from "./HeroBanner";
 
@@ -18,16 +18,11 @@ const Home = () => {
   const dispatch = useDispatch();
 
   const { products, exclusiveProducts } = useSelector(
-    (state) => state.products
+    (state) => state.products,
   );
 
-  const {
-    categories,
-    cart,
-    addToCart,
-    decrementQty,
-    incrementQty,
-  } = useContext(myContext);
+  const { categories, cart, addToCart, decrementQty, incrementQty } =
+    useContext(myContext);
 
   /* ===== SLIDER SETTINGS ===== */
   const getSlidesToShow = () => {
@@ -39,13 +34,26 @@ const Home = () => {
 
     return 7;
   };
+  /* ===== SLIDER SETTINGS ===== */
+  const getSlidesToShow1 = () => {
+    const width = window.innerWidth;
+
+    if (width < 576) return 1;
+    if (width < 768) return 2;
+    if (width < 992) return 3;
+
+    return 1;
+  };
 
   const [slidesToShow, setSlidesToShow] = useState(getSlidesToShow());
+  const [slidesToShow1, setSlidesToShow1] = useState(getSlidesToShow1());
+
   const [openIndex, setOpenIndex] = useState(null);
 
   useEffect(() => {
     const handleResize = () => {
       setSlidesToShow(getSlidesToShow());
+      setSlidesToShow1(getSlidesToShow1());
     };
 
     window.addEventListener("resize", handleResize);
@@ -77,14 +85,12 @@ const Home = () => {
 
   /* ===== FLASH SALE TIMER ===== */
   const [time, setTime] = useState(
-    new Date("2026-09-07T12:00:00").getTime() - Date.now()
+    new Date("2026-09-07T12:00:00").getTime() - Date.now(),
   );
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setTime(
-        new Date("2026-09-07T12:00:00").getTime() - Date.now()
-      );
+      setTime(new Date("2026-09-07T12:00:00").getTime() - Date.now());
     }, 1000);
 
     return () => clearInterval(timer);
@@ -105,9 +111,7 @@ const Home = () => {
       <section className="py-2">
         <div className="container">
           <div className="d-flex justify-content-between align-items-center mb-2">
-            <h3 className="fw-bold Product-headding">
-              Exclusive Products
-            </h3>
+            <h3 className="fw-bold Product-headding">Exclusive Products</h3>
 
             <Link
               to="/product"
@@ -128,9 +132,7 @@ const Home = () => {
             touchMove={true}
           >
             {exclusiveProducts.map((arr) => {
-              const cartItem = cart.find(
-                (item) => item._id === arr._id
-              );
+              const cartItem = cart.find((item) => item._id === arr._id);
 
               const isOutOfStock = Number(arr.stock) <= 0;
 
@@ -138,17 +140,12 @@ const Home = () => {
                 <div key={arr._id} className="card-container">
                   <div
                     className={`card ${
-                      isOutOfStock
-                        ? "product-out-of-stock"
-                        : ""
+                      isOutOfStock ? "product-out-of-stock" : ""
                     }`}
                   >
                     {/* IMAGE */}
                     <div className="product-image-wrapper">
-                      <Link
-                        to={`/product/${arr._id}`}
-                        className="img-link"
-                      >
+                      <Link to={`/product/${arr._id}`} className="img-link">
                         <img
                           src={arr.imageUrl}
                           alt={arr.name}
@@ -157,9 +154,7 @@ const Home = () => {
                       </Link>
 
                       {isOutOfStock && (
-                        <div className="out-of-stock-label">
-                          OUT OF STOCK
-                        </div>
+                        <div className="out-of-stock-label">OUT OF STOCK</div>
                       )}
                     </div>
 
@@ -173,9 +168,7 @@ const Home = () => {
                         {arr.description}
                       </p>
 
-                      <p className="quantity mb-0">
-                        {arr.weight}
-                      </p>
+                      <p className="quantity mb-0">{arr.weight}</p>
 
                       <div className="d-flex align-items-center mb-0">
                         <span className="price">
@@ -218,22 +211,16 @@ const Home = () => {
                         <div className="d-flex align-items-center justify-content-center gap-2">
                           <button
                             className="btn btn-sm btn-outline-secondary"
-                            onClick={() =>
-                              decrementQty(arr._id)
-                            }
+                            onClick={() => decrementQty(arr._id)}
                           >
                             -
                           </button>
 
-                          <span className="fw-bold">
-                            {cartItem.quantity}
-                          </span>
+                          <span className="fw-bold">{cartItem.quantity}</span>
 
                           <button
                             className="btn btn-sm btn-outline-secondary"
-                            onClick={() =>
-                              incrementQty(arr._id)
-                            }
+                            onClick={() => incrementQty(arr._id)}
                           >
                             +
                           </button>
@@ -256,29 +243,21 @@ const Home = () => {
             dots={false}
             infinite={true}
             speed={500}
-            slidesToShow={2}
+            slidesToShow={slidesToShow1}
             slidesToScroll={1}
             autoplay={true}
-            autoplaySpeed={3000}
+            autoplaySpeed={5000}
             swipe={true}
             draggable={true}
             touchMove={true}
           >
-            <div>
+            {/* <div>
               <img
                 className="banner-img-1"
                 src={image4}
                 alt="Grocery Store Banner"
               />
-            </div>
-
-            <div>
-              <img
-                className="banner-img-1"
-                src={image5}
-                alt="Organic Food Banner"
-              />
-            </div>
+            </div> */}
 
             <div>
               <img
@@ -290,37 +269,11 @@ const Home = () => {
           </Slider>
         </div>
       </section>
-
-      {/* ================= FLASH SALE BANNER ================= */}
-
-      <section className="p-0 mb-4">
-        <div className="container flash-banner">
-          <img
-            className="banner-img-4"
-            src={image}
-            alt="Flash Sale"
-          />
-
-          <div className="timeout">
-            {String(days).padStart(2, "0")} :{" "}
-            {String(hours).padStart(2, "0")} :{" "}
-            {String(minutes).padStart(2, "0")} :{" "}
-            {String(secs).padStart(2, "0")}
-          </div>
-
-          <div className="btn btn-dark button-hero">
-            GRAB DEAL
-          </div>
-        </div>
-      </section>
-
       {/* ================= CATEGORIES ================= */}
 
       <section className="py-4 bg-light">
         <div className="container">
-          <h3 className="fw-bold mb-4 Product-headding">
-            Shop by Category
-          </h3>
+          <h3 className="fw-bold mb-4 Product-headding">Shop by Category</h3>
 
           <Slider
             dots={false}
@@ -349,9 +302,7 @@ const Home = () => {
                     </div>
 
                     <div className="card-body pt-0">
-                      <h6 className="fw-semibold mb-2">
-                        {cat.name}
-                      </h6>
+                      <h6 className="fw-semibold mb-2">{cat.name}</h6>
 
                       <Link
                         to={`/category/${cat._id}`}
@@ -368,31 +319,99 @@ const Home = () => {
         </div>
       </section>
 
+      {/* ================= FLASH SALE BANNER ================= */}
+
+      {/* <section className="p-0 mb-4">
+        <div className="container flash-banner">
+          <img
+            className="banner-img-4"
+            src={image}
+            alt="Flash Sale"
+          />
+
+          <div className="timeout">
+            {String(days).padStart(2, "0")} :{" "}
+            {String(hours).padStart(2, "0")} :{" "}
+            {String(minutes).padStart(2, "0")} :{" "}
+            {String(secs).padStart(2, "0")}
+          </div>
+
+          <div className="btn btn-dark button-hero">
+            GRAB DEAL
+          </div>
+        </div>
+      </section> */}
+
       {/* ================= SECOND BANNER ================= */}
 
-      <section className="bg-light py-4">
+      <section className="exclusive-banner">
         <div className="container-fluid">
           <div className="row align-items-center">
-            <div className="col-md-7">
-              {/* Image can be added here later */}
+            {/* LEFT CONTENT */}
+            <div className="col-lg-6 col-md-6">
+              <div className="exclusive-content">
+                <span className="exclusive-badge">LIMITED TIME OFFER</span>
+
+                <h2>
+                  Exclusive Deals
+                  <br />
+                  Just for You
+                </h2>
+
+                <p>
+                  Grab amazing discounts on trending products. Shop your
+                  favourites before these deals disappear.
+                </p>
+
+                <Link to="/offers" className="exclusive-btn">
+                  Explore Deals
+                  <span> →</span>
+                </Link>
+              </div>
             </div>
+          </div>
+        </div>
+      </section>
 
-            <div className="col-md-5">
-              <h2 className="fw-bold mb-3">
-                Exclusive Deals Just for You
-              </h2>
+      {/* ================= video ================= */}
+      <section className="video-banner-section">
+        {" "}
+        <div className="container">
+          {" "}
+          <div className="video-banner-wrapper">
+            {" "}
+            <video className="exclusive-video" autoPlay muted loop playsInline>
+              {" "}
+              <source src={video1} type="video/mp4" />{" "}
+            </video>{" "}
+          </div>{" "}
+        </div>{" "}
+      </section>
 
-              <p className="text-muted mb-4">
-                Grab limited-time offers on trending products
-                before they’re gone.
-              </p>
+      <section className="exclusive-banner">
+        <div className="container-fluid">
+          <div className="row align-items-center">
+            {/* LEFT CONTENT */}
+            <div className="col-lg-6 col-md-6">
+              <div className="exclusive-content">
+                <span className="exclusive-badge">Recipies</span>
 
-              <Link
-                to="/products"
-                className="btn btn-dark px-4"
-              >
-                Explore Deals
-              </Link>
+                <h2>
+                  Cook With Us
+                  <br />
+                  Just for You
+                </h2>
+
+                <p>
+                  Discover delicious recipes crafted by our chefs and bring
+                  fresh, flavorful meals to your kitchen.{" "}
+                </p>
+
+                <Link to="/offers" className="exclusive-btn">
+                  Explore Recipies
+                  <span> →</span>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -403,9 +422,7 @@ const Home = () => {
       <section className="py-2">
         <div className="container">
           <div className="d-flex justify-content-between align-items-center mb-2 mt-2">
-            <h3 className="fw-bold Product-headding">
-              Featured Products
-            </h3>
+            <h3 className="fw-bold Product-headding">Featured Products</h3>
 
             <Link
               to="/product"
@@ -426,30 +443,20 @@ const Home = () => {
             touchMove={true}
           >
             {products.map((arr) => {
-              const cartItem = cart.find(
-                (item) => item._id === arr._id
-              );
+              const cartItem = cart.find((item) => item._id === arr._id);
 
               const isOutOfStock = Number(arr.stock) <= 0;
 
               return (
-                <div
-                  key={arr._id}
-                  className="card-container"
-                >
+                <div key={arr._id} className="card-container">
                   <div
                     className={`card ${
-                      isOutOfStock
-                        ? "product-out-of-stock"
-                        : ""
+                      isOutOfStock ? "product-out-of-stock" : ""
                     }`}
                   >
                     {/* IMAGE */}
                     <div className="product-image-wrapper">
-                      <Link
-                        to={`/product/${arr._id}`}
-                        className="img-link"
-                      >
+                      <Link to={`/product/${arr._id}`} className="img-link">
                         <img
                           src={arr.imageUrl}
                           alt={arr.name}
@@ -458,9 +465,7 @@ const Home = () => {
                       </Link>
 
                       {isOutOfStock && (
-                        <div className="out-of-stock-label">
-                          OUT OF STOCK
-                        </div>
+                        <div className="out-of-stock-label">OUT OF STOCK</div>
                       )}
                     </div>
 
@@ -474,9 +479,7 @@ const Home = () => {
                         {arr.description}
                       </p>
 
-                      <p className="quantity mb-0">
-                        {arr.weight}
-                      </p>
+                      <p className="quantity mb-0">{arr.weight}</p>
 
                       <div className="d-flex align-items-center mb-1">
                         <span className="price">
@@ -519,22 +522,16 @@ const Home = () => {
                         <div className="d-flex align-items-center justify-content-center gap-2">
                           <button
                             className="btn btn-sm btn-outline-secondary"
-                            onClick={() =>
-                              decrementQty(arr._id)
-                            }
+                            onClick={() => decrementQty(arr._id)}
                           >
                             -
                           </button>
 
-                          <span className="fw-bold">
-                            {cartItem.quantity}
-                          </span>
+                          <span className="fw-bold">{cartItem.quantity}</span>
 
                           <button
                             className="btn btn-sm btn-outline-secondary"
-                            onClick={() =>
-                              incrementQty(arr._id)
-                            }
+                            onClick={() => incrementQty(arr._id)}
                           >
                             +
                           </button>
@@ -549,30 +546,101 @@ const Home = () => {
         </div>
       </section>
 
+      {/* ================= APP DOWNLOAD ================= */}
+
+      <section className="app-download-section">
+        <div className="container">
+          <div className="app-download-card">
+            <div className="row align-items-center">
+              {/* LEFT CONTENT */}
+              <div className="col-lg-7">
+                <div className="app-download-content">
+                  <span className="app-download-tag">
+                    SHOP ANYWHERE, ANYTIME
+                  </span>
+
+                  <h2>
+                    Your groceries,
+                    <br />
+                    <span>just a tap away.</span>
+                  </h2>
+
+                  <p>
+                    Download our mobile app for exclusive offers, faster
+                    checkout and a smoother shopping experience.
+                  </p>
+
+                  <div className="app-download-buttons">
+                    <a href="#" target="_blank" rel="noreferrer">
+                      <img
+                        src={googlePlay}
+                        alt="Get it on Google Play"
+                        className="app-store-badge"
+                      />
+                    </a>
+
+                    <a href="#" target="_blank" rel="noreferrer">
+                      <img
+                        src={appStore}
+                        alt="Download on the App Store"
+                        className="app-store-badge"
+                      />
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* RIGHT VISUAL */}
+              <div className="col-lg-5">
+                <div className="app-download-visual">
+                  <div className="app-circle app-circle-one"></div>
+                  <div className="app-circle app-circle-two"></div>
+
+                  <div className="phone-shape">
+                    <div className="phone-screen">
+                      <span className="phone-logo">SHOP</span>
+
+                      <div className="phone-line"></div>
+                      <div className="phone-product"></div>
+                      <div className="phone-product"></div>
+                      <div className="phone-product"></div>
+                    </div>
+                  </div>
+
+                  <div className="app-floating-card">
+                    <strong>Exclusive</strong>
+                    <span>App Offers</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ================= NEWSLETTER ================= */}
 
       <section className="py-2">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-md-8">
-              <div className="p-3 bg-dark text-light rounded text-center shadow">
+              <div className="p-3 bg-light text-dark rounded text-center shadow">
                 <h3 className="fw-bold mb-0 news-letter-headding">
                   Get 10% Off Your First Order
                 </h3>
 
                 <p className="mb-4 news-letter-text">
-                  Subscribe to our newsletter for exclusive deals
-                  and updates Subscribe now!.
+                  Subscribe to our newsletter for exclusive deals and updates.
                 </p>
 
                 <div className="d-flex gap-2 justify-content-center flex-wrap">
                   <input
                     type="email"
-                    className="form-control w-100 input-news-letter"
+                    className="form-control input-news-letter"
                     placeholder="Enter your email"
                   />
 
-                  <button className="btn btn-light news-letter-button">
+                  <button className="btn btn-dark news-letter-button">
                     Subscribe
                   </button>
                 </div>
@@ -582,204 +650,207 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ================= APP PROMO ================= */}
+      {/* ================= CUSTOMER REVIEWS ================= */}
 
-      <section className="py-5 bg-light text-dark">
+      <section className="customer-reviews-section">
         <div className="container">
-          <div className="row align-items-center">
-            <div className="col-md-8">
-              <h3 className="fw-bold mb-2">
-                Shop Faster on Our Mobile App
-              </h3>
+          {/* HEADER */}
+          <div className="customer-reviews-header text-center">
+            <span className="customer-reviews-label">CUSTOMER REVIEWS</span>
 
-              <p className="text-muted">
-                Get exclusive app-only offers and faster checkout.
-              </p>
-            </div>
+            <h2>
+              What Our Customers <span>Say</span>
+            </h2>
 
-            <div className="col-md-4 justify-content-center d-flex gap-3">
-              <a href="#" target="_blank" rel="noreferrer">
-                <img
-                  src={googlePlay}
-                  alt="Get it on Google Play"
-                  className="app-store-badge"
-                />
-              </a>
+            <p>Real experiences from customers who shop with us.</p>
+          </div>
 
-              <a href="#" target="_blank" rel="noreferrer">
-                <img
-                  src={appStore}
-                  alt="Download on the App Store"
-                  className="app-store-badge"
-                />
-              </a>
-            </div>
+          {/* REVIEWS SLIDER */}
+          <div className="customer-reviews-slider">
+            <Slider
+              dots={true}
+              arrows={false}
+              infinite={true}
+              autoplay={true}
+              autoplaySpeed={3500}
+              speed={600}
+              slidesToShow={1}
+              slidesToScroll={1}
+            >
+              {[
+                {
+                  name: "Rahul Sharma",
+                  text: "Amazing quality and super fast delivery. Everything arrived fresh and perfectly packed. Loved the overall shopping experience!",
+                  rating: 5,
+                },
+                {
+                  name: "Ananya Patel",
+                  text: "Great prices and a very smooth checkout process. The products were exactly as shown and delivery was really quick.",
+                  rating: 5,
+                },
+                {
+                  name: "Amit Verma",
+                  text: "Customer support was very helpful and responsive. The entire experience was simple and hassle-free. Will definitely shop again!",
+                  rating: 5,
+                },
+              ].map((review, index) => (
+                <div key={index} className="review-slide">
+                  <div className="customer-review-card">
+                    {/* QUOTE */}
+                    <div className="review-quote">
+                      <i className="bi bi-quote"></i>
+                    </div>
+
+                    {/* STARS */}
+                    <div className="review-stars">
+                      {Array.from({ length: review.rating }).map((_, i) => (
+                        <i key={i} className="bi bi-star-fill"></i>
+                      ))}
+                    </div>
+
+                    {/* REVIEW */}
+                    <p className="review-text">“{review.text}”</p>
+
+                    {/* CUSTOMER */}
+                    <div className="review-customer">
+                      <div className="review-avatar">
+                        {review.name.charAt(0)}
+                      </div>
+
+                      <div className="review-customer-info">
+                        <h5>{review.name}</h5>
+
+                        <span>Verified Customer</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </Slider>
           </div>
         </div>
       </section>
 
       {/* ================= WHY SHOP WITH US ================= */}
 
-      <section className="why-shop-section py-5">
+      <section className="why-shop-section">
         <div className="container">
-          <div className="text-center mb-5">
-            <span className="text-danger fw-semibold">
-              WHY CHOOSE US
-            </span>
+          {/* HEADER */}
+          <div className="why-shop-header text-center">
+            <span className="why-shop-label">WHY CHOOSE US</span>
 
-            <h2 className="fw-bold mt-2">
-              Shopping Made Simple
+            <h2>
+              Shopping Made <span>Simple</span>
             </h2>
 
-            <p className="text-muted">
-              Everything you need for a smooth and enjoyable
-              shopping experience.
+            <p>
+              Everything you need for a smooth, secure and enjoyable shopping
+              experience.
             </p>
           </div>
 
-          <div className="row g-3">
-            {/* Card 1 */}
+          {/* FEATURES */}
+          <div className="row g-4">
+            {/* CARD 1 */}
             <div className="col-md-6 col-lg-3">
-              <div className="service-card text-center h-100">
-                <div className="service-icon">
-                  <i className="bi bi-truck"></i>
+              <div className="why-shop-card">
+                <div className="why-shop-top">
+                  <span className="why-shop-number">01</span>
+
+                  <div className="why-shop-icon">
+                    <i className="bi bi-truck"></i>
+                  </div>
                 </div>
 
-                <h5 className="fw-bold mt-4">
-                  Fast & Free Delivery
-                </h5>
+                <h4>Fast & Free Delivery</h4>
 
-                <p className="text-muted">
-                  Get your favorite products delivered quickly
-                  and safely to your doorstep.
+                <p>
+                  Get your favorite products delivered quickly and safely right
+                  to your doorstep.
                 </p>
 
-                <div className="btn btn-dark">
-                  Learn More
+                <div className="why-shop-link">
+                  <span>Learn More</span>
+                  <i className="bi bi-arrow-right"></i>
                 </div>
               </div>
             </div>
 
-            {/* Card 2 */}
+            {/* CARD 2 */}
             <div className="col-md-6 col-lg-3">
-              <div className="service-card text-center h-100">
-                <div className="service-icon">
-                  <i className="bi bi-shield-check"></i>
+              <div className="why-shop-card">
+                <div className="why-shop-top">
+                  <span className="why-shop-number">02</span>
+
+                  <div className="why-shop-icon">
+                    <i className="bi bi-shield-check"></i>
+                  </div>
                 </div>
 
-                <h5 className="fw-bold mt-4">
-                  Secure Shopping
-                </h5>
+                <h4>Secure Shopping</h4>
 
-                <p className="text-muted">
-                  Your personal information and payments are
-                  protected with secure technology.
+                <p>
+                  Shop confidently with secure payments and protected personal
+                  information.
                 </p>
 
-                <div className="btn btn-dark">
-                  Shop Securly
+                <div className="why-shop-link">
+                  <span>Shop Securely</span>
+                  <i className="bi bi-arrow-right"></i>
                 </div>
               </div>
             </div>
 
-            {/* Card 3 */}
+            {/* CARD 3 */}
             <div className="col-md-6 col-lg-3">
-              <div className="service-card text-center h-100">
-                <div className="service-icon">
-                  <i className="bi bi-arrow-repeat"></i>
+              <div className="why-shop-card">
+                <div className="why-shop-top">
+                  <span className="why-shop-number">03</span>
+
+                  <div className="why-shop-icon">
+                    <i className="bi bi-arrow-repeat"></i>
+                  </div>
                 </div>
 
-                <h5 className="fw-bold mt-4">
-                  Easy Returns
-                </h5>
+                <h4>Easy Returns</h4>
 
-                <p className="text-muted">
-                  Changed your mind? Enjoy a simple and
-                  hassle-free return process.
+                <p>
+                  Changed your mind? Enjoy a simple and hassle-free return
+                  experience.
                 </p>
 
-                <div className="btn btn-dark">
-                  View Policy
+                <div className="why-shop-link">
+                  <span>View Policy</span>
+                  <i className="bi bi-arrow-right"></i>
                 </div>
               </div>
             </div>
 
-            {/* Card 4 */}
+            {/* CARD 4 */}
             <div className="col-md-6 col-lg-3">
-              <div className="service-card text-center h-100">
-                <div className="service-icon">
-                  <i className="bi bi-star"></i>
+              <div className="why-shop-card">
+                <div className="why-shop-top">
+                  <span className="why-shop-number">04</span>
+
+                  <div className="why-shop-icon">
+                    <i className="bi bi-star"></i>
+                  </div>
                 </div>
 
-                <h5 className="fw-bold mt-4">
-                  Quality Products
-                </h5>
+                <h4>Quality Products</h4>
 
-                <p className="text-muted">
-                  Discover carefully selected products that
-                  meet our quality standards.
+                <p>
+                  Discover carefully selected products that meet our high
+                  quality standards.
                 </p>
 
-                <div className="btn btn-dark">
-                  Explore Products
+                <div className="why-shop-link">
+                  <span>Explore Products</span>
+                  <i className="bi bi-arrow-right"></i>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* ================= CUSTOMER REVIEWS ================= */}
-
-      <section className="py-5 bg-light">
-        <div className="container">
-          <h3 className="fw-bold text-center mb-4">
-            What Our Customers Say
-          </h3>
-
-          <Slider
-            dots={true}
-            arrows={false}
-            infinite={true}
-            autoplay={true}
-            autoplaySpeed={3000}
-            slidesToShow={1}
-            responsive={[
-              {
-                breakpoint: 768,
-                settings: {
-                  slidesToShow: 1,
-                },
-              },
-            ]}
-          >
-            {[
-              {
-                name: "Rahul Sharma",
-                text: "Amazing quality and super fast delivery. Loved the experience!",
-              },
-              {
-                name: "Ananya Patel",
-                text: "Great prices and smooth checkout. Highly recommended.",
-              },
-              {
-                name: "Amit Verma",
-                text: "Customer support was very helpful. Will shop again!",
-              },
-            ].map((review, index) => (
-              <div key={index} className="px-3">
-                <div className="p-4 bg-white shadow-sm rounded text-center h-100">
-                  <p className="text-muted fst-italic text-1">
-                    “{review.text}”
-                  </p>
-
-                  <h6 className="fw-bold mt-3 mb-0 text-2">
-                    {review.name}
-                  </h6>
-                </div>
-              </div>
-            ))}
-          </Slider>
         </div>
       </section>
 
