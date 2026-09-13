@@ -1,3 +1,4 @@
+
 import { useContext, useEffect, useState } from "react";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
@@ -15,29 +16,33 @@ import HeroBanner from "./HeroBanner";
 
 const Home = () => {
   const dispatch = useDispatch();
+
   const { products, exclusiveProducts } = useSelector(
-    (state) => state.products,
+    (state) => state.products
   );
+
   const {
     categories,
     cart,
     addToCart,
     decrementQty,
     incrementQty,
-   
   } = useContext(myContext);
 
   /* ===== SLIDER SETTINGS ===== */
   const getSlidesToShow = () => {
     const width = window.innerWidth;
+
     if (width < 576) return 2.5;
     if (width < 768) return 2;
     if (width < 992) return 3;
+
     return 7;
   };
 
   const [slidesToShow, setSlidesToShow] = useState(getSlidesToShow());
   const [openIndex, setOpenIndex] = useState(null);
+
   useEffect(() => {
     const handleResize = () => {
       setSlidesToShow(getSlidesToShow());
@@ -64,22 +69,27 @@ const Home = () => {
       a: "Yes, returns are accepted within 7 days.",
     },
   ];
+
   useEffect(() => {
     dispatch(fetchProducts());
     dispatch(fetchExclusiveProducts());
   }, [dispatch]);
 
+  /* ===== FLASH SALE TIMER ===== */
   const [time, setTime] = useState(
-    new Date("2026-09-07T12:00:00").getTime() - Date.now(),
+    new Date("2026-09-07T12:00:00").getTime() - Date.now()
   );
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setTime(new Date("2026-09-07T12:00:00").getTime() - Date.now());
+      setTime(
+        new Date("2026-09-07T12:00:00").getTime() - Date.now()
+      );
     }, 1000);
 
     return () => clearInterval(timer);
   }, []);
+
   const seconds = Math.max(0, Math.floor(time / 1000));
 
   const days = Math.floor(seconds / 86400);
@@ -95,7 +105,10 @@ const Home = () => {
       <section className="py-2">
         <div className="container">
           <div className="d-flex justify-content-between align-items-center mb-2">
-            <h3 className="fw-bold Product-headding">Exclusive Products</h3>
+            <h3 className="fw-bold Product-headding">
+              Exclusive Products
+            </h3>
+
             <Link
               to="/product"
               className="btn btn-outline-dark headding-button"
@@ -103,6 +116,7 @@ const Home = () => {
               View All
             </Link>
           </div>
+
           <Slider
             dots={false}
             infinite={false}
@@ -114,53 +128,88 @@ const Home = () => {
             touchMove={true}
           >
             {exclusiveProducts.map((arr) => {
-              const cartItem = cart.find((item) => item._id === arr._id);
+              const cartItem = cart.find(
+                (item) => item._id === arr._id
+              );
+
+              const isOutOfStock = Number(arr.stock) <= 0;
 
               return (
                 <div key={arr._id} className="card-container">
-                  <div className="card">
+                  <div
+                    className={`card ${
+                      isOutOfStock
+                        ? "product-out-of-stock"
+                        : ""
+                    }`}
+                  >
                     {/* IMAGE */}
-                    <Link to={`/product/${arr._id}`} className="img-link">
-                      <img
-                        src={arr.imageUrl}
-                        alt={arr.name}
-                        className="card-image"
-                      />
-                    </Link>
+                    <div className="product-image-wrapper">
+                      <Link
+                        to={`/product/${arr._id}`}
+                        className="img-link"
+                      >
+                        <img
+                          src={arr.imageUrl}
+                          alt={arr.name}
+                          className="card-image"
+                        />
+                      </Link>
+
+                      {isOutOfStock && (
+                        <div className="out-of-stock-label">
+                          OUT OF STOCK
+                        </div>
+                      )}
+                    </div>
+
                     {/* DETAILS */}
                     <div className="card-body">
                       <h6 className="card-title text-truncate mb-1">
                         {arr.name}
                       </h6>
+
                       <p className="card-description text-truncate mb-0">
                         {arr.description}
                       </p>
-                      <p className="quantity mb-0">{arr.weight}</p>
-                      <div className="d-flex align-items-center mb-0 ">
+
+                      <p className="quantity mb-0">
+                        {arr.weight}
+                      </p>
+
+                      <div className="d-flex align-items-center mb-0">
                         <span className="price">
-                          <strong style={{ color: "green" }}>
-                            ₹ {arr.price}
-                          </strong>
-                        </span>
-                        <span className="price">
-                          <strong
-                            className="old-price"
-                            style={{
-                              color: "red",
-                              textDecoration: "line-through",
-                            }}
-                          >
-                            {arr.oldprice}
-                          </strong>
+                          <div style={{ color: "green" }}>
+                            {arr.oldPrice ? (
+                              <>
+                                <span className="text-muted text-decoration-line-through me-2">
+                                  ₹ {arr.oldPrice}
+                                </span>
+
+                                <strong className="text-danger">
+                                  ₹ {arr.price}
+                                </strong>
+                              </>
+                            ) : (
+                              <strong>₹ {arr.price}</strong>
+                            )}
+                          </div>
                         </span>
                       </div>
                     </div>
 
                     {/* CART CONTROLS */}
                     <div className="mb-1 w-100 d-flex justify-content-center">
-                      {!cartItem ? (
+                      {isOutOfStock ? (
                         <button
-                          className="btn btn-sm btn-dark exclusive-button "
+                          className="btn btn-sm btn-secondary exclusive-button"
+                          disabled
+                        >
+                          Out of Stock
+                        </button>
+                      ) : !cartItem ? (
+                        <button
+                          className="btn btn-sm btn-dark exclusive-button"
                           onClick={() => addToCart(arr)}
                         >
                           Add to Cart
@@ -169,16 +218,22 @@ const Home = () => {
                         <div className="d-flex align-items-center justify-content-center gap-2">
                           <button
                             className="btn btn-sm btn-outline-secondary"
-                            onClick={() => decrementQty(arr._id)}
+                            onClick={() =>
+                              decrementQty(arr._id)
+                            }
                           >
                             -
                           </button>
 
-                          <span className="fw-bold">{cartItem.quantity}</span>
+                          <span className="fw-bold">
+                            {cartItem.quantity}
+                          </span>
 
                           <button
                             className="btn btn-sm btn-outline-secondary"
-                            onClick={() => incrementQty(arr._id)}
+                            onClick={() =>
+                              incrementQty(arr._id)
+                            }
                           >
                             +
                           </button>
@@ -224,6 +279,7 @@ const Home = () => {
                 alt="Organic Food Banner"
               />
             </div>
+
             <div>
               <img
                 className="banner-img-1"
@@ -235,22 +291,36 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ================= HERO SECTION 2 ================= */}
-      <section className=" p-0 mb-4 ">
+      {/* ================= FLASH SALE BANNER ================= */}
+
+      <section className="p-0 mb-4">
         <div className="container flash-banner">
-          <img className="banner-img-4" src={image} />
+          <img
+            className="banner-img-4"
+            src={image}
+            alt="Flash Sale"
+          />
+
           <div className="timeout">
-            {String(days).padStart(2, "0")} : {String(hours).padStart(2, "0")} :{" "}
-            {String(minutes).padStart(2, "0")} : {String(secs).padStart(2, "0")}
+            {String(days).padStart(2, "0")} :{" "}
+            {String(hours).padStart(2, "0")} :{" "}
+            {String(minutes).padStart(2, "0")} :{" "}
+            {String(secs).padStart(2, "0")}
           </div>
-          <div className="btn btn-dark button-hero">GRAB DEAL</div>
+
+          <div className="btn btn-dark button-hero">
+            GRAB DEAL
+          </div>
         </div>
       </section>
 
       {/* ================= CATEGORIES ================= */}
+
       <section className="py-4 bg-light">
         <div className="container">
-          <h3 className="fw-bold mb-4 Product-headding">Shop by Category</h3>
+          <h3 className="fw-bold mb-4 Product-headding">
+            Shop by Category
+          </h3>
 
           <Slider
             dots={false}
@@ -264,7 +334,6 @@ const Home = () => {
           >
             {categories.map((cat) => (
               <div key={cat._id}>
-                {/* GAP WRAPPER */}
                 <div className="px-2">
                   <div className="card h-100 text-center border-0 shadow-sm category-card">
                     <div className="p-3">
@@ -280,7 +349,9 @@ const Home = () => {
                     </div>
 
                     <div className="card-body pt-0">
-                      <h6 className="fw-semibold mb-2">{cat.name}</h6>
+                      <h6 className="fw-semibold mb-2">
+                        {cat.name}
+                      </h6>
 
                       <Link
                         to={`/category/${cat._id}`}
@@ -298,25 +369,28 @@ const Home = () => {
       </section>
 
       {/* ================= SECOND BANNER ================= */}
+
       <section className="bg-light py-4">
         <div className="container-fluid">
           <div className="row align-items-center">
             <div className="col-md-7">
-              {/* <img
-                src="https://via.placeholder.com/450x300"
-                alt="Deals"
-                className="img-fluid rounded"
-              /> */}
+              {/* Image can be added here later */}
             </div>
 
             <div className="col-md-5">
-              <h2 className="fw-bold mb-3">Exclusive Deals Just for You</h2>
+              <h2 className="fw-bold mb-3">
+                Exclusive Deals Just for You
+              </h2>
+
               <p className="text-muted mb-4">
-                Grab limited-time offers on trending products before they’re
-                gone.
+                Grab limited-time offers on trending products
+                before they’re gone.
               </p>
 
-              <Link to="/products" className="btn btn-dark px-4">
+              <Link
+                to="/products"
+                className="btn btn-dark px-4"
+              >
                 Explore Deals
               </Link>
             </div>
@@ -324,11 +398,15 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ================= PRODUCT SLIDER ================= */}
+      {/* ================= FEATURED PRODUCT SLIDER ================= */}
+
       <section className="py-2">
         <div className="container">
           <div className="d-flex justify-content-between align-items-center mb-2 mt-2">
-            <h3 className="fw-bold Product-headding">Featured Products</h3>
+            <h3 className="fw-bold Product-headding">
+              Featured Products
+            </h3>
+
             <Link
               to="/product"
               className="btn btn-outline-dark headding-button"
@@ -336,6 +414,7 @@ const Home = () => {
               View All
             </Link>
           </div>
+
           <Slider
             dots={false}
             infinite={false}
@@ -347,53 +426,91 @@ const Home = () => {
             touchMove={true}
           >
             {products.map((arr) => {
-              const cartItem = cart.find((item) => item._id === arr._id);
+              const cartItem = cart.find(
+                (item) => item._id === arr._id
+              );
+
+              const isOutOfStock = Number(arr.stock) <= 0;
 
               return (
-                <div key={arr._id} className="card-container">
-                  <div className="card">
+                <div
+                  key={arr._id}
+                  className="card-container"
+                >
+                  <div
+                    className={`card ${
+                      isOutOfStock
+                        ? "product-out-of-stock"
+                        : ""
+                    }`}
+                  >
                     {/* IMAGE */}
-                    <Link to={`/product/${arr._id}`} className="img-link">
-                      <img
-                        src={arr.imageUrl}
-                        alt={arr.name}
-                        className="card-image"
-                      />
-                    </Link>
+                    <div className="product-image-wrapper">
+                      <Link
+                        to={`/product/${arr._id}`}
+                        className="img-link"
+                      >
+                        <img
+                          src={arr.imageUrl}
+                          alt={arr.name}
+                          className="card-image"
+                        />
+                      </Link>
+
+                      {isOutOfStock && (
+                        <div className="out-of-stock-label">
+                          OUT OF STOCK
+                        </div>
+                      )}
+                    </div>
+
                     {/* DETAILS */}
                     <div className="card-body">
                       <h6 className="card-title text-truncate mb-1">
                         {arr.name}
                       </h6>
+
                       <p className="card-description text-truncate mb-0">
                         {arr.description}
                       </p>
-                      <p className="quantity mb-0">{arr.weight}</p>
-                      <div className="d-flex align-items-center mb-1 ">
+
+                      <p className="quantity mb-0">
+                        {arr.weight}
+                      </p>
+
+                      <div className="d-flex align-items-center mb-1">
                         <span className="price">
-                          <strong style={{ color: "green" }}>
-                            ₹ {arr.price}
-                          </strong>
-                        </span>
-                        <span className="price">
-                          <strong
-                            className="old-price"
-                            style={{
-                              color: "red",
-                              textDecoration: "line-through",
-                            }}
-                          >
-                            {arr.oldprice}
-                          </strong>
+                          <div style={{ color: "green" }}>
+                            {arr.oldPrice ? (
+                              <>
+                                <span className="text-muted text-decoration-line-through me-2">
+                                  ₹ {arr.oldPrice}
+                                </span>
+
+                                <strong className="text-danger">
+                                  ₹ {arr.price}
+                                </strong>
+                              </>
+                            ) : (
+                              <strong>₹ {arr.price}</strong>
+                            )}
+                          </div>
                         </span>
                       </div>
                     </div>
 
                     {/* CART CONTROLS */}
                     <div className="mb-1 w-100 d-flex justify-content-center">
-                      {!cartItem ? (
+                      {isOutOfStock ? (
                         <button
-                          className="btn btn-sm btn-dark exclusive-button "
+                          className="btn btn-sm btn-secondary exclusive-button"
+                          disabled
+                        >
+                          Out of Stock
+                        </button>
+                      ) : !cartItem ? (
+                        <button
+                          className="btn btn-sm btn-dark exclusive-button"
                           onClick={() => addToCart(arr)}
                         >
                           Add to Cart
@@ -402,16 +519,22 @@ const Home = () => {
                         <div className="d-flex align-items-center justify-content-center gap-2">
                           <button
                             className="btn btn-sm btn-outline-secondary"
-                            onClick={() => decrementQty(arr._id)}
+                            onClick={() =>
+                              decrementQty(arr._id)
+                            }
                           >
                             -
                           </button>
 
-                          <span className="fw-bold">{cartItem.quantity}</span>
+                          <span className="fw-bold">
+                            {cartItem.quantity}
+                          </span>
 
                           <button
                             className="btn btn-sm btn-outline-secondary"
-                            onClick={() => incrementQty(arr._id)}
+                            onClick={() =>
+                              incrementQty(arr._id)
+                            }
                           >
                             +
                           </button>
@@ -427,6 +550,7 @@ const Home = () => {
       </section>
 
       {/* ================= NEWSLETTER ================= */}
+
       <section className="py-2">
         <div className="container">
           <div className="row justify-content-center">
@@ -435,9 +559,10 @@ const Home = () => {
                 <h3 className="fw-bold mb-0 news-letter-headding">
                   Get 10% Off Your First Order
                 </h3>
-                <p className=" mb-4 news-letter-text">
-                  Subscribe to our newsletter for exclusive deals and updates
-                  Subscribe now!.
+
+                <p className="mb-4 news-letter-text">
+                  Subscribe to our newsletter for exclusive deals
+                  and updates Subscribe now!.
                 </p>
 
                 <div className="d-flex gap-2 justify-content-center flex-wrap">
@@ -446,6 +571,7 @@ const Home = () => {
                     className="form-control w-100 input-news-letter"
                     placeholder="Enter your email"
                   />
+
                   <button className="btn btn-light news-letter-button">
                     Subscribe
                   </button>
@@ -457,11 +583,15 @@ const Home = () => {
       </section>
 
       {/* ================= APP PROMO ================= */}
+
       <section className="py-5 bg-light text-dark">
         <div className="container">
           <div className="row align-items-center">
             <div className="col-md-8">
-              <h3 className="fw-bold mb-2">Shop Faster on Our Mobile App</h3>
+              <h3 className="fw-bold mb-2">
+                Shop Faster on Our Mobile App
+              </h3>
+
               <p className="text-muted">
                 Get exclusive app-only offers and faster checkout.
               </p>
@@ -487,15 +617,23 @@ const Home = () => {
           </div>
         </div>
       </section>
-      {/* Why Shop With Us Section */}
+
+      {/* ================= WHY SHOP WITH US ================= */}
+
       <section className="why-shop-section py-5">
         <div className="container">
           <div className="text-center mb-5">
-            <span className="text-danger fw-semibold">WHY CHOOSE US</span>
-            <h2 className="fw-bold mt-2">Shopping Made Simple</h2>
+            <span className="text-danger fw-semibold">
+              WHY CHOOSE US
+            </span>
+
+            <h2 className="fw-bold mt-2">
+              Shopping Made Simple
+            </h2>
+
             <p className="text-muted">
-              Everything you need for a smooth and enjoyable shopping
-              experience.
+              Everything you need for a smooth and enjoyable
+              shopping experience.
             </p>
           </div>
 
@@ -507,14 +645,18 @@ const Home = () => {
                   <i className="bi bi-truck"></i>
                 </div>
 
-                <h5 className="fw-bold mt-4">Fast & Free Delivery</h5>
+                <h5 className="fw-bold mt-4">
+                  Fast & Free Delivery
+                </h5>
 
                 <p className="text-muted">
-                  Get your favorite products delivered quickly and safely to
-                  your doorstep.
+                  Get your favorite products delivered quickly
+                  and safely to your doorstep.
                 </p>
 
-                <div className="btn btn-dark">Learn More</div>
+                <div className="btn btn-dark">
+                  Learn More
+                </div>
               </div>
             </div>
 
@@ -525,14 +667,18 @@ const Home = () => {
                   <i className="bi bi-shield-check"></i>
                 </div>
 
-                <h5 className="fw-bold mt-4">Secure Shopping</h5>
+                <h5 className="fw-bold mt-4">
+                  Secure Shopping
+                </h5>
 
                 <p className="text-muted">
-                  Your personal information and payments are protected with
-                  secure technology.
+                  Your personal information and payments are
+                  protected with secure technology.
                 </p>
 
-                <div className="btn btn-dark">Shop Securly</div>
+                <div className="btn btn-dark">
+                  Shop Securly
+                </div>
               </div>
             </div>
 
@@ -543,14 +689,18 @@ const Home = () => {
                   <i className="bi bi-arrow-repeat"></i>
                 </div>
 
-                <h5 className="fw-bold mt-4">Easy Returns</h5>
+                <h5 className="fw-bold mt-4">
+                  Easy Returns
+                </h5>
 
                 <p className="text-muted">
-                  Changed your mind? Enjoy a simple and hassle-free return
-                  process.
+                  Changed your mind? Enjoy a simple and
+                  hassle-free return process.
                 </p>
 
-                <div className="btn btn-dark">View Policy</div>
+                <div className="btn btn-dark">
+                  View Policy
+                </div>
               </div>
             </div>
 
@@ -561,23 +711,31 @@ const Home = () => {
                   <i className="bi bi-star"></i>
                 </div>
 
-                <h5 className="fw-bold mt-4">Quality Products</h5>
+                <h5 className="fw-bold mt-4">
+                  Quality Products
+                </h5>
 
                 <p className="text-muted">
-                  Discover carefully selected products that meet our quality
-                  standards.
+                  Discover carefully selected products that
+                  meet our quality standards.
                 </p>
 
-                <div className="btn btn-dark">Explore Products</div>
+                <div className="btn btn-dark">
+                  Explore Products
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
+
       {/* ================= CUSTOMER REVIEWS ================= */}
+
       <section className="py-5 bg-light">
         <div className="container">
-          <h3 className="fw-bold text-center mb-4">What Our Customers Say</h3>
+          <h3 className="fw-bold text-center mb-4">
+            What Our Customers Say
+          </h3>
 
           <Slider
             dots={true}
@@ -586,7 +744,14 @@ const Home = () => {
             autoplay={true}
             autoplaySpeed={3000}
             slidesToShow={1}
-            responsive={[{ breakpoint: 768, settings: { slidesToShow: 1 } }]}
+            responsive={[
+              {
+                breakpoint: 768,
+                settings: {
+                  slidesToShow: 1,
+                },
+              },
+            ]}
           >
             {[
               {
@@ -607,7 +772,10 @@ const Home = () => {
                   <p className="text-muted fst-italic text-1">
                     “{review.text}”
                   </p>
-                  <h6 className="fw-bold mt-3 mb-0 text-2">{review.name}</h6>
+
+                  <h6 className="fw-bold mt-3 mb-0 text-2">
+                    {review.name}
+                  </h6>
                 </div>
               </div>
             ))}
@@ -615,7 +783,10 @@ const Home = () => {
         </div>
       </section>
 
-      {/* <section className="py-5">
+      {/* ================= FAQ ================= */}
+
+      {/*
+      <section className="py-5">
         <div className="container">
           <h3 className="fw-bold text-center mb-4">
             Frequently Asked Questions
@@ -623,25 +794,33 @@ const Home = () => {
 
           {faqs.map((item, index) => (
             <div key={index} className="border rounded mb-2">
-              
               <button
                 className="w-100 text-start p-3 fw-semibold bg-light border-0"
-                onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                onClick={() =>
+                  setOpenIndex(
+                    openIndex === index ? null : index
+                  )
+                }
               >
                 <div className="d-flex justify-content-between">
                   {item.q}
-                  <p>{openIndex === index ? "−" : "+"}</p>
+
+                  <p>
+                    {openIndex === index ? "−" : "+"}
+                  </p>
                 </div>
               </button>
 
-             
               {openIndex === index && (
-                <div className="p-3 border-top text-muted">{item.a}</div>
+                <div className="p-3 border-top text-muted">
+                  {item.a}
+                </div>
               )}
             </div>
           ))}
         </div>
-      </section> */}
+      </section>
+      */}
     </div>
   );
 };

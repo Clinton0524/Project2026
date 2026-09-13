@@ -59,3 +59,41 @@
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   }
 }
+
+/* =========================================
+   OUT OF STOCK PRODUCT
+========================================= */
+
+.product-out-of-stock {
+  opacity: 0.55;
+  filter: grayscale(100%);
+  position: relative;
+}
+
+/* Prevent clicking anything inside an
+   out-of-stock card */
+.product-out-of-stock .card-img-top {
+  cursor: not-allowed;
+}
+
+/* Product image wrapper */
+.product-image-wrapper {
+  width: 100%;
+  position: relative;
+}
+
+/* OUT OF STOCK badge */
+.out-of-stock-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #dc3545;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  z-index: 2;
+}

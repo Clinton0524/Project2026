@@ -45,38 +45,43 @@ export const MyProvider = ({ children }) => {
   });
 
   // =====================================================
-  // LOAD CART FOR CURRENT USER
+  // LOAD CART FROM BACKEND
   // =====================================================
 
   useEffect(() => {
-    if (currentUser?.id) {
-      const savedCart = localStorage.getItem(
-        `cart_${currentUser.id}`
-      );
-
-      try {
-        setCart(savedCart ? JSON.parse(savedCart) : []);
-      } catch (error) {
-        console.error("Cart parsing error:", error);
-        setCart([]);
-      }
+    if (currentUser) {
+      fetchCart();
     } else {
       setCart([]);
     }
   }, [currentUser]);
 
-  // =====================================================
-  // SAVE CART
-  // =====================================================
+  const fetchCart = async () => {
+    try {
+      const response = await api.get("/cart");
 
-  useEffect(() => {
-    if (currentUser?.id) {
-      localStorage.setItem(
-        `cart_${currentUser.id}`,
-        JSON.stringify(cart)
-      );
+      if (response.data.success) {
+        const backendItems = response.data.cart?.items || [];
+
+        const formattedCart = backendItems.map((item) => ({
+          ...item.productId,
+          quantity: item.quantity,
+        }));
+
+        setCart(formattedCart);
+      } else {
+        setCart([]);
+      }
+    } catch (error) {
+      console.error("Fetch cart error:", error);
+
+      if (error.response?.status === 401) {
+        console.log("User is not authorized to fetch cart");
+      }
+
+      setCart([]);
     }
-  }, [cart, currentUser]);
+  };
 
   // =====================================================
   // FETCH CATEGORIES
@@ -88,9 +93,7 @@ export const MyProvider = ({ children }) => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get(
-        `${API_URL}/api/categories?limit=50`
-      );
+      const response = await axios.get(`${API_URL}/api/categories?limit=50`);
 
       setCategories(response.data.categories || []);
     } catch (error) {
@@ -102,90 +105,136 @@ export const MyProvider = ({ children }) => {
   // ADD TO CART
   // =====================================================
 
-  const addToCart = (product) => {
+  const addToCart = async (product) => {
     if (!currentUser) {
       alert("Please login to add products to cart.");
       return;
     }
 
-    setCart((previousCart) => {
-      const existing = previousCart.find(
-        (item) => item._id === product._id
-      );
+    try {
+      const response = await api.post("/cart/add", {
+        productId: product._id,
+        quantity: 1,
+      });
 
-      if (existing) {
-        return previousCart.map((item) =>
-          item._id === product._id
-            ? {
-                ...item,
-                quantity: item.quantity + 1,
-              }
-            : item
-        );
+      if (response.data.success) {
+        const backendItems = response.data.cart?.items || [];
+
+        const formattedCart = backendItems.map((item) => ({
+          ...item.productId,
+          quantity: item.quantity,
+        }));
+
+        setCart(formattedCart);
       }
+    } catch (error) {
+      console.error("Add to cart error:", error);
 
-      return [
-        ...previousCart,
-        {
-          ...product,
-          quantity: 1,
+      alert(error.response?.data?.message || "Failed to add product to cart");
+    }
+  };
+
+  // =====================================================
+  // INCREMENT QUANTITY
+  // =====================================================
+
+  const incrementQty = async (id) => {
+    try {
+      const response = await api.put("/cart/update", {
+        productId: id,
+        action: "increase",
+      });
+
+      if (response.data.success) {
+        const backendItems = response.data.cart?.items || [];
+
+        const formattedCart = backendItems.map((item) => ({
+          ...item.productId,
+          quantity: item.quantity,
+        }));
+
+        setCart(formattedCart);
+      }
+    } catch (error) {
+      console.error("Increment quantity error:", error);
+
+      alert(error.response?.data?.message || "Failed to increase quantity");
+    }
+  };
+
+  // =====================================================
+  // DECREMENT QUANTITY
+  // =====================================================
+
+  const decrementQty = async (id) => {
+    try {
+      const response = await api.put("/cart/update", {
+        productId: id,
+        action: "decrease",
+      });
+
+      if (response.data.success) {
+        const backendItems = response.data.cart?.items || [];
+
+        const formattedCart = backendItems.map((item) => ({
+          ...item.productId,
+          quantity: item.quantity,
+        }));
+
+        setCart(formattedCart);
+      }
+    } catch (error) {
+      console.error("Decrement quantity error:", error);
+
+      alert(error.response?.data?.message || "Failed to decrease quantity");
+    }
+  };
+
+  // =====================================================
+  // REMOVE ITEM FROM CART
+  // =====================================================
+
+  const removeFromCart = async (id) => {
+    try {
+      const response = await api.delete("/cart/remove", {
+        data: {
+          productId: id,
         },
-      ];
-    });
-  };
+      });
 
-  // =====================================================
-  // INCREMENT
-  // =====================================================
+      if (response.data.success) {
+        const backendItems = response.data.cart?.items || [];
 
-  const incrementQty = (id) => {
-    setCart((previousCart) =>
-      previousCart.map((item) =>
-        item._id === id
-          ? {
-              ...item,
-              quantity: item.quantity + 1,
-            }
-          : item
-      )
-    );
-  };
+        const formattedCart = backendItems.map((item) => ({
+          ...item.productId,
+          quantity: item.quantity,
+        }));
 
-  // =====================================================
-  // DECREMENT
-  // =====================================================
+        setCart(formattedCart);
+      }
+    } catch (error) {
+      console.error("Remove from cart error:", error);
 
-  const decrementQty = (id) => {
-    setCart((previousCart) =>
-      previousCart
-        .map((item) =>
-          item._id === id
-            ? {
-                ...item,
-                quantity: item.quantity - 1,
-              }
-            : item
-        )
-        .filter((item) => item.quantity > 0)
-    );
-  };
-
-  // =====================================================
-  // REMOVE ITEM
-  // =====================================================
-
-  const removeFromCart = (id) => {
-    setCart((previousCart) =>
-      previousCart.filter((item) => item._id !== id)
-    );
+      alert(error.response?.data?.message || "Failed to remove item from cart");
+    }
   };
 
   // =====================================================
   // CLEAR CART
   // =====================================================
 
-  const clearCart = () => {
-    setCart([]);
+  const clearCart = async () => {
+    try {
+      const response = await api.delete("/cart/clear");
+
+      if (response.data.success) {
+        setCart([]);
+      }
+    } catch (error) {
+      console.error("Clear cart error:", error);
+
+      alert(error.response?.data?.message || "Failed to clear cart");
+    }
   };
 
   // =====================================================
@@ -220,8 +269,7 @@ export const MyProvider = ({ children }) => {
       console.error("Login error:", error);
 
       const message =
-        error.response?.data?.message ||
-        "Invalid email or password";
+        error.response?.data?.message || "Invalid email or password";
 
       setError(message);
 
@@ -262,9 +310,7 @@ export const MyProvider = ({ children }) => {
     } catch (error) {
       console.error("Register error:", error);
 
-      const message =
-        error.response?.data?.message ||
-        "Registration failed";
+      const message = error.response?.data?.message || "Registration failed";
 
       setError(message);
 
@@ -285,6 +331,7 @@ export const MyProvider = ({ children }) => {
 
     setCurrentUser(null);
     setCart([]);
+
     setLoginInfo({
       email: "",
       password: "",
@@ -347,9 +394,5 @@ export const MyProvider = ({ children }) => {
     handleLogout,
   };
 
-  return (
-    <myContext.Provider value={value}>
-      {children}
-    </myContext.Provider>
-  );
+  return <myContext.Provider value={value}>{children}</myContext.Provider>;
 };

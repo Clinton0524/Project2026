@@ -66,7 +66,7 @@ const Register = () => {
       );
 
       if (result.success) {
-        alert("Registration successful! Please login.");
+        alert("Registration successful!.");
 
         setRegister({
           name: "",
@@ -75,7 +75,7 @@ const Register = () => {
           confirmPassword: "",
         });
 
-        navigate("/login");
+        navigate("/");
       }
     } catch (error) {
       console.error("Registration error:", error);

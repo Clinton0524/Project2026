@@ -1,0 +1,402 @@
+/* =====================================================
+   CHECKOUT PAGE
+===================================================== */
+
+.checkout-page {
+  max-width: 1200px;
+}
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.checkout-header {
+  background: linear-gradient(135deg, #f0fff5, #ffffff);
+  border: 1px solid #e4eee7;
+  border-radius: 18px;
+  padding: 24px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.checkout-eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #198754;
+  margin-bottom: 6px;
+}
+
+.checkout-header h2 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #222;
+}
+
+.checkout-header p {
+  margin: 6px 0 0;
+  color: #777;
+}
+
+/* =====================================================
+   CHECKOUT STEPS
+===================================================== */
+
+.checkout-step {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 13px;
+  color: #777;
+  white-space: nowrap;
+}
+
+.checkout-step > span:not(.step-line) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step-active,
+.checkout-step > span:nth-last-child(2) {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #198754;
+  color: white;
+  font-weight: 700;
+}
+
+.step-line {
+  width: 35px;
+  height: 1px;
+  background: #d8d8d8;
+}
+
+/* =====================================================
+   CARDS
+===================================================== */
+
+.checkout-card {
+  background: #ffffff;
+  border: 1px solid #e8e8e8;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+}
+
+.checkout-card h6 {
+  font-size: 17px;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 16px;
+}
+
+.checkout-card p {
+  color: #555;
+}
+
+/* =====================================================
+   USER DETAILS
+===================================================== */
+
+.user-details-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #e9f8ef;
+  color: #198754;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* =====================================================
+   ADDRESS
+===================================================== */
+
+.address-card {
+  position: relative;
+  border: 1px solid #dedede;
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #fff;
+}
+
+.address-card:hover {
+  border-color: #198754;
+  box-shadow: 0 4px 12px rgba(25, 135, 84, 0.08);
+}
+
+.address-selected {
+  border: 2px solid #198754 !important;
+  background: #f4fff8;
+}
+
+.address-card input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #198754;
+  cursor: pointer;
+}
+
+.address-card strong {
+  color: #222;
+  font-size: 15px;
+}
+
+.address-card p {
+  font-size: 14px;
+  color: #555;
+}
+
+/* =====================================================
+   ADD NEW ADDRESS
+===================================================== */
+
+.checkout-card .form-control,
+.checkout-card textarea {
+  border-radius: 9px;
+  border: 1px solid #ddd;
+  padding: 10px 12px;
+}
+
+.checkout-card .form-control:focus,
+.checkout-card textarea:focus {
+  border-color: #198754;
+  box-shadow: 0 0 0 0.15rem rgba(25, 135, 84, 0.12);
+}
+
+.checkout-card .btn-outline-dark {
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+/* =====================================================
+   SUMMARY
+===================================================== */
+
+.checkout-summary {
+  background: #ffffff;
+  border: 1px solid #e8e8e8;
+  border-radius: 16px;
+  padding: 22px;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.07);
+  position: sticky;
+  top: 20px;
+}
+
+.checkout-summary h6 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+/* =====================================================
+   CART ITEMS
+===================================================== */
+
+.checkout-summary .cart-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.checkout-summary .cart-item:last-child {
+  border-bottom: none;
+}
+
+.cart-item-name {
+  flex: 1;
+  font-size: 13px;
+  color: #444;
+}
+
+.cart-item-price {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* =====================================================
+   PROMO
+===================================================== */
+
+.promo-section {
+  background: #f8faf9;
+  border: 1px solid #e6ece8;
+  border-radius: 12px;
+  padding: 13px;
+  margin-bottom: 18px;
+}
+
+.promo-section h6 {
+  font-size: 14px;
+  margin-bottom: 9px;
+}
+
+.promo-section .form-control {
+  border-radius: 8px;
+}
+
+.promo-section .btn {
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+/* =====================================================
+   PRICE BREAKDOWN
+===================================================== */
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  color: #555;
+  font-size: 14px;
+}
+
+.discount-row {
+  color: #198754;
+  font-weight: 600;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px dashed #d7d7d7;
+}
+
+.total-row span:first-child {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.total-row span:last-child {
+  font-size: 22px;
+  font-weight: 800;
+  color: #198754;
+}
+
+/* =====================================================
+   PLACE ORDER BUTTON
+===================================================== */
+
+.checkout-summary .place-order-btn {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  padding: 13px;
+  background: #198754;
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.checkout-summary .place-order-btn:hover {
+  background: #157347;
+  transform: translateY(-1px);
+  box-shadow: 0 5px 14px rgba(25, 135, 84, 0.25);
+}
+
+.checkout-summary .place-order-btn:disabled {
+  opacity: 0.65;
+  transform: none;
+}
+
+/* =====================================================
+   SECURE MESSAGE
+===================================================== */
+
+.secure-checkout {
+  text-align: center;
+  margin-top: 12px;
+  color: #777;
+  font-size: 11px;
+}
+
+.secure-checkout strong {
+  color: #198754;
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 991px) {
+  .checkout-summary {
+    position: static;
+    margin-top: 20px;
+  }
+
+  .checkout-header {
+    align-items: flex-start;
+    gap: 20px;
+    flex-direction: column;
+  }
+
+  .checkout-step {
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .checkout-page {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .checkout-header {
+    padding: 18px;
+    border-radius: 14px;
+  }
+
+  .checkout-header h2 {
+    font-size: 23px;
+  }
+
+  .checkout-card,
+  .checkout-summary {
+    padding: 16px;
+    border-radius: 13px;
+  }
+
+  .checkout-step {
+    font-size: 11px;
+  }
+
+  .step-line {
+    flex: 1;
+  }
+
+  .address-card {
+    padding: 13px;
+  }
+
+  .checkout-summary {
+    margin-top: 15px;
+  }
+
+  .total-row span:last-child {
+    font-size: 20px;
+  }
+}

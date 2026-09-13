@@ -10,7 +10,7 @@ const PaymentMock = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const address = location.state?.address;
+  const { address, promoCode, promoDiscount } = location.state || {};
   const [paymentMethod, setPaymentMethod] = useState("COD");
 
   const [loading, setLoading] = useState(false);
@@ -91,6 +91,7 @@ const PaymentMock = () => {
         shippingAddress: address,
         paymentMethod,
         paymentId,
+        promoCode: promoCode || null,
       });
 
       if (response.data.success) {

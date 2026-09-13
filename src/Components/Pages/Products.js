@@ -1,3 +1,4 @@
+
 import { useContext, useMemo, useState, useEffect } from "react";
 import { fetchProducts } from "../Redux/ProductSlice";
 
@@ -5,6 +6,7 @@ import { myContext } from "../Context/Context";
 import Breadcrumbs from "../BreadCrumbs/Breadcrumbs";
 import "../Css/Products.css";
 import { useDispatch, useSelector } from "react-redux";
+
 const Products = () => {
   const [maxPrice, setMaxPrice] = useState(1000);
   const [activeCategory, setActiveCategory] = useState([]);
@@ -14,6 +16,7 @@ const Products = () => {
   const dispatch = useDispatch();
 
   const { products } = useSelector((state) => state.products);
+
   const {
     sort,
     setSort,
@@ -29,6 +32,7 @@ const Products = () => {
     incrementQty,
     decrementQty,
   } = useContext(myContext);
+
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
@@ -67,28 +71,37 @@ const Products = () => {
       if (sort === "l-h") return a.price - b.price;
       return 0;
     });
-  }, [products, sort, maxPrice, under50, under100, under150, activeCategory]);
+  }, [
+    products,
+    sort,
+    maxPrice,
+    under50,
+    under100,
+    under150,
+    activeCategory,
+  ]);
 
   const handleSortToggle = (value) => {
     setSort((prev) => (prev === value ? "" : value));
   };
+
   const handleSlider = (value) => {
     setMaxPrice(value);
     setUnder50(false);
     setUnder100(false);
     setUnder150(false);
   };
+
   // Function to toggle category
   const toggleCategory = (categoryName) => {
-    setActiveCategory(
-      (prev) =>
-        prev.includes(categoryName)
-          ? prev.filter((c) => c !== categoryName) // remove
-          : [...prev, categoryName] // add
+    setActiveCategory((prev) =>
+      prev.includes(categoryName)
+        ? prev.filter((c) => c !== categoryName)
+        : [...prev, categoryName]
     );
   };
 
-  //PAGINATION
+  // PAGINATION
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -141,10 +154,11 @@ const Products = () => {
           </div>
 
           {/* Price Slider */}
-
           <div className="mt-3 text-start">
             <h6>Filter</h6>
+
             <label>Max Price: ₹{maxPrice}</label>
+
             <input
               type="range"
               min="0"
@@ -186,6 +200,7 @@ const Products = () => {
           </div>
 
           <h6 className="mt-3 text-start">Categories</h6>
+
           {categories.map((cat) => (
             <div className="form-check text-start" key={cat._id}>
               <input
@@ -202,10 +217,11 @@ const Products = () => {
         {/* PRODUCTS */}
         <div className="col-md-10">
           <div className="d-flex">
-            <Breadcrumbs />{" "}
+            <Breadcrumbs />
+
             <div className="d-md-none mb-3 ms-auto">
               <button
-                className="filter-icon-btn "
+                className="filter-icon-btn"
                 onClick={() => setFilterOpen(true)}
                 aria-label="Open filters"
               >
@@ -216,24 +232,43 @@ const Products = () => {
 
           <div className="row g-2">
             {currentData.map((arr) => {
-              const cartItem = cart.find((item) => item._id === arr._id);
+              const cartItem = cart.find(
+                (item) => item._id === arr._id
+              );
+
+              // CHECK STOCK
+              const isOutOfStock = Number(arr.stock) <= 0;
 
               return (
                 <div
                   className="col-6 col-sm-4 col-md-3 col-lg-2 mb-2"
                   key={arr._id}
                 >
-                  <div className="card p-2 h-100 d-flex flex-column align-items-center text-center shadow-sm">
-                    <img
-                      src={arr.imageUrl}
-                      alt={arr.name}
-                      className="card-img-top"
-                      style={{
-                        height: "120px",
-                        objectFit: "contain",
-                        width: "100%",
-                      }}
-                    />
+                  <div
+                    className={`card p-2 h-100 d-flex flex-column align-items-center text-center shadow-sm ${
+                      isOutOfStock ? "product-out-of-stock" : ""
+                    }`}
+                  >
+                    {/* PRODUCT IMAGE */}
+                    <div className="product-image-wrapper">
+                      <img
+                        src={arr.imageUrl}
+                        alt={arr.name}
+                        className="card-img-top"
+                        style={{
+                          height: "120px",
+                          objectFit: "contain",
+                          width: "100%",
+                        }}
+                      />
+
+                      {/* OUT OF STOCK LABEL */}
+                      {isOutOfStock && (
+                        <div className="out-of-stock-label">
+                          OUT OF STOCK
+                        </div>
+                      )}
+                    </div>
 
                     <div className="card-body p-2 d-flex flex-column w-100 text-start">
                       <h6 className="card-title mb-1">{arr.name}</h6>
@@ -241,12 +276,34 @@ const Products = () => {
                       <p className="card-text text-truncate mb-1">
                         {arr.description}
                       </p>
-                      <strong className="mb-2">₹ {arr.price}</strong>
+
+                      <div className="mb-2">
+                        {arr.oldPrice ? (
+                          <>
+                            <span className="text-muted text-decoration-line-through me-2">
+                              ₹ {arr.oldPrice}
+                            </span>
+
+                            <strong className="text-danger">
+                              ₹ {arr.price}
+                            </strong>
+                          </>
+                        ) : (
+                          <strong>₹ {arr.price}</strong>
+                        )}
+                      </div>
                     </div>
 
                     {/* CART CONTROLS */}
                     <div className="mb-2 w-100">
-                      {!cartItem ? (
+                      {isOutOfStock ? (
+                        <button
+                          className="btn btn-sm btn-secondary w-100"
+                          disabled
+                        >
+                          Out of Stock
+                        </button>
+                      ) : !cartItem ? (
                         <button
                           className="btn btn-sm btn-dark w-100"
                           onClick={() => addToCart(arr)}
@@ -262,7 +319,9 @@ const Products = () => {
                             -
                           </button>
 
-                          <span className="fw-bold">{cartItem.quantity}</span>
+                          <span className="fw-bold">
+                            {cartItem.quantity}
+                          </span>
 
                           <button
                             className="btn btn-sm btn-outline-secondary"
@@ -278,6 +337,7 @@ const Products = () => {
               );
             })}
           </div>
+
           {/* PAGINATION */}
           <div className="d-flex justify-content-center mt-3 mb-5">
             <div className="btn-group align-items-center">
@@ -302,6 +362,8 @@ const Products = () => {
               </button>
             </div>
           </div>
+
+          {/* MOBILE FILTER MODAL */}
           {filterOpen && (
             <div className="filter-modal-overlay">
               <div className="filter-modal">
@@ -368,7 +430,9 @@ const Products = () => {
                     min="0"
                     max="1000"
                     value={maxPrice}
-                    onChange={(e) => handleSlider(Number(e.target.value))}
+                    onChange={(e) =>
+                      handleSlider(Number(e.target.value))
+                    }
                     className="form-range dark-range"
                   />
                 </div>
@@ -380,7 +444,9 @@ const Products = () => {
                     checked={under50}
                     onClick={() => setUnder50(!under50)}
                   />
-                  <label className="form-check-label">less than ₹50</label>
+                  <label className="form-check-label">
+                    less than ₹50
+                  </label>
                 </div>
 
                 <div className="form-check text-start">
@@ -390,7 +456,9 @@ const Products = () => {
                     checked={under100}
                     onClick={() => setUnder100(!under100)}
                   />
-                  <label className="form-check-label">less than ₹100</label>
+                  <label className="form-check-label">
+                    less than ₹100
+                  </label>
                 </div>
 
                 <div className="form-check text-start">
@@ -400,14 +468,19 @@ const Products = () => {
                     checked={under150}
                     onClick={() => setUnder150(!under150)}
                   />
-                  <label className="form-check-label">less than ₹150</label>
+                  <label className="form-check-label">
+                    less than ₹150
+                  </label>
                 </div>
 
                 {/* CATEGORIES */}
                 <h6 className="mt-3 text-start">Categories</h6>
 
                 {categories.map((cat) => (
-                  <div className="form-check text-start" key={cat._id}>
+                  <div
+                    className="form-check text-start"
+                    key={cat._id}
+                  >
                     <input
                       className="form-check-input"
                       type="checkbox"
@@ -415,7 +488,9 @@ const Products = () => {
                       onChange={() => toggleCategory(cat.name)}
                     />
 
-                    <label className="form-check-label">{cat.name}</label>
+                    <label className="form-check-label">
+                      {cat.name}
+                    </label>
                   </div>
                 ))}
 

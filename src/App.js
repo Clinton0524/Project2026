@@ -18,6 +18,7 @@ import ScrollToTop from "./Components/ScrollToTop";
 import Orders from "./Components/Pages/Orders";
 import OrderDetails from "./Components/Pages/OrderDetails";
 import OrderSuccess from "./Components/Pages/OrderSuccess";
+import Offers from "./Components/Pages/Offers";
 function App() {
   return (
     <Provider store={Store}>
@@ -39,6 +40,8 @@ function App() {
                 <Route path="/product/:id" element={<ProductDetail />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/orders" element={<Orders />} />
+                <Route path="/offers" element={<Offers />} />
+
                 <Route path="/category/:catid" element={<CategoryProducts />} />
                 <Route path="/orders/:orderId" element={<OrderDetails />} />
               </Routes>
