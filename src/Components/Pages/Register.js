@@ -1,8 +1,9 @@
-import React, { useContext } from "react";
-import { myContext } from "../Context/Context";
-import { useNavigate } from "react-router-dom";
-import "../Css/Register.css";
 
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { myContext } from "../Context/Context";
+import "../Css/Register.css";
+import Image from "../Images/Pink and Blue Playful Kids Clothing Store Logo.png";
 const Register = () => {
   const {
     register,
@@ -14,17 +15,24 @@ const Register = () => {
 
   const navigate = useNavigate();
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (e) => {
     setRegister({
       ...register,
       [e.target.name]: e.target.value,
     });
+
+    if (error) {
+      setError("");
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Clear previous error
     setError("");
 
     // Check required fields
@@ -59,6 +67,8 @@ const Register = () => {
     }
 
     try {
+      setLoading(true);
+
       const result = await registerUser(
         register.name,
         register.email,
@@ -66,7 +76,7 @@ const Register = () => {
       );
 
       if (result.success) {
-        alert("Registration successful!.");
+        alert("Registration successful!");
 
         setRegister({
           name: "",
@@ -77,91 +87,267 @@ const Register = () => {
 
         navigate("/");
       }
-    } catch (error) {
-      console.error("Registration error:", error);
+    } catch (err) {
+      console.error("Registration error:", err);
       setError("Registration failed");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="register-container">
-      <div className="register-card">
+    <div className="register-page">
 
-        {/* Left panel */}
-        <div className="register-left">
-          <h2>Welcome!</h2>
-          <p>Create an account to start shopping</p>
+      <div className="register-wrapper">
+
+        {/* ================= LEFT BRAND SECTION ================= */}
+        <div className="register-brand">
+
+          <div className="register-brand-content">
+
+            <img className="register-brand-logo" src={Image}/>
+              
+            
+
+            <h1>
+              Join Our Family!
+            </h1>
+
+            <p>
+              Create your account and enjoy a
+              simple and convenient shopping experience.
+            </p>
+
+            <div className="register-features">
+
+              <div className="register-feature">
+                <span>✓</span>
+                <p>Quick and easy registration</p>
+              </div>
+
+              <div className="register-feature">
+                <span>✓</span>
+                <p>Discover amazing products</p>
+              </div>
+
+              <div className="register-feature">
+                <span>✓</span>
+                <p>Enjoy exclusive offers</p>
+              </div>
+
+            </div>
+
+          </div>
+
         </div>
 
-        {/* Right panel */}
-        <div className="register-right">
-          <h3 className="register-text">Register</h3>
+        {/* ================= RIGHT FORM SECTION ================= */}
+        <div className="register-form-section">
 
-          {error && <div className="error">{error}</div>}
+          <div className="register-form-container">
 
-          <form onSubmit={handleSubmit}>
+            {/* Mobile Logo */}
+          
 
-            <div className="input-group">
-              <label>Full Name</label>
+            <h2>
+              Create Account
+            </h2>
 
-              <input
-                type="text"
-                name="name"
-                value={register.name || ""}
-                onChange={handleChange}
-                placeholder="Enter full name"
-              />
+            <p className="register-subtitle">
+              Sign up to get started with us
+            </p>
+
+            {/* Error Message */}
+            {error && (
+              <div className="register-error">
+                <span>!</span>
+                {error}
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit}>
+
+              {/* FULL NAME */}
+              <div className="register-input-group">
+
+                <label htmlFor="register-name">
+                  Full Name
+                </label>
+
+                <div className="register-input-wrapper">
+
+                  <span className="register-input-icon">
+                    👤
+                  </span>
+
+                  <input
+                    id="register-name"
+                    type="text"
+                    name="name"
+                    value={register.name || ""}
+                    onChange={handleChange}
+                    placeholder="Enter your full name"
+                    autoComplete="name"
+                  />
+
+                </div>
+
+              </div>
+
+              {/* EMAIL */}
+              <div className="register-input-group">
+
+                <label htmlFor="register-email">
+                  Email Address
+                </label>
+
+                <div className="register-input-wrapper">
+
+                  <span className="register-input-icon">
+                    ✉
+                  </span>
+
+                  <input
+                    id="register-email"
+                    type="email"
+                    name="email"
+                    value={register.email || ""}
+                    onChange={handleChange}
+                    placeholder="Enter your email"
+                    autoComplete="email"
+                  />
+
+                </div>
+
+              </div>
+
+              {/* PASSWORD */}
+              <div className="register-input-group">
+
+                <label htmlFor="register-password">
+                  Password
+                </label>
+
+                <div className="register-input-wrapper">
+
+                  <span className="register-input-icon">
+                    🔒
+                  </span>
+
+                  <input
+                    id="register-password"
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    value={register.password || ""}
+                    onChange={handleChange}
+                    placeholder="Create a password"
+                    autoComplete="new-password"
+                  />
+
+                  <button
+                    type="button"
+                    className="register-password-toggle"
+                    onClick={() =>
+                      setShowPassword(!showPassword)
+                    }
+                  >
+                    {showPassword ? "Hide" : "Show"}
+                  </button>
+
+                </div>
+
+              </div>
+
+              {/* CONFIRM PASSWORD */}
+              <div className="register-input-group">
+
+                <label htmlFor="register-confirm-password">
+                  Confirm Password
+                </label>
+
+                <div className="register-input-wrapper">
+
+                  <span className="register-input-icon">
+                    🔐
+                  </span>
+
+                  <input
+                    id="register-confirm-password"
+                    type={
+                      showConfirmPassword
+                        ? "text"
+                        : "password"
+                    }
+                    name="confirmPassword"
+                    value={register.confirmPassword || ""}
+                    onChange={handleChange}
+                    placeholder="Confirm your password"
+                    autoComplete="new-password"
+                  />
+
+                  <button
+                    type="button"
+                    className="register-password-toggle"
+                    onClick={() =>
+                      setShowConfirmPassword(
+                        !showConfirmPassword
+                      )
+                    }
+                  >
+                    {showConfirmPassword ? "Hide" : "Show"}
+                  </button>
+
+                </div>
+
+              </div>
+
+              {/* REGISTER BUTTON */}
+              <button
+                type="submit"
+                className="register-button"
+                disabled={loading}
+              >
+                {loading ? (
+                  <>
+                    <span className="register-spinner"></span>
+                    Creating account...
+                  </>
+                ) : (
+                  <>
+                    Create Account
+                    <span className="register-arrow">
+                      →
+                    </span>
+                  </>
+                )}
+              </button>
+
+            </form>
+
+            {/* DIVIDER */}
+            <div className="register-divider">
+              <span>OR</span>
             </div>
 
-            <div className="input-group">
-              <label>Email</label>
+            {/* LOGIN LINK */}
+            <p className="register-login-text">
+              Already have an account?
+              <Link to="/login">
+                Login
+              </Link>
+            </p>
 
-              <input
-                type="email"
-                name="email"
-                value={register.email || ""}
-                onChange={handleChange}
-                placeholder="Enter email"
-              />
-            </div>
+            {/* HOME LINK */}
+            <Link to="/" className="register-back-home">
+              ← Back to shopping
+            </Link>
 
-            <div className="input-group">
-              <label>Password</label>
+          </div>
 
-              <input
-                type="password"
-                name="password"
-                value={register.password || ""}
-                onChange={handleChange}
-                placeholder="Enter password"
-              />
-            </div>
-
-            <div className="input-group">
-              <label>Confirm Password</label>
-
-              <input
-                type="password"
-                name="confirmPassword"
-                value={register.confirmPassword || ""}
-                onChange={handleChange}
-                placeholder="Confirm password"
-              />
-            </div>
-
-            <button type="submit">
-              Register
-            </button>
-
-          </form>
-
-          <p className="login-text">
-            Already have an account?{" "}
-            <a href="/login">Login</a>
-          </p>
         </div>
 
       </div>
+
     </div>
   );
 };
